@@ -13,102 +13,199 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 header{padding:24px max(4vw,16px) 8px;max-width:1200px;margin:0 auto}
 h1{margin:0 0 6px;font-size:clamp(24px,4vw,34px);line-height:1.15}
-header p{margin:0 0 12px;color:var(--mute);max-width:70ch}
-.bar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+header p{margin:0 0 12px;color:var(--mute);max-width:72ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px;align-items:center}
 .bar button{font:600 15px system-ui,sans-serif;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .bar button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.bar .sep{width:1px;height:28px;background:var(--line);margin:0 4px}
 .bar button:focus-visible,.c:focus-visible{outline:3px solid var(--est);outline-offset:3px}
 .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mute);margin:10px 0 0}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-main{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:16px max(4vw,16px) 40px;max-width:1200px;margin:0 auto}
-.c{perspective:1200px;height:360px;cursor:pointer;border:0;padding:0;background:none;text-align:left;color:inherit;font:inherit}
+#deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:16px max(4vw,16px) 24px;max-width:1200px;margin:0 auto}
+.c{perspective:1200px;height:380px;cursor:pointer;border:0;padding:0;background:none;text-align:left;color:inherit;font:inherit}
 .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
 .c.flip .in{transform:rotateY(180deg)}
 .f,.b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgb(0 0 0/.08);overflow:hidden;display:flex;flex-direction:column}
-.b{transform:rotateY(180deg);padding:16px 18px;gap:8px;overflow-y:auto}
+.b{transform:rotateY(180deg);padding:16px 18px;gap:8px;overflow-y:auto;border-top:12px solid var(--k)}
 .f{align-items:center;justify-content:center;text-align:center;padding:18px;border-top:12px solid var(--k)}
-.b{border-top:12px solid var(--k)}
 .est{--k:var(--est)}.anc{--k:var(--anc)}.lig{--k:var(--lig)}.gen{--k:var(--gen)}
 .tag{position:absolute;top:12px;left:14px;font:700 12px system-ui;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
 .num{font:900 clamp(52px,9vw,68px)/1 system-ui,sans-serif;color:var(--k);letter-spacing:-.02em}
-.nick{font:800 22px/1.2 system-ui,sans-serif;margin:10px 0 6px}
+.roundel{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;font:900 44px/1 system-ui;color:var(--fg,#fff);background:var(--k)}
+.roundel.small{font-size:30px}
+.nick{font:800 22px/1.2 system-ui,sans-serif;margin:12px 0 6px}
+.sub{color:var(--mute);font-size:15px}
 .train{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:10px 0 4px}
 .train span{min-width:30px;height:26px;padding:0 6px;border-radius:6px;display:grid;place-items:center;font:800 13px system-ui;color:#fff;background:var(--k)}
 .train span.r{background:transparent;color:var(--k);border:2px solid var(--k)}
 .train span.s{background:color-mix(in srgb,var(--k) 55%,transparent)}
 .hint{position:absolute;bottom:12px;font-size:13px;color:var(--mute)}
 .b h3{margin:0;font-size:19px;color:var(--k)}
-.row{display:grid;grid-template-columns:92px 1fr;gap:8px;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:6px}
 .row b{color:var(--mute);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:26px;padding:0 8px;border-radius:13px;font:800 13px system-ui;color:var(--fg,#fff);background:var(--lc)}
+.chip.oc{opacity:.55;outline:2px dashed var(--lc);outline-offset:1px;background:transparent;color:var(--ink)}
+.ser{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:7px;font:800 13px system-ui;color:#fff;background:var(--sk)}
+.ser.oc{background:transparent;color:var(--ink);border:2px dashed var(--sk)}
 .trick{margin-top:auto;background:color-mix(in srgb,var(--k) 14%,transparent);border-radius:10px;padding:10px 12px;font-size:15px}
-.trick::before{content:"🧠 ";}
+.trick::before{content:"🧠 "}
+#tabla{max-width:1200px;margin:0 auto;padding:8px max(4vw,16px) 24px}
+#tabla h2{font-size:22px;margin:8px 0}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:15px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+thead th{position:sticky;top:0;background:var(--card);font-size:14px}
+tbody th{text-align:left;white-space:nowrap}
+td.y{font-weight:800}
+.dot{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--sk);color:#fff;font:800 12px/22px system-ui}
+.dot.oc{background:transparent;border:2px dashed var(--sk);color:var(--ink);line-height:18px}
+.keys{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.keys li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 footer{max-width:1200px;margin:0 auto;padding:0 max(4vw,16px) 32px;color:var(--mute);font-size:14px}
+[hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){.in{transition:none}}
 </style>
 </head>
 <body>
 <header>
   <h1>🃏 Cartas de las series de trenes</h1>
-  <p>Toca una carta para darle la vuelta. Delante tienes la serie y su apodo; detrás, los coches, la composición, las líneas y un truco. Intenta decir la respuesta en voz alta <strong>antes</strong> de girarla.</p>
-  <div class="bar">
+  <p>Toca una carta para darle la vuelta. Practica en los dos sentidos: <strong>de la serie a sus líneas</strong> y <strong>de la línea a sus series</strong>. Di la respuesta en voz alta <strong>antes</strong> de girarla.</p>
+  <div class="bar" role="toolbar" aria-label="Modo">
+    <button type="button" data-mode="series" aria-pressed="true">🚆 Por serie</button>
+    <button type="button" data-mode="lineas" aria-pressed="false">🚇 Por línea</button>
+    <button type="button" data-mode="tabla" aria-pressed="false">📋 Tabla</button>
+    <span class="sep" aria-hidden="true"></span>
     <button id="mix" type="button">🔀 Barajar</button>
     <button id="all" type="button">Girar todas</button>
-    <button id="reset" type="button">Ponerlas boca abajo</button>
+    <button id="reset" type="button">Boca abajo</button>
   </div>
-  <div class="legend"><span><i style="background:var(--est)"></i>Gálibo estrecho · 230 cm · L1-L5 + Ramal</span><span><i style="background:var(--anc)"></i>Gálibo ancho · 280 cm · L6-L12</span><span><i style="background:var(--lig)"></i>Metro Ligero</span><span><i style="background:var(--gen)"></i>Reglas básicas</span></div>
+  <div class="legend"><span><i style="background:var(--est)"></i>Gálibo estrecho · 230 cm · L1-L5 + Ramal</span><span><i style="background:var(--anc)"></i>Gálibo ancho · 280 cm · L6-L12</span><span><i style="background:var(--lig)"></i>Metro Ligero</span><span>Borde discontinuo = solo ocasional</span></div>
 </header>
-<main id="deck"></main>
-<footer>Fuente: Manual 1, <em>Conocimientos específicos sobre Metro de Madrid</em>, págs. 39 y 65-70 (temario oficial 2026).</footer>
+<main>
+<div id="deck"></div>
+<section id="tabla" hidden>
+  <h2>Qué serie va por cada línea</h2>
+  <div class="scroll"><table id="tbl"></table></div>
+  <ul class="keys">
+    <li>🧠 <strong>Las líneas viejas (1 a 5 y Ramal) solo llevan 2000 y 3000.</strong> Las líneas nuevas (6 a 12) llevan de la 5000 a la 9000.</li>
+    <li>🧠 <strong>La 9A es la más poblada:</strong> 5000, 7000, 8000 y 9000. <strong>La 9B solo tiene el Trío (6000).</strong></li>
+    <li>🧠 <strong>Los tramos A llevan trenes largos de 6.</strong> Los tramos B y la circular 12 llevan trenes cortos de 3 o 4.</li>
+    <li>🧠 <strong>La 5 es la única línea vieja con dos series:</strong> la Pareja (2000) y la Familia grande (3000 de 6).</li>
+    <li>🧠 <strong>La L11 no tiene serie propia en el manual:</strong> solo se menciona el 8000 de forma ocasional.</li>
+  </ul>
+</section>
+</main>
+<footer>Fuente: Manual 1, <em>Conocimientos específicos sobre Metro de Madrid</em>, págs. 39 y 65-70 (temario oficial 2026). Los colores de las líneas son orientativos.</footer>
 <script>
+/* Line colours (approximate Metro de Madrid palette) */
+const LC={'1':['#30a3dc','#fff'],'2':['#e0292f','#fff'],'3':['#ffd000','#14191c'],'4':['#814109','#fff'],'5':['#96bf0d','#14191c'],'6':['#a0a5a7','#14191c'],'7':['#f96611','#fff'],'7A':['#f96611','#fff'],'7B':['#f96611','#fff'],'8':['#f373b7','#14191c'],'9':['#990d66','#fff'],'9A':['#990d66','#fff'],'9B':['#990d66','#fff'],'10':['#1b0c80','#fff'],'10A':['#1b0c80','#fff'],'10B':['#1b0c80','#fff'],'11':['#136926','#fff'],'12':['#999933','#14191c'],'R':['#ffffff','#1b0c80'],'ML1':['#3a7dc4','#fff']};
+const SK={'2000':'var(--est)','3000':'var(--est)','3000·4':'var(--est)','3000·6':'var(--est)','5000':'var(--anc)','6000':'var(--anc)','7000':'var(--anc)','8000':'var(--anc)','9000':'var(--anc)','Citadis':'var(--lig)'};
+const chip=(l,oc)=>{const [bg,fg]=LC[l]||['#888','#fff'];return `<span class="chip${oc?' oc':''}" style="--lc:${bg};--fg:${fg};${l==='R'?'box-shadow:inset 0 0 0 2px #1b0c80;':''}">${l==='R'?'Ramal':'L'+l}</span>`};
+const chips=(arr,oc=[])=>`<span class="chips">${arr.map(l=>chip(l)).join('')}${oc.map(l=>chip(l,1)).join('')}</span>`;
+const ser=(s,oc)=>`<span class="ser${oc?' oc':''}" style="--sk:${SK[s.split(' ')[0]]||'var(--anc)'}">${s}</span>`;
 const T=s=>s.split('-').map(x=>`<span class="${x[0]==='R'?'r':x[0]==='S'?'s':''}">${x}</span>`).join('');
-const CARDS=[
+
+/* ===== Series deck ===== */
+const SERIES=[
  {k:'gen',tag:'Regla',num:'M R S',nick:'Las letras de los coches',train:'M-R-S',
   rows:[['M','Motor con cabina (va en los extremos, aquí va el conductor)'],['R','Remolque: sin motor y sin cabina'],['S','Motor intermedio sin cabina'],['Número','El impar siempre es el más bajo (R-2175 / M-2176)']],
   trick:'M de Maquinista, R de Remolque, S de "Sin cabina". Los trenes largos son un espejo: M-R-S | S-R-M.'},
  {k:'gen',tag:'Regla',num:'230 · 280',nick:'Los dos gálibos',train:'',
-  rows:[['Estrecho','230 cm · series 2000 y 3000 · L1, L2, L3, L4, L5 y Ramal'],['Ancho','280 cm · series 5000, 6000, 7000, 8000 y 9000 · L6 a L12'],['Futuro','Todos los proyectos nuevos se hacen para gálibo ancho']],
+  rows:[['Estrecho','230 cm · series 2000 y 3000'],['Líneas',chips(['1','2','3','4','5','R'])],['Ancho','280 cm · series 5000, 6000, 7000, 8000 y 9000'],['Líneas',chips(['6','7','8','9','10','11','12'])]],
   trick:'Series "pequeñas" (2000 y 3000) = tren estrecho = líneas viejas (1-5).'},
  {k:'est',tag:'Estrecho',num:'2000',nick:'La Pareja',train:'R-M',
-  rows:[['Coches','2 (unidad tren)'],['Familias','2000-A y 2000-B'],['Líneas','1 y 5']],
-  trick:'2000 = 2 coches. Una pareja de novios: uno conduce (M) y el otro va de remolque (R).'},
+  rows:[['Coches','2 (unidad tren) · familias 2000-A y 2000-B'],['Líneas',chips(['1','5'])]],
+  trick:'2000 = 2 coches. Una pareja de novios que va a la 1 y a la 5.'},
  {k:'est',tag:'Estrecho',num:'3000',nick:'La Familia (grande y pequeña)',train:'M1-R1-S1-S2-R2-M2',
-  rows:[['Subserie 1','6 coches inseparables: M1-R1-S1-S2-R2-M2 · líneas 3 y 5'],['Subserie 2','4 coches: M-R-S-M · líneas 2, 4 y Ramal']],
-  trick:'Familia grande (6) en la 3 y la 5; familia pequeña (4) en la 2, la 4 y el Ramal. Pares con pares: 4 coches → líneas 2 y 4.'},
+  rows:[['6 coches','M1-R1-S1-S2-R2-M2'],['Líneas',chips(['3','5'])],['4 coches','M-R-S-M'],['Líneas',chips(['2','4','R'])]],
+  trick:'Familia grande (6) en la 3 y la 5. Familia pequeña (4) en las pares, 2 y 4, y en el Ramal.'},
  {k:'anc',tag:'Ancho',num:'5000',nick:'Los Gemelos',train:'M-M',
-  rows:[['Coches','2 (unidad tren)'],['Composición','M-M: los dos tienen motor'],['Líneas','6 y 9A']],
-  trick:'Dos gemelos iguales, los dos con motor: ninguno va de remolque.'},
+  rows:[['Coches','2 (unidad tren), los dos con motor'],['Líneas',chips(['6','9A'])]],
+  trick:'Dos gemelos iguales que dan vueltas en la circular 6 y suben a la 9A.'},
  {k:'anc',tag:'Ancho',num:'6000',nick:'El Trío',train:'M-R-M',
-  rows:[['Coches','3 (el manual lo llama "Trío")'],['Composición','M-R-M: dos motores y un remolque'],['Extra','Coches diáfanos, con pasillo de intercirculación'],['Línea','9B (tramo TFM)']],
-  trick:'Un trío musical: dos cantantes (M) y uno en medio (R). Toca en la 9B.'},
+  rows:[['Coches','3 ("Trío"): dos motores y un remolque, con pasillo entre coches'],['Línea',chips(['9B'])]],
+  trick:'Un trío musical que solo toca en la 9B (tramo TFM, hacia Arganda).'},
  {k:'anc',tag:'Ancho',num:'7000',nick:'El Sexteto',train:'M1-R1-S1-S2-R2-M2',
-  rows:[['Coches','6, inseparables'],['Composición','M1-R1-S1-S2-R2-M2 (como el 3000 grande)'],['Líneas','9A y 10A']],
-  trick:'Es el gemelo ancho del 3000 de 6 coches. 7000 → líneas 9A y 10A.'},
+  rows:[['Coches','6, inseparables (como el 3000 grande)'],['Líneas',chips(['9A','10A'])]],
+  trick:'7000 → "9 y 10 A": el sexteto solo toca en los tramos A.'},
  {k:'anc',tag:'Ancho',num:'8000',nick:'El Comodín',train:'M-S-R-M',
-  rows:[['6 coches','M1-R1-S1-S2-R2-M2 → línea 6'],['4 coches','M-S-R-M → líneas 8 y 10B'],['3 monotensión','M-R-M → líneas 10B y 12 (a veces 7B, 10A y 11)'],['3 bitensión','M-R-M → líneas 9A y 10A']],
-  trick:'El comodín de la baraja: tiene muchas formas y va a casi todas partes. Ojo: su versión de 4 es M-S-R-M (no M-R-S-M como el 3000).'},
+  rows:[['6 coches',chips(['6'])],['M-S-R-M',chips(['8','10B'])],['M-R-M mono',chips(['10B','12'],['7B','10A','11'])],['M-R-M bi',chips(['9A','10A'])]],
+  trick:'El comodín de la baraja: va a casi todas partes. Es la única serie de la L8 y la única que aparece (de forma ocasional) en la L11.'},
  {k:'anc',tag:'Ancho',num:'9000',nick:'El Doble formato',train:'M-R-S-S-R-M',
-  rows:[['6 coches','M-R-S-S-R-M → líneas 7A, 9A y 10A'],['3 coches','M-R-M → líneas 7B y 12']],
-  trick:'Viene en tamaño grande (6) y pequeño (3). El pequeño va a las "B" y a la circular: 7B y 12.'},
+  rows:[['6 coches','M-R-S-S-R-M'],['Líneas',chips(['7A','9A','10A'])],['3 coches','M-R-M'],['Líneas',chips(['7B','12'])]],
+  trick:'Grande (6) en los tramos A. Pequeño (3) en la 7B y en la circular 12.'},
  {k:'lig',tag:'Metro Ligero',num:'Citadis',nick:'El Tranvía',train:'',
-  rows:[['Cajas','5, articuladas (ampliable a 7)'],['Tensión','750 V CC'],['Flota','8 vehículos, numerados del 128 al 135, con ATP para el túnel']],
+  rows:[['Cajas','5, articuladas (ampliable a 7)'],['Tensión','750 V CC'],['Flota','8 vehículos (128 al 135), con ATP para el túnel'],['Línea',chips(['ML1'])]],
   trick:'Cinco cajas, 750 V y del 128 al 135: "un tranvía de 5 vagones con 8 hermanos".'},
  {k:'gen',tag:'Cifras',num:'1.445',nick:'Cifras que caen seguro',train:'',
-  rows:[['Ancho de vía','1.445 mm en metro pesado · 1.435 mm en metro ligero'],['Catenaria','600 V o 1.500 V CC en metro · 750 V en ligero'],['Sentido','Metro por la izquierda · Ligero por la derecha'],['Pantógrafo','En el techo del coche M par. Sube con aire comprimido y lo baja un muelle']],
+  rows:[['Ancho de vía','1.445 mm en metro pesado · 1.435 mm en ligero'],['Catenaria','600 V o 1.500 V CC en metro · 750 V en ligero'],['Sentido','Metro por la izquierda · Ligero por la derecha'],['Pantógrafo','En el techo del coche M par. Sube con aire y lo baja un muelle']],
   trick:'El ligero tiene 10 mm menos de vía y circula al revés (por la derecha).'},
 ];
+
+/* ===== Line deck: [line, gálibo, series, occasional series, trick] ===== */
+const LINES=[
+ ['1','est',[['2000','2 coches']],[],'La 1 y la Pareja: la primera línea con el primer tren, el 2000.'],
+ ['2','est',[['3000','4 coches']],[],'La 2 es par: lleva la Familia pequeña (3000 de 4 coches).'],
+ ['3','est',[['3000','6 coches']],[],'La 3 lleva la Familia grande: 3000 de 6 coches.'],
+ ['4','est',[['3000','4 coches']],[],'La 4 es par como la 2: Familia pequeña (3000 de 4).'],
+ ['5','est',[['2000','2 coches'],['3000','6 coches']],[],'La 5 es la única línea vieja con dos series: la Pareja y la Familia grande.'],
+ ['R','est',[['3000','4 coches']],[],'El Ramal (Ópera-Príncipe Pío) va como la 2 y la 4: 3000 de 4.'],
+ ['6','anc',[['5000','2 coches, M-M'],['8000','6 coches']],[],'La circular 6: los Gemelos (5000) y el Comodín grande (8000 de 6).'],
+ ['7A','anc',[['9000','6 coches']],[],'7A (Estadio Metropolitano-Pitis): 9000 grande, de 6.'],
+ ['7B','anc',[['9000','3 coches, M-R-M']],[['8000','M-R-M, ocasional']],'7B (MetroEste): 9000 pequeño, de 3. A veces, 8000.'],
+ ['8','anc',[['8000','4 coches, M-S-R-M']],[],'La 8 va al aeropuerto con el Comodín de 4 (M-S-R-M). Es su única serie.'],
+ ['9A','anc',[['5000','2 coches'],['7000','6 coches'],['8000','M-R-M bitensión'],['9000','6 coches']],[],'La 9A es la más poblada: 5000, 7000, 8000 y 9000. Las cuatro series anchas menos el Trío.'],
+ ['9B','anc',[['6000','3 coches, Trío']],[],'9B (TFM, Puerta de Arganda-Arganda del Rey): solo el Trío (6000).'],
+ ['10A','anc',[['7000','6 coches'],['8000','M-R-M bitensión'],['9000','6 coches']],[['8000','monotensión, ocasional']],'10A (Tres Olivos-Puerta del Sur): 7000, 8000 bitensión y 9000 grande.'],
+ ['10B','anc',[['8000','M-S-R-M y M-R-M monotensión']],[],'10B (MetroNorte): solo el Comodín (8000), en dos versiones.'],
+ ['11','anc',[],[['8000','M-R-M monotensión, ocasional']],'La 11 no tiene serie fija en el manual: solo el 8000 de forma ocasional.'],
+ ['12','anc',[['8000','M-R-M monotensión'],['9000','3 coches, M-R-M']],[],'La circular 12 (MetroSur) lleva trenes cortos de 3: 8000 y 9000.'],
+ ['ML1','lig',[['Citadis','5 cajas, 750 V']],[],'Metro Ligero 1 (Pinar de Chamartín-Las Tablas): el tranvía Citadis.'],
+];
+
 const deck=document.getElementById('deck');
-function render(list){
-  deck.innerHTML=list.map((c,i)=>`<button class="c ${c.k}" type="button" aria-label="Carta ${c.num}: ${c.nick}. Toca para girar">
-   <div class="in">
-    <div class="f"><span class="tag">${c.tag}</span><div class="num">${c.num}</div><div class="nick">${c.nick}</div>${c.train?`<div class="train">${T(c.train)}</div>`:''}<span class="hint">Toca para ver la respuesta ↻</span></div>
-    <div class="b"><h3>${c.num} · ${c.nick}</h3>${c.rows.map(r=>`<div class="row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}<div class="trick">${c.trick}</div></div>
-   </div></button>`).join('');
+const front=c=>`<div class="f"><span class="tag">${c.tag}</span>${c.face}<span class="hint">Toca para ver la respuesta ↻</span></div>`;
+function seriesCard(c){
+  return {k:c.k,label:`Carta ${c.num}: ${c.nick}`,tag:c.tag,
+   face:`<div class="num">${c.num}</div><div class="nick">${c.nick}</div>${c.train?`<div class="train">${T(c.train)}</div>`:''}<div class="sub">¿Cuántos coches y por qué líneas va?</div>`,
+   back:`<h3>${c.num} · ${c.nick}</h3>${c.rows.map(r=>`<div class="row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}<div class="trick">${c.trick}</div>`};
 }
-render(CARDS);
+function lineCard([l,k,s,oc,trick]){
+  const [bg,fg]=LC[l];const name=l==='R'?'Ramal':l==='ML1'?'ML1':'Línea '+l;
+  const tag=k==='est'?'Estrecho':k==='anc'?'Ancho':'Metro Ligero';
+  return {k,label:`Carta ${name}`,tag,
+   face:`<div class="roundel${l.length>2?' small':''}" style="--k:${bg};--fg:${fg};${l==='R'?'box-shadow:inset 0 0 0 4px #1b0c80;':''}">${l==='R'?'R':l}</div><div class="nick">${name}</div><div class="sub">¿Qué series circulan por aquí?</div>`,
+   back:`<h3>${name} · ${tag}</h3>${s.length?s.map(([x,d])=>`<div class="row"><b>${ser(x)}</b><span>${d}</span></div>`).join(''):'<div class="row"><b>Fija</b><span>Ninguna en el manual</span></div>'}${oc.map(([x,d])=>`<div class="row"><b>${ser(x,1)}</b><span>${d}</span></div>`).join('')}<div class="trick">${trick}</div>`};
+}
+let mode='series';
+const build=()=>mode==='series'?SERIES.map(seriesCard):LINES.map(lineCard);
+function render(list){
+  deck.innerHTML=list.map(c=>`<button class="c ${c.k}" type="button" aria-label="${c.label}. Toca para girar"><div class="in">${front(c)}<div class="b">${c.back}</div></div></button>`).join('');
+}
+function table(){
+  const S=['2000','3000','5000','6000','7000','8000','9000','Citadis'];
+  let h=`<thead><tr><th scope="col">Línea</th>${S.map(s=>`<th scope="col">${ser(s)}</th>`).join('')}</tr></thead><tbody>`;
+  for(const [l,,s,oc] of LINES){
+    const has=new Set(s.map(x=>x[0])),occ=new Set(oc.map(x=>x[0]).filter(x=>!has.has(x)));
+    h+=`<tr><th scope="row">${chip(l)}</th>${S.map(x=>has.has(x)?`<td class="y"><span class="dot" style="--sk:${SK[x]}" aria-label="sí">✓</span></td>`:occ.has(x)?`<td><span class="dot oc" style="--sk:${SK[x]}" aria-label="ocasional">~</span></td>`:'<td aria-label="no"></td>').join('')}</tr>`;
+  }
+  document.getElementById('tbl').innerHTML=h+'</tbody>';
+}
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+  const t=m==='tabla';
+  deck.hidden=t;document.getElementById('tabla').hidden=!t;
+  ['mix','all','reset'].forEach(id=>document.getElementById(id).hidden=t);
+  t?table():render(build());
+}
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 deck.addEventListener('click',e=>{const c=e.target.closest('.c');if(c)c.classList.toggle('flip')});
 document.getElementById('all').onclick=()=>deck.querySelectorAll('.c').forEach(c=>c.classList.add('flip'));
 document.getElementById('reset').onclick=()=>deck.querySelectorAll('.c').forEach(c=>c.classList.remove('flip'));
-document.getElementById('mix').onclick=()=>{const a=[...CARDS];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}render(a)};
+document.getElementById('mix').onclick=()=>{const a=build();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}render(a)};
+setMode('series');
 </script>
 </body>
 </html>
