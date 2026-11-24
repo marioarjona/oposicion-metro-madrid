@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de estudio 80/20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a calm study notebook for someone rereading many times; clear, no noise.
+   IDEA: a line diagram: each manual is a station along the route to Saturday.
+   PICTURE: the route strip, stations sized by exam weight, filling as you log rereads.
+   COLOUR and TYPE: teal ground band, coral accent; Archivo titles, Atkinson Hyperlegible body.
+   LAYOUT: hero with countdown and route, sticky station nav, long readable column. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0f1a1c);--ink:light-dark(#14191c,#e7efef);--mute:light-dark(#55636a,#9fb2b5);
+--teal:light-dark(#0d6e78,#3fb6c2);--deep:light-dark(#0b5159,#0a3f45);--mist:light-dark(#eaf5f5,#15282b);
+--coral:light-dark(#d94f2b,#ff7a55);--line:light-dark(#d5e3e4,#25393c);--hi:light-dark(#fff1c9,#3a3210)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+h1,h2,h3{font-family:Archivo,system-ui,sans-serif;line-height:1.1;text-wrap:balance;margin:0 0 .5em}
+h1{font-weight:800;font-size:clamp(32px,5vw,50px);color:#fff}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,36px);color:var(--teal);padding-top:.2em}
+h3{font-weight:800;font-size:21px;margin-top:1.6em;color:var(--ink)}
+.hero{background:var(--deep);color:#eaf6f6;padding-bottom:20px}
+.hero p{max-width:62ch;margin:.2em 0 1em;color:#cfe7e9}
+.count{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;margin:6px 0 18px}
+.count b{font:800 clamp(34px,6vw,56px)/1 Archivo,sans-serif;color:#fff;white-space:nowrap}
+.count span{color:#bfe0e3;font-size:15px}
+.fig{position:relative;height:170px;margin-top:8px}
+.fig svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fig a{cursor:pointer}
+.note{font-size:14px;color:#a9cfd3;margin:6px 0 0}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px max(5vw,16px)}
+nav a{flex:none;color:var(--ink);text-decoration:none;font:500 15px Archivo,sans-serif;padding:10px 12px;border-radius:999px;min-height:44px;display:flex;align-items:center}
+nav a:hover,nav a:focus-visible{background:var(--mist);outline:none}
+nav a.on{background:var(--teal);color:var(--bg)}
+main{max-width:1000px;margin:0 auto}
+.sec{border-bottom:1px solid var(--line)}
+.sec p,.sec li{max-width:76ch}
+strong{color:light-dark(#0b1215,#fff);background:linear-gradient(transparent 62%,var(--hi) 62%)}
+a{color:var(--teal)}
+ul,ol{padding-left:1.3em}li{margin:.25em 0}li>ul{margin:.2em 0}
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:12px 0 18px}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font:500 14px Archivo,sans-serif;color:var(--mute);background:var(--mist)}
+td:first-child{font-weight:700}
+.scroll{overflow-x:auto}
+code{overflow-wrap:anywhere}
+.reads{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 18px;color:var(--mute);font-size:15px}
+.reads button{font:500 15px Archivo,sans-serif;min-width:52px;min-height:44px;border-radius:12px;border:2px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.reads button[aria-pressed=true]{background:var(--coral);border-color:var(--coral);color:#fff}
+.reads button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+#cifras{background:var(--mist)}
+#cifras td:nth-child(2){font-weight:400}
+footer{padding:28px max(5vw,16px);color:var(--mute);font-size:14px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.fig *{transition:none!important}}
+@media(max-width:600px){body{font-size:16px}table{font-size:14px}.fig{height:210px}}
+</style>
+</head>
+<body>
+<header class="band hero">
+  <h1>Guía 80/20 para la prueba de conocimientos</h1>
+  <p>Lo que más puede caer de los 7 manuales, resumido para releerlo varias veces. Marca cada lectura y la línea se irá llenando hasta el sábado.</p>
+  <div class="count"><b id="cd">—</b><span id="cdl">para el sábado 28 a las 10:00 (Cantoblanco)</span></div>
+  <div class="fig" id="route" role="img" aria-label="Manuales ordenados por peso estimado en el examen, con las lecturas hechas de cada uno"><svg id="rs"></svg></div>
+  <p class="note">El tamaño de cada estación es el peso estimado de ese manual en el examen. Las marcas de lectura se guardan solo en este navegador.</p>
+</header>
+<nav id="nav"><a href="#inicio">Cómo usarla</a><a href="#m1">M1 Metro</a><a href="#m3">M3 Circulación</a><a href="#m2">M2 Seguridad</a><a href="#m6">M6 PRL</a><a href="#m4">M4 Reglamento</a><a href="#m5">M5 Código</a><a href="#m7">M7 CRTM</a><a href="#cifras">Cifras</a></nav>
+<main>
+<section id="inicio" class="band sec"><h2>Cómo usar esta guía</h2>
+<p><strong>Esta guía es el 80% de lo que puede caer en el examen.</strong> He leído los 7 manuales enteros y me he quedado con lo que se puede preguntar: cifras, plazos, definiciones, listas cerradas, quién autoriza qué y las excepciones. Lo que queda fuera (el 20%) va al final de cada manual, en «El 20% que puedes descartar».</p>
+<h3>Qué peso tiene cada manual (estimación)</h3>
+<p>La convocatoria no dice cuántas preguntas salen de cada manual. Esta estimación sale de tres cosas: lo que ocupa cada uno, lo preguntable que es y cómo se reparte un banco público de 474 preguntas hecho sobre estos mismos manuales.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Orden</th>
+<th>Manual</th>
+<th>Páginas</th>
+<th>Preguntas estimadas de 40</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>M1 · Conocimientos de Metro</strong></td>
+<td>101</td>
+<td><strong>9-11</strong></td>
+<td>cifras, tarifas, depósitos, ATP, trenes</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>M3 · Normativa de Circulación</strong></td>
+<td>150</td>
+<td><strong>8-10</strong></td>
+<td>señales, cifras de tiempo y velocidad, averías</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>M2 · Seguridad de Agentes</strong></td>
+<td>78</td>
+<td><strong>5-7</strong></td>
+<td>comparte el 50% con el M3: si estudias uno, ya llevas medio otro</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>M6 · PRL</strong></td>
+<td>~230</td>
+<td><strong>5-7</strong></td>
+<td>es largo pero fácil; esta guía resume todo lo útil</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>M4 · Reglamento de Viajeros</strong></td>
+<td>9</td>
+<td><strong>3-5</strong></td>
+<td>muy rentable: son pocas páginas y casi todo cifras</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>M5 · Código Ético</strong></td>
+<td>14</td>
+<td><strong>2-3</strong></td>
+<td>listas y artículos</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>M7 · CRTM</strong></td>
+<td>9</td>
+<td><strong>1-3</strong></td>
+<td>se aprende en 20 minutos</td>
+</tr>
+</tbody></table>
+</div><h3>Método para quien necesita releer</h3>
+<p>Que necesites leer las cosas varias veces no es un problema: <strong>es justo como funciona la memoria</strong>. Lo que cuenta es <strong>cómo</strong> relees:</p>
+<ol>
+<li><strong>Lee una sección entera</strong> sin parar.</li>
+<li><strong>Cierra la pantalla</strong> y di en voz alta (o escribe) <strong>3 datos</strong> de lo que has leído. Esto vale el triple que leer otra vez.</li>
+<li><strong>Vuelve a abrirla</strong> y comprueba qué se te había escapado. Esos datos son los que repasas.</li>
+<li><strong>Repetición espaciada:</strong> cada día, <strong>antes</strong> de empezar algo nuevo, relee rápido lo del día anterior (5-10 min por manual). Así cada sección te pasa por delante <strong>3 o 4 veces</strong> antes del sábado.</li>
+<li>Las <strong>cifras</strong> (al final de esta página) se leen <strong>en voz alta</strong> todos los días.</li>
+</ol>
+<h3>Exámenes de otros años: lo que he encontrado</h3>
+<ul>
+<li><strong>Metro de Madrid no publica los cuadernillos de preguntas.</strong> Del proceso de 2023 (Maquinista y Jefe/a de Sector, 60 plazas) solo están en su web la <strong>plantilla de respuestas</strong> (A, B, C, D) y su corrección de las preguntas 30 y 55. <strong>Sin las preguntas no sirve para estudiar.</strong> Además, el temario de 2023 era otro: eran <strong>80 preguntas</strong> sobre la web de Metro, no estos 7 manuales.</li>
+<li>Cada examen se publica solo durante el plazo de reclamaciones (este año, del <strong>30/11 al 02/12</strong>) y en la plataforma de los candidatos, así que no queda accesible después.</li>
+<li><strong>Lo más útil que hay:</strong> un banco <strong>gratuito y no oficial</strong> de <strong>474 preguntas</strong> hecho sobre <strong>estos mismos 7 manuales de 2026</strong>. Cada pregunta enlaza a la página del PDF de donde sale. Lo ha hecho un opositor, no Metro: <strong>úsalo para practicar, pero si algo no cuadra, manda el PDF</strong>. Está en <a href="https://oposicion-metro.pages.dev" target="_blank" rel="noopener">https://oposicion-metro.pages.dev</a> (copia en <a href="https://sh3rencr.github.io/oposicion-metro/" target="_blank" rel="noopener">https://sh3rencr.github.io/oposicion-metro/</a>) y tiene simulacro cronometrado y psicotécnicos.</li>
+<li>El <strong>Manual 6 (PRL)</strong> trae al final <strong>20 preguntas de autotest con sus soluciones</strong> (pág. 226): están resumidas en su sección.</li>
+</ul>
+<h3>Plan de la semana (pensado para releer)</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Cuándo</th>
+<th>Primera lectura (cosas nuevas)</th>
+<th>Repaso (releer)</th>
+<th>Además</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Lun, 21:00-23:30</strong></td>
+<td><strong>M4</strong> Reglamento + <strong>M7</strong> CRTM</td>
+<td>—</td>
+<td>dormir antes de las 0:00</td>
+</tr>
+<tr>
+<td><strong>Mar</strong></td>
+<td><strong>M1</strong> Conocimientos de Metro (mañana y tarde)</td>
+<td>M4 + M7 (15 min)</td>
+<td>30 min de psicotécnicos · 20 preguntas del banco sobre M1</td>
+</tr>
+<tr>
+<td><strong>Mié</strong></td>
+<td><strong>M2</strong> Seguridad + <strong>M3</strong> Circulación (se estudian juntos)</td>
+<td>M1 (20 min) + M4/M7 (10 min)</td>
+<td>30 min de psicotécnicos · preguntas de M2 y M3</td>
+</tr>
+<tr>
+<td><strong>Jue</strong></td>
+<td><strong>M6</strong> PRL + <strong>M5</strong> Código Ético</td>
+<td>M2/M3 (30 min) + M1 (15 min)</td>
+<td>30 min de psicotécnicos · autotest de PRL</td>
+</tr>
+<tr>
+<td><strong>Vie</strong></td>
+<td><strong>Nada nuevo.</strong> Mañana: <strong>3.ª vuelta a toda la guía</strong>, rápida</td>
+<td><strong>Simulacro</strong>: 40 preguntas en 60 min + verbal (20 en 10 min)</td>
+<td>Desde las 19:00: solo la hoja de cifras. DNI, 2 bolis Bic, ruta. A la cama pronto</td>
+</tr>
+<tr>
+<td><strong>Sáb</strong></td>
+<td>7:00 → <strong>solo la hoja de cifras</strong>, 20 min, en voz alta</td>
+<td>—</td>
+<td>llegar a Cantoblanco hacia las 9:30 · baño antes de entrar · sin reloj inteligente</td>
+</tr>
+</tbody></table>
+</div><h3>Estrategia en el examen</h3>
+<ul>
+<li><strong>Conocimientos:</strong> 40 preguntas en 60 min, con <strong>−0,33</strong> por fallo. Contestar a ciegas sale a cero de media: <strong>responde si puedes descartar al menos una opción</strong>; si no, en blanco. Haz <strong>2 vueltas</strong>. El aprobado está en <strong>20</strong>.</li>
+<li><strong>Verbal:</strong> 20 preguntas en <strong>10 min</strong>. <strong>Espacial:</strong> 20 en 20 min. Aquí los fallos <strong>no restan</strong>: <strong>rellénalas todas</strong>.</li>
+<li><strong>Competencias:</strong> 45 min. Sé <strong>sincero y coherente</strong>; marca siempre una M y una P en cada bloque, y aquí <strong>no se puede anular</strong>.</li>
+</ul>
+</section>
+<section id="m1" class="band sec man"><h2>Manual 1 · Conocimientos específicos sobre Metro de Madrid (julio de 2026)</h2><div class="reads" data-sec="m1"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: MÁXIMA.</strong> Es el manual del que más preguntas salen: cifras, tarifas, depósitos, gálibos, ATP y modos de conducción.</p>
+<h3>1. Quiénes somos y estructura</h3>
+<ul>
+<li>Metro es una <strong>empresa pública integrada en el CRTM</strong>. Su <strong>Administración tutelar es la Comunidad de Madrid</strong>, que es <strong>accionista mayoritaria desde diciembre de 2011</strong>.</li>
+<li><strong>Misión:</strong> «Ser la <strong>principal solución de movilidad</strong> en la región de Madrid… calidad, eficiente, comprometido con el cliente… <strong>seguridad, sostenibilidad e innovación</strong>».</li>
+<li><strong>3 pilares estratégicos:</strong> <strong>Servicio público · Eficiencia en la gestión · Experiencia de cliente</strong>. (No los confundas con los 3 <em>valores</em> del Código Ético).</li>
+<li>Primera empresa de metro que certificó <strong>toda su red</strong> con la norma <strong>UNE-EN-13816</strong> (calidad del servicio). Tiene la <strong>ISO 14001</strong> (medio ambiente) <strong>desde 2005</strong>.</li>
+<li>Transporta <strong>más de 2 millones de clientes por día laborable</strong>.</li>
+<li><strong>Carta de Servicios: los compromisos (muy preguntable)</strong><div class="scroll"><table>
+<thead>
+<tr>
+<th>Compromiso</th>
+<th>Cifra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ocupación en hora punta</td>
+<td><strong>95%</strong> de los clientes viajan a <strong>≤ 4 clientes/m²</strong></td>
+</tr>
+<tr>
+<td>Accesibilidad disponible</td>
+<td><strong>95%</strong></td>
+</tr>
+<tr>
+<td>Valoración de la información</td>
+<td><strong>≥ 8</strong> sobre 10; el <strong>100%</strong> de las estaciones la tienen</td>
+</tr>
+<tr>
+<td>Información sobre incidencias</td>
+<td><strong>95%</strong> de los clientes</td>
+</tr>
+<tr>
+<td>Tiempo de espera en andén</td>
+<td>el <strong>95%</strong> espera menos que el <strong>intervalo máximo ofertado</strong></td>
+</tr>
+<tr>
+<td>Valoración de la atención al cliente</td>
+<td><strong>≥ 8,5</strong></td>
+</tr>
+<tr>
+<td>Respuesta a reclamaciones</td>
+<td><strong>95%</strong> en <strong>≤ 13 días hábiles</strong></td>
+</tr>
+<tr>
+<td>Valoración de la limpieza</td>
+<td><strong>≥ 7</strong></td>
+</tr>
+<tr>
+<td>Trenes con protección automática</td>
+<td><strong>100%</strong></td>
+</tr>
+<tr>
+<td>Viajes protegidos frente a agresiones</td>
+<td><strong>&gt; 99,99%</strong></td>
+</tr>
+<tr>
+<td>Compensaciones</td>
+<td>las mismas del Reglamento (suspensión / &gt;15 min / &gt;20 min); <strong>los abonos quedan excluidos</strong></td>
+</tr>
+</tbody></table>
+</div></li>
+<li><strong>Órganos de gobierno (2):</strong> <strong>Junta General de Accionistas</strong> (estatutos, nombrar administradores, cuentas, auditores, fusión) y <strong>Consejo de Administración</strong> (gestión, representación y <strong>cuentas anuales</strong>; revisa los riesgos de Cumplimiento).</li>
+<li><strong>Órganos de gestión (2):</strong> <strong>Comité Ejecutivo</strong> (estrategia, presupuesto, contrataciones) y <strong>Comité de Dirección</strong> (estrategia a corto plazo; se <strong>reúne cada quince días</strong>).</li>
+</ul>
+<h3>2. Cifras de la red</h3>
+<ul>
+<li><strong>12 líneas + Ramal Ópera-Príncipe Pío + ML1</strong>. Cada línea se nombra «<strong>Cabecera – Final de línea</strong>».</li>
+<li><strong>Línea:</strong> trayecto entre la cabecera y el final. <strong>Interestación:</strong> tramo entre dos estaciones.</li>
+<li>Cifras de la página 17 (en el PDF es una imagen; los datos los he tomado del banco de preguntas, así que compruébalos en la pág. 17): <strong>303 estaciones · 296,78 km · 7.272 empleados · 578 ascensores · 2.067 coches · 2.427 teleindicadores · 736.874.032 viajeros en 2025</strong>.</li>
+<li><strong>Cabeceras de cada línea</strong> (dirección de la vía I): L1 Pinar de Chamartín → Valdecarros · L2 Las Rosas → Cuatro Caminos · L3 El Casar → Moncloa · L4 Pinar de Chamartín → Argüelles · L5 Alameda de Osuna → Casa de Campo · <strong>L6 circular, vía I = vía interior</strong> · L7B Hospital del Henares → Estadio Metropolitano, L7A Estadio Metropolitano → Pitis · L8 Nuevos Ministerios → Aeropuerto T4 · L9B Arganda del Rey → Puerta de Arganda, L9A Puerta de Arganda → Paco de Lucía · L10B Hospital Infanta Sofía → Tres Olivos, L10A Tres Olivos → Puerta del Sur · L11 Plaza Elíptica → La Fortuna · <strong>L12 (Metrosur) circular, vía interior</strong> · Ramal Ópera → Príncipe Pío · <strong>ML1 Las Tablas → Pinar de Chamartín</strong>.</li>
+<li><strong>Vía I</strong> = la que se <strong>aleja</strong> del origen de la línea. <strong>Vía II</strong> = la que se <strong>acerca</strong>.</li>
+</ul>
+<h3>3. Instalaciones de estación</h3>
+<ul>
+<li><strong>Vestíbulo:</strong> donde se compra y se valida el título. El torniquete de <strong>entrada</strong> comprueba la validez; el paso de <strong>salida</strong> impide que entre gente sin título.</li>
+<li><strong>Interfonos amarillos</strong> → comunican con el <strong>Jefe de Sector</strong>.</li>
+<li>En los plafones de vestíbulo y andén: plano de la red, plano zonal, tarifas y horarios. El <strong>Reglamento de Viajeros solo está en los vestíbulos</strong>.</li>
+<li><strong>Piñón:</strong> punto donde termina el andén y empieza la interestación (si hay una puerta, el piñón es la puerta).</li>
+<li><strong>Accesibilidad:</strong><ul>
+<li>Botones <strong>amarillos</strong> en el borde del andén = distancia de seguridad (<strong>una huella</strong>).</li>
+<li>Pintura <strong>fotoluminiscente</strong>.</li>
+<li>Pavimento <strong>naranja</strong> = zona del <strong>primer coche</strong> para personas con movilidad reducida.</li>
+<li>Pavimento <strong>amarillo ranurado</strong> = cambio de nivel.</li>
+<li>Bandas <strong>naranjas</strong> delante de las máquinas automáticas.</li>
+<li>Andén <strong>elevado en la 1.ª puerta del 1.er coche</strong> (rampa para silla de ruedas).</li>
+<li><strong>Pulsador de puertas a 115 cm de altura máxima, a la derecha</strong>.</li>
+<li><strong>Braille</strong> en los pasamanos, <strong>apoyos isquiáticos</strong> y <strong>voz en los ascensores</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>4. Recintos</h3>
+<ul>
+<li><strong>Centros de Atención al Cliente:</strong> <strong>Sol, Ópera y Plaza de Castilla</strong>. Horario: <strong>L-V de 7:00 a 22:00</strong>; <strong>sábados, domingos y festivos de 10:00 a 22:00</strong>; 365 días al año.</li>
+<li><strong>CIAC</strong> (Centro Interactivo de Atención al Cliente): en <strong>Alto del Arenal</strong>, de <strong>7 a 23 h</strong>, 365 días, tel. <strong>900 444 404</strong>.</li>
+<li><strong>PCC</strong> (Puesto de Control Central): también en <strong>Alto del Arenal</strong>. Sus áreas son Control de Tráfico de Trenes, <strong>Control de Energía</strong> (cortes de tensión), Información al Viajero, Gestión de Información de Explotación, Control de Instalaciones de Estaciones y <strong>Seguridad y Protección Civil</strong> (emergencias, intrusión, incendios).</li>
+<li><strong>Sede social:</strong> <strong>Avenida de Asturias, 4</strong> (Plaza de Castilla). Es la misma dirección que el CRTM.</li>
+<li><strong>11 DEPÓSITOS</strong> (hay que aprenderse el número de depósito y su línea):<div class="scroll"><table>
+<thead>
+<tr>
+<th>Depósito</th>
+<th>Nº</th>
+<th>Línea</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ventas</td>
+<td>2</td>
+<td>L2</td>
+</tr>
+<tr>
+<td>Canillejas</td>
+<td>4</td>
+<td>L5 y L7</td>
+</tr>
+<tr>
+<td>Aluche</td>
+<td>5</td>
+<td>L5</td>
+</tr>
+<tr>
+<td>Fuencarral</td>
+<td>6</td>
+<td>L10</td>
+</tr>
+<tr>
+<td>Sacedal</td>
+<td>7</td>
+<td>L9</td>
+</tr>
+<tr>
+<td>Laguna</td>
+<td>8</td>
+<td>L6</td>
+</tr>
+<tr>
+<td>Hortaleza</td>
+<td>9</td>
+<td>superficie: L4 · subterráneo: L1 y ML1</td>
+</tr>
+<tr>
+<td>Cuatro Vientos</td>
+<td>10</td>
+<td>L10 y L11</td>
+</tr>
+<tr>
+<td>Loranca</td>
+<td>11</td>
+<td>L12</td>
+</tr>
+<tr>
+<td>Valdecarros</td>
+<td>12</td>
+<td>L1</td>
+</tr>
+<tr>
+<td>Villaverde</td>
+<td>13</td>
+<td>L3</td>
+</tr>
+</tbody></table>
+</div></li>
+<li><strong>8 COCHERAS:</strong> Moncloa (L3) · Ciudad Universitaria (L6) · Universidad Rey Juan Carlos (L12) · Puerta de Arganda (L9) · Miguel Hernández (L1) · El Bercial (L12) · Argüelles (L4) · Arganzuela-Planetario (L6).</li>
+</ul>
+<h3>5. Red, gálibos y ATP (muy preguntable)</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Metro pesado</th>
+<th>Metro ligero</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sentido de circulación</td>
+<td>por la <strong>IZQUIERDA</strong></td>
+<td>por la <strong>DERECHA</strong></td>
+</tr>
+<tr>
+<td>Ancho de vía</td>
+<td><strong>1.445 mm</strong></td>
+<td><strong>1.435 mm</strong></td>
+</tr>
+<tr>
+<td>Tensión de alimentación</td>
+<td><strong>600 o 1.500 Vcc</strong> (línea aérea)</td>
+<td><strong>750 Vcc</strong></td>
+</tr>
+</tbody></table>
+</div><ul>
+<li><strong>Gálibo estrecho (230 cm):</strong> <strong>L1, 2, 3, 4, 5 y Ramal</strong>. Trenes de las series <strong>2000 y 3000</strong>.</li>
+<li><strong>Gálibo ancho (280 cm):</strong> <strong>L6 a L12</strong>. Trenes de las series <strong>5000, 6000, 7000, 8000 y 9000</strong>. Todos los proyectos nuevos se hacen ya en gálibo ancho.</li>
+<li><strong>Pasillos de evacuación</strong> del túnel: <strong>75 cm</strong> de ancho.</li>
+<li><strong>Estación:</strong> sus límites son los piñones. <strong>Zona A</strong> del andén = franja de <strong>unos 80 cm</strong> desde la banda amarilla hasta el borde. <strong>Zona B</strong> = el resto del andén.</li>
+<li><strong>Plataforma de vía</strong> a cielo abierto: todas las vías <strong>más 3 m</strong> desde los carriles exteriores.</li>
+<li><strong>Tipos de vía:</strong><ul>
+<li><strong>Principales:</strong> las que llevan trenes con viajeros.</li>
+<li><strong>Secundarias:</strong> sacos, túneles de enlace, depósitos.</li>
+<li><strong>De pruebas:</strong> una vía secundaria preparada para pruebas.</li>
+<li><strong>Banalizadas:</strong> permiten circular en los <strong>dos sentidos</strong>.</li>
+</ul>
+</li>
+<li><strong>Cantón:</strong> tramo entre dos señales consecutivas. Está formado por circuitos de vía y lo controlan los <strong>enclavamientos</strong>. Si está ocupado, la señal de entrada muestra <strong>rojo</strong> (nadie pasa) o <strong>M-Roja</strong> (no pasan los trenes <strong>sin</strong> ATP).</li>
+<li><strong>3 sistemas de bloqueo:</strong><ul>
+<li><strong>Automático:</strong> el normal.</li>
+<li><strong>Telefónico:</strong> se usa cuando falla el enclavamiento, para auxiliar a un tren, para entrar en un cantón ocupado o para ir a contravía sin señalización.</li>
+<li><strong>Por ocupación o acantonamiento:</strong> para un tren que <strong>no shunta</strong> bien los circuitos o que va <strong>hacia delante y hacia atrás</strong>. Lo establece el <strong>PCC</strong>.</li>
+</ul>
+</li>
+<li><strong>El ATP tiene 2 funciones:</strong> hacer cumplir las condiciones del enclavamiento y <strong>vigilar la velocidad</strong>. Aplica el <strong>freno de emergencia</strong> cuando el tren <strong>rebasa una señal en rojo</strong>, <strong>supera la velocidad máxima</strong>, se <strong>acerca indebidamente</strong> a otro tren, se <strong>pierde la comprobación</strong> de un elemento de vía (aguja, calce) o hay <strong>Runback</strong> (el tren se mueve en sentido contrario al inversor).</li>
+<li><strong>3 sistemas ATP:</strong> <strong>Códigos de Velocidad (CV)</strong>, <strong>Distancia Objetivo (DO)</strong> y <strong>CBTC</strong>.</li>
+<li><strong>4 modos de conducción:</strong><div class="scroll"><table>
+<thead>
+<tr>
+<th>Modo</th>
+<th>Qué hace</th>
+<th>Cuándo se usa</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ATO</strong></td>
+<td>el sistema controla la velocidad y la parada</td>
+<td>modo normal donde hay ATO</td>
+</tr>
+<tr>
+<td><strong>Manual + ATP</strong></td>
+<td>conduce el maquinista y el ATP vigila la velocidad máxima de seguridad</td>
+<td>modo normal donde <strong>no</strong> hay ATO</td>
+</tr>
+<tr>
+<td><strong>Manual + 20</strong></td>
+<td>limita a <strong>20 km/h</strong></td>
+<td><strong>vías secundarias</strong> (depósitos, cocheras, túneles de enlace)</td>
+</tr>
+<tr>
+<td><strong>Llave Especial</strong></td>
+<td><strong>anula el ATP</strong></td>
+<td>averías o situaciones degradadas: <strong>máx. 30 km/h</strong> en vía principal, salvo que el PCC diga otra cosa</td>
+</tr>
+</tbody></table>
+</div></li>
+</ul>
+<h3>6. Vía</h3>
+<ul>
+<li><strong>Carril:</strong> <strong>cabeza</strong> (rodadura), <strong>alma</strong> (la parte fina) y <strong>patín</strong> (la base, que es donde se sujeta). <strong>Rueda:</strong> <strong>llanta</strong> (cónica) y <strong>pestaña</strong> (guía la rueda, por el lado interior).</li>
+<li><strong>Traviesa</strong> (de madera u hormigón; une los carriles y el balasto). <strong>Taco de hormigón</strong> = hace de traviesa. <strong>Balasto</strong> = grava que asienta la vía y <strong>drena</strong>.</li>
+<li><strong>Aguja:</strong> <strong>espadín</strong> (el extremo afilado se llama punta; el contrario, talón), <strong>contraaguja</strong>, <strong>corazón o cruzamiento</strong> y <strong>contracarril</strong>.<ul>
+<li>Pasar por la punta = <strong>tomar la aguja de punta</strong>; por el otro lado = <strong>de talón</strong>.</li>
+<li>Posiciones: <strong>recta</strong> o <strong>desvío</strong>.</li>
+</ul>
+</li>
+<li><strong>Diagonal (escape):</strong> 2 agujas. <strong>Bretelle:</strong> 2 diagonales cruzadas = <strong>4 agujas</strong>. <strong>Haz de vías</strong>; en un depósito, el conjunto de haces es la <strong>playa de maniobras</strong>.</li>
+<li><strong>4 manivelas:</strong> <strong>G</strong> (grande, Ericsson) · <strong>M</strong> (mediana, Ericsson) · <strong>P</strong> (pequeña, Dimetronic) · <strong>E</strong> (pequeña, Adtranz electrohidráulica).</li>
+<li><strong>Agujas manuales:</strong> solo existen <strong>Williams Fija y Ramapo</strong>.</li>
+<li><strong>Calce:</strong> provoca a propósito el <strong>descarrilamiento</strong> de un vehículo que invade la vía principal sin autorización. Está en las transferencias de depósitos y cocheras y en los túneles de enlace.</li>
+<li><strong>Topera:</strong> está al <strong>final de la vía</strong>.</li>
+</ul>
+<h3>7. Material móvil</h3>
+<ul>
+<li><strong>Unidad tren:</strong> el conjunto mínimo con autonomía propia (2, 3, 4 o 6 coches). Las letras de los coches: <strong>M</strong> = motor con cabina, <strong>R</strong> = remolque, <strong>S</strong> = motor sin cabina.</li>
+<li><strong>Serie 2000:</strong> <strong>2 coches</strong>, <strong>L1 y L5</strong>. El número <strong>impar</strong> es siempre el más bajo (R-2175 / M-2176).</li>
+<li><strong>Serie 3000:</strong><ul>
+<li>Subserie 1: <strong>6 coches</strong> M1-R1-S1-S2-R2-M2, <strong>L3 y L5</strong>.</li>
+<li>Subserie 2: <strong>4 coches</strong> M-R-S-M, <strong>L2, L4 y Ramal</strong>.</li>
+</ul>
+</li>
+<li><strong>Serie 5000:</strong> M-M, <strong>L6 y L9A</strong>.</li>
+<li><strong>Serie 6000:</strong> <strong>trío</strong> M-R-M, <strong>L9B</strong>.</li>
+<li><strong>Serie 7000:</strong> 6 coches, <strong>L9A y L10A</strong>.</li>
+<li><strong>Serie 8000:</strong><ul>
+<li>6 coches en L6.</li>
+<li>M-S-R-M en <strong>L8 y L10B</strong>.</li>
+<li>M-R-M monotensión en L10B y L12.</li>
+<li>M-R-M bitensión en L9A y L10A.</li>
+</ul>
+</li>
+<li><strong>Serie 9000:</strong><ul>
+<li>6 coches en <strong>L7A, L9A y L10A</strong>.</li>
+<li>M-R-M en <strong>L7B y L12</strong>.</li>
+</ul>
+</li>
+<li><strong>Citadis (Metro Ligero):</strong> <strong>5 cajas</strong>, ampliable a <strong>7</strong>; tensión de <strong>750 V</strong>; <strong>8 vehículos numerados del 128 al 135</strong>.</li>
+<li><strong>Equipos del tren:</strong><ul>
+<li><strong>Pantógrafo:</strong> en el coche <strong>M par</strong>; sube con aire y baja con un <strong>muelle</strong>.</li>
+<li><strong>Batería:</strong> <strong>110 Vcc</strong>, con toma de <strong>24 V</strong>; sustituye al convertidor si este falla.</li>
+<li><strong>Convertidor estático:</strong> pasa de 600/1500 Vcc a 380/400 V trifásica, 220 V, 110 V y 24 V.</li>
+<li><strong>Compresor principal:</strong> da aire al freno, al pantógrafo y a la suspensión.</li>
+<li><strong>Compresor auxiliar:</strong> <strong>solo</strong> para subir el pantógrafo.</li>
+<li><strong>Disyuntor:</strong> aísla el equipo de tracción si hay <strong>sobreintensidad</strong>.</li>
+<li><strong>Enganche móvil:</strong> en los extremos de la unidad.</li>
+<li><strong>Enganche fijo:</strong> entre coches; <strong>solo lo separa Mantenimiento</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>8. Tarifas y títulos (muy preguntable)</h3>
+<ul>
+<li><strong>8 coronas tarifarias:</strong> <strong>6 de la Comunidad de Madrid</strong> (<strong>A, B1, B2, B3, C1, C2</strong>) y <strong>2 de Castilla-La Mancha</strong> (<strong>E1, E2</strong>). Cada corona incluye las anteriores. Excepciones: los <strong>interzonales</strong> y los abonos <strong>E1 y E2</strong> (no valen para trayectos dentro de E1 o E2 ni entre ellas).</li>
+<li>La <strong>zona A</strong> incluye Metro, la <strong>EMT</strong> (salvo la <strong>203 Exprés Aeropuerto</strong>), Cercanías dentro de la zona y <strong>ML1</strong>.</li>
+<li><strong>Zonas de cada red:</strong><ul>
+<li>MetroMadrid: zona <strong>A</strong> (incluye ML1).</li>
+<li>TFM: Puerta de Arganda (A) – <strong>Arganda del Rey (B3)</strong>.</li>
+<li><strong>MetroSur:</strong> L12 y Joaquín Vilumbrales (<strong>B1-B2</strong>). Para entrar por <strong>La Fortuna</strong> hace falta un título MetroSur o superior.</li>
+<li><strong>MetroNorte:</strong> Hospital Infanta Sofía – La Granja (<strong>B1</strong>).</li>
+<li><strong>MetroEste:</strong> Hospital del Henares – Barrio del Puerto (<strong>B1</strong>).</li>
+<li><strong>Metro Ligero Oeste</strong> (ML2 y ML3): <strong>Metro no participa</strong>. ML2 es B1 y ML3 es B1-B2.</li>
+</ul>
+</li>
+<li><strong>Tarjetas:</strong> la <strong>personal</strong> (con nombre y foto) y la <strong>MULTI</strong> (anónima). Las dos admiten <strong>hasta 3 títulos</strong>, tienen <strong>garantía de 3 años</strong> y <strong>caducan a los 10 años</strong>.<ul>
+<li>Personal: <strong>4 €</strong>, <strong>una por usuario</strong>; si se pide por internet llega en <strong>7 a 15 días hábiles</strong>; en una oficina con cita previa (<strong>012</strong>) te la dan en el momento.</li>
+<li>MULTI: <strong>2,50 €</strong> (<strong>0 €</strong> si la primera carga es un título turístico); <strong>no se devuelve el importe</strong>; <strong>no</strong> se vende en las oficinas de gestión.</li>
+</ul>
+</li>
+<li><strong>Perfiles por edad:</strong><ul>
+<li><strong>&lt; 4 años:</strong> gratis, sin título.</li>
+<li><strong>Infantil:</strong> de 4 a 7 años sin cumplir.</li>
+<li><strong>Joven:</strong> hasta cumplir 26.</li>
+<li><strong>Normal:</strong> de 26 a 65.</li>
+<li><strong>+65.</strong></li>
+<li><strong>Joven 7-14:</strong> <strong>gratuito</strong>, válido hasta <strong>C2</strong>; la última carga se puede hacer el día que cumple <strong>15</strong>.</li>
+</ul>
+</li>
+<li><strong>Descuentos (acumulables):</strong><ul>
+<li>Familia numerosa <strong>general: 20%</strong>.</li>
+<li>Familia numerosa <strong>especial: 50%</strong>.</li>
+<li><strong>Discapacidad ≥ 65%: 20%</strong>.</li>
+</ul>
+</li>
+<li><strong>Abono 30 días:</strong> hay <strong>10 días</strong> desde la carga para empezar a usarlo; si no se valida, los días empiezan a contar solos.</li>
+<li><strong>Abono +65:</strong> dura <strong>365 días desde la carga</strong> y vale en todas las zonas (hasta C2). El abono <strong>anual para particulares está suspendido</strong>; solo se vende a empresas.</li>
+<li><strong>Tarjeta Azul:</strong> para empadronados en <strong>Madrid capital</strong> (por edad o discapacidad, con límite de renta). La gestiona el <strong>Ayuntamiento</strong>. Solo vale en <strong>Metro zona A, ML1 y EMT</strong>. Se pueden tener <strong>2 tarjetas, pero solo 1 activa</strong>. Si un viajero enseña las dos, <strong>no se hace nada</strong>: ni ficha de irregularidad ni retirada.</li>
+<li><strong>Sencillo de Metro zona A:</strong><ul>
+<li>Hasta <strong>5 estaciones = 1,50 €</strong>.</li>
+<li><strong>+0,10 €</strong> por cada estación de más.</li>
+<li><strong>10 o más estaciones = 2 €</strong>.</li>
+<li>Vale solo para la <strong>jornada</strong> en que se compra. Si se carga <strong>después de las 12 de la noche</strong>, también vale la jornada siguiente.</li>
+</ul>
+</li>
+<li><strong>Metrobús:</strong> 10 viajes en Metro y <strong>EMT</strong> de la zona A (salvo el Exprés Aeropuerto).</li>
+<li><strong>Suplemento Aeropuerto:</strong><ul>
+<li>Se paga en <strong>T1-T2-T3 y T4</strong>.</li>
+<li>Están <strong>exentos</strong> los <strong>abonos</strong> (anual, 30 días, turístico, Azul, Infantil) y los titulares de la <strong>tarjeta AENA</strong>.</li>
+<li><strong>No es un título</strong>: se añade a uno y <strong>no ocupa hueco</strong> en la tarjeta.</li>
+</ul>
+</li>
+<li><strong>Turístico:</strong><ul>
+<li>Se carga en la MULTI y es <strong>personal</strong>.</li>
+<li>Dura <strong>1, 2, 3, 4, 5 o 7 días</strong>.</li>
+<li><strong>Infantil</strong> para <strong>menores de 11 años</strong>, al <strong>50%</strong> del precio.</li>
+<li>Zonas <strong>A</strong> y <strong>T</strong> (la T no vale en los servicios regionales de Renfe).</li>
+<li><strong>No caduca</strong>: empieza a contar con la 1.ª validación.</li>
+<li><strong>No puede ir con ningún otro título</strong> en la tarjeta.</li>
+<li>El torniquete lo rechaza si se valida varias veces seguidas (<strong>antipassback</strong>).</li>
+</ul>
+</li>
+<li><strong>App Mi Tarjeta Transporte:</strong> necesita <strong>NFC, Android 9.0 o superior y Google Wallet</strong>.<ul>
+<li>Al digitalizar la tarjeta, la <strong>física queda bloqueada</strong>.</li>
+<li><strong>No</strong> puede estar activa en 2 móviles a la vez.</li>
+<li>En la MULTI virtual <strong>no</strong> se pueden cargar <strong>sencillos ni el 10 viajes TFM</strong>.</li>
+</ul>
+</li>
+<li><strong>Tarjeta Infantil:</strong> <strong>verde</strong>, <strong>gratuita</strong> y no recargable. Repetirla por pérdida o mal uso cuesta <strong>6 €</strong>. Los niños de <strong>4 a 6 años sin Tarjeta Infantil pagan billete</strong>.</li>
+<li><strong>Tarjeta de la Policía Nacional</strong> (Brigada Móvil – Policía en el Transporte): <strong>Abono Anual C2</strong>, sin número de tarjeta; lleva el texto «<strong>TARJETA PROPIEDAD DEL CRTM</strong>».</li>
+</ul>
+<h3>El 20% que puedes descartar</h3>
+<p>La lista completa de estaciones de cada línea (basta con las <strong>cabeceras</strong> y los <strong>depósitos</strong>) y las descripciones largas de las áreas del PCC (solo los nombres).</p>
+</section>
+<section id="m3" class="band sec man"><h2>Manual 3 · Normativa Interna de Circulación (NIC), Metro pesado</h2><div class="reads" data-sec="m3"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: MÁXIMA.</strong> Es el manual más largo y el más técnico. Muchas definiciones, carteles y faroles <strong>son los mismos del Manual 2</strong>: lo que ya hayas estudiado allí te sirve para los dos.</p>
+<h3>Títulos 1 y 2 · Principios</h3>
+<ul>
+<li>La <strong>NIC</strong> regula la circulación por la red <strong>principal y secundaria</strong>. <strong>Solo se modifica mediante Circulares de Dirección</strong>, y se publica en <strong>hojas intercambiables</strong>.</li>
+<li>El <strong>PCC es el máximo responsable de la explotación</strong>: tiene el <strong>mando funcional y jerárquico</strong> sobre todo el personal de circulación y sobre Mantenimiento en lo que toca a la circulación. Trabaja con el <strong>CTC</strong> (Control de Tráfico Centralizado, que muestra la ocupación y telemanda los enclavamientos).</li>
+<li><strong>Si el PCC no puede ejercer su autoridad</strong>, la asumen los <strong>responsables operativos</strong> y, en su defecto, <strong>los conductores</strong>.</li>
+<li>Las funciones que afectan a la seguridad <strong>no se delegan</strong> salvo orden superior.</li>
+<li><strong>Órdenes:</strong> <strong>sin intermediarios</strong>. Las verbales, telefónicas o por radio se <strong>hacen repetir</strong> al receptor (Manual de estilo). Comunicación PCC ↔ conductor: <strong>1.º radiotelefonía</strong>, <strong>2.º telefonía selectiva de los piñones</strong> y, si no, otros medios. <strong>Todas las conversaciones con el PCC se graban.</strong></li>
+<li><strong>Toma de servicio:</strong> se avisa al superior o, si no es posible, al PCC. <strong>Nadie abandona el puesto sin permiso</strong>; si es por fuerza mayor, <strong>antes se garantiza la seguridad</strong>.</li>
+<li><strong>Prohibido:</strong> dormir, alcohol, drogas y medicamentos que afecten a la lucidez, el móvil para asuntos personales y tapar pilotos o pantallas.</li>
+<li>En situaciones anormales, <strong>transmitir tranquilidad</strong> a los viajeros.</li>
+</ul>
+<h3>Título 3 · Señalización</h3>
+<ul>
+<li><strong>8 tipos:</strong> gestuales de emergencia · fijas ferroviarias · indicadores luminosos · señales de los trenes · acústicas · fijas de tracción eléctrica · otras señales · carteles.</li>
+<li><strong>ORDEN DE PRIORIDAD:</strong><ol>
+<li><strong>Gestuales de emergencia</strong>.</li>
+<li><strong>Señalización circunstancial</strong> (indicadores luminosos o carteles).</li>
+<li><strong>Señales fijas</strong> y de limitación de velocidad.</li>
+</ol>
+</li>
+<li>Varias señales en el mismo sitio: si son compatibles, <strong>se obedecen todas</strong>; si se contradicen, <strong>la más restrictiva</strong>.</li>
+<li><strong>Gestual de emergencia:</strong> agitar cualquier objeto o los brazos = <strong>parada inmediata</strong>.</li>
+<li><strong>Las señales ferroviarias prevalecen sobre el ATP.</strong></li>
+<li><strong>Según su ubicación:</strong> <strong>de estación</strong> (en el piñón), <strong>intermedias</strong> y <strong>de maniobra</strong>.</li>
+<li><strong>Según su funcionamiento (letra de la placa):</strong><div class="scroll"><table>
+<thead>
+<tr>
+<th>Placa</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A</strong></td>
+<td><strong>Automática</strong> (depende de los trenes o de la señal siguiente)</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><strong>Mandada</strong> (además, desde el CTC o un mando local)</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td><strong>Repetidora</strong>: la «R» blanca siempre encendida y el foco rojo cuando la señal que repite está en parada</td>
+</tr>
+<tr>
+<td><strong>NR</strong></td>
+<td><strong>No rebasable</strong>: un solo foco rojo y <strong>solo se pasa con autorización del PCC</strong></td>
+</tr>
+<tr>
+<td><strong>S Ag</strong></td>
+<td><strong>Indicadora de posición de aguja</strong> (aguja tomada de punta), con flecha <strong>blanca o verde</strong></td>
+</tr>
+</tbody></table>
+</div></li>
+<li><strong>Aspectos de las señales:</strong><div class="scroll"><table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Rojo</strong></td>
+<td><strong>parada absoluta</strong></td>
+</tr>
+<tr>
+<td><strong>M-Roja de estación</strong> (M roja)</td>
+<td>parada para quien <strong>no</strong> va en ATO o M+ATP; los que van en ATO o M+ATP <strong>pueden pasar</strong></td>
+</tr>
+<tr>
+<td><strong>M-Roja de interestación</strong></td>
+<td><strong>M roja + foco verde intermitentes</strong>; mismo significado</td>
+</tr>
+<tr>
+<td><strong>Amarillo</strong></td>
+<td>anuncio de parada (la siguiente está en rojo): <strong>pasar con prevención</strong>; se usa típicamente para entrar a un <strong>túnel de enlace</strong></td>
+</tr>
+<tr>
+<td><strong>Verde</strong></td>
+<td>vía libre</td>
+</tr>
+<tr>
+<td><strong>Blanco</strong></td>
+<td>vía libre</td>
+</tr>
+<tr>
+<td><strong>Morado o azul</strong></td>
+<td>pasar en <strong>marcha a la vista</strong>: zona sin señalizar o con obstáculos (parachoques, trenes estacionados)</td>
+</tr>
+</tbody></table>
+</div></li>
+<li>Una señal <strong>apagada o dudosa</strong> cuenta como <strong>su aspecto más restrictivo</strong> (salvo las de posición de aguja).</li>
+<li><strong>Rebase de una señal en rojo, apagada o dudosa:</strong> solo con autorización del <strong>PCC o del responsable operativo</strong>. <strong>Si no hay comunicación:</strong><ul>
+<li><strong>En una estación</strong> → quedarse y <strong>llamar al responsable operativo</strong>.</li>
+<li><strong>En una interestación</strong> (y si <strong>no es NR ni está a contravía</strong>) → <strong>esperar 3 MINUTOS</strong> y seguir <strong>a paso de hombre</strong> hasta la siguiente señal o estación, <strong>comprobando las agujas</strong>.</li>
+<li>Una <strong>repetidora apagada</strong> se puede pasar <strong>sin autorización</strong>, pero hay que suponer que la señal que repite está <strong>en rojo</strong>.</li>
+</ul>
+</li>
+<li>Una señal fuera de servicio se tapa con una <strong>funda gris opaca</strong> y se pasa <strong>sin ningún trámite</strong>.</li>
+<li><strong>Cartel de regulación</strong> (cuenta atrás en el piñón):<ul>
+<li>Si la parada es de <strong>más de 30 s</strong>, muestra «parada».</li>
+<li>Si es de <strong>menos de 30 s</strong>, muestra los segundos que faltan.</li>
+<li><strong>Parpadea a partir de 10 s</strong>.</li>
+<li>El <strong>retraso</strong> se muestra en <strong>rojo</strong>; <strong>parpadea a los 60 s</strong>; si pasa de <strong>99 s</strong> aparece una <strong>«R» roja parpadeando</strong>.</li>
+</ul>
+</li>
+<li><strong>Serie de tracción encendida</strong> = hay tensión. <strong>Apagada NO garantiza que no haya tensión.</strong></li>
+<li><strong>Indicador de vía de destino:</strong> dice a qué vía va el tren, <strong>no si está ocupada</strong>. <strong>Indicador de topera</strong> = luz encima de la topera.</li>
+<li><strong>Señales del tren:</strong> por cabeza <strong>2 faros blancos</strong>; por cola <strong>2 pilotos rojos</strong>. <strong>Señales acústicas:</strong> silbato o claxon <strong>y la voz</strong>.</li>
+<li><strong>Señales de tracción eléctrica:</strong><ul>
+<li><strong>Final de catenaria:</strong> solo se pasa con los <strong>pantógrafos bajados y autorización</strong> del responsable operativo.</li>
+<li><strong>Aislador de sección:</strong> poner el <strong>regulador en «0»</strong>.</li>
+<li><strong>Cambio de tensión:</strong> <strong>abajo</strong> la tensión actual y <strong>arriba</strong> la siguiente. En vías secundarias, el cambio de zona hay que <strong>autorizarlo</strong>.</li>
+</ul>
+</li>
+<li><strong>Otras señales:</strong><ul>
+<li><strong>Piquete de entrevía:</strong> <strong>franjas blancas y negras de 10 cm</strong>; marca hasta dónde son compatibles dos vías.</li>
+<li><strong>Puntos kilométricos:</strong> cada <strong>10 m</strong>; en el túnel, <strong>chapa blanca</strong>.</li>
+<li><strong>Aviso de limitación:</strong> <strong>CÍRCULO</strong> blanco con borde negro.</li>
+<li><strong>Limitación de velocidad:</strong> <strong>ROMBO</strong>; <strong>no se puede superar bajo ningún concepto</strong>.</li>
+<li><strong>Fin de limitación:</strong> <strong>CUADRADO</strong>.</li>
+<li><strong>Prohibición de circulación:</strong> con cartel <strong>blanco sobre rojo</strong> que dice a qué material afecta.</li>
+<li><strong>Puertas enrollables de depósito:</strong> el <strong>piloto intermitente</strong> = puerta abierta y paso autorizado; si el piloto está <strong>fijo o apagado</strong> → no arrancar sin autorización.</li>
+<li><strong>Placas:</strong> número de coches; <strong>«AG» + número</strong> = aguja; <strong>«CAL» + número</strong> = calce; <strong>distancia a la señal</strong> en metros.</li>
+</ul>
+</li>
+<li><strong>Carteles y faroles:</strong> son los mismos del Manual 2 (avisador, precautorio de personal, de zona de obras, del túnel de enlace a <strong>30 km/h</strong>, Auto-Shunt, salidas de emergencia, tren en mantenimiento).</li>
+<li>Para pasar el <strong>cartel precautorio de personal</strong>: el conductor debe <strong>conocer</strong> que hay gente en la vía <strong>+</strong> tener la <strong>autorización del PCC o el testigo piloto</strong>.</li>
+</ul>
+<h3>Título 4 · Circulación de trenes</h3>
+<ul>
+<li><strong>Habilitación:</strong> puede ser <strong>general</strong> o <strong>limitada</strong> (a un tipo de material o de vía).<ul>
+<li>Las <strong>prácticas</strong> solo se hacen con un trabajador habilitado y el practicante <strong>nunca va solo</strong> en la cabina.</li>
+<li>En las <strong>circulaciones especiales</strong> (pruebas), quien está capacitado pero sin habilitación conduce <strong>acompañado</strong> por alguien habilitado.</li>
+</ul>
+</li>
+<li>Prohibido subir, bajar o pasar de un coche a otro <strong>con el tren en movimiento</strong>, salvo en los trenes con <strong>pasillo de intercomunicación</strong>.</li>
+<li><strong>Dotación del conductor:</strong> las <strong>llaves</strong> de cabina. <strong>Dotación de la cabina:</strong> <strong>linterna de emergencia + prenda de alta visibilidad</strong> (salvo en los vehículos diésel).</li>
+<li><strong>Antes de salir a línea</strong> se prueban los <strong>frenos</strong>; durante el trayecto, la tracción y el frenado. Si el tren no está bien y no hay comunicación → <strong>no se incorpora a la línea</strong>.</li>
+<li><strong>Se conduce desde la cabina de cabeza.</strong> Si no se puede → un habilitado va en la de cabeza y avisa (salvo en el Auto-Shunt y en los retrocesos autorizados).</li>
+<li>En las vías principales se circula <strong>por la IZQUIERDA</strong> (salvo en vías banalizadas, inversiones o con autorización del PCC).</li>
+<li>En conducción manual sin consignas → la <strong>velocidad máxima permitida</strong>.</li>
+<li><strong>Dispositivos de seguridad</strong> (seta de emergencia, <strong>«Hombre Muerto»</strong>, ATP, freno condenado): <strong>nunca se anulan sin autorización del PCC</strong> o del responsable operativo. Por fuerza mayor y sin comunicación → el <strong>mínimo tiempo indispensable</strong> y avisar en cuanto se pueda.</li>
+<li>Los trenes con viajeros <strong>paran en todas las estaciones</strong>, digan lo que digan las señales. No se para fuera de los puntos previstos salvo por una señal, el ATP, para evitar un accidente o por orden del PCC.</li>
+<li><strong>Puertas:</strong><ul>
+<li>Se abren <strong>solo con el tren totalmente parado</strong>. En estaciones con andén a los dos lados, <strong>primero el lado de salida</strong> y luego el de entrada; <strong>se cierran en el mismo orden</strong>.</li>
+<li>Antes de cerrar: comprobar (con espejos, monitores o mirando), <strong>un toque corto de silbato</strong>, cerrar, volver a comprobar y arrancar.</li>
+<li>Si hay una incidencia de puertas en marcha → <strong>parar inmediatamente</strong> y avisar al PCC.</li>
+</ul>
+</li>
+<li><strong>Abandono de la cabina:</strong><ul>
+<li>Inmovilizar el tren: <strong>freno de estacionamiento</strong> e <strong>inversor en «0»</strong>.</li>
+<li>Avisar al PCC y <strong>cerrar la puerta</strong> de la cabina.</li>
+<li>En los vehículos auxiliares clásicos, el conductor se queda en la cabina; si no puede, deja el <strong>freno eléctrico en sentido contrario a la pendiente</strong> y el freno de estacionamiento.</li>
+</ul>
+</li>
+<li><strong>Contravía:</strong> prohibida, salvo en <strong>vías banalizadas con señales</strong>, con <strong>autorización del PCC (art. 4.7.7)</strong> o, sin comunicación, para recolocar un tren que <strong>se pasó del piñón</strong>.</li>
+<li><strong>Retroceso</strong> (hacia atrás <strong>sin conductor en cabeza</strong>): prohibido, salvo para recolocar un tren que se pasó del piñón, <strong>con autorización del PCC</strong> y sin personal en la vía.</li>
+<li><strong>Pasar una estación sin parar:</strong> <strong>máx. 30 km/h</strong> tocando el <strong>silbato</strong>. Si la señal de salida está en rojo → parar en el <strong>piñón de entrada</strong>.</li>
+<li><strong>Conductor indispuesto:</strong> <strong>para en la 1.ª estación</strong> y avisa al PCC. Si tiene que dejar el tren → lo inmoviliza con las <strong>puertas abiertas</strong> y avisa a los viajeros.</li>
+<li><strong>Relevo:</strong> el conductor entrante llega con antelación; el saliente le cuenta las averías y las situaciones degradadas. <strong>Hoja de ruta:</strong> se entrega al terminar la jornada.</li>
+<li><strong>Autorización para que un tren circule:</strong> la de los <strong>trenes de viajeros la da el CRTM</strong>; la de los <strong>vehículos auxiliares</strong>, el departamento de Metro. El PCC guarda una copia.</li>
+<li><strong>Matrícula:</strong> es única para cada coche. <strong>Número de tren:</strong> <strong>solo lo cambia el PCC</strong>; va visible <strong>en los dos frontales</strong>; el conductor <strong>debe memorizarlo</strong>; <strong>no puede haber 2 trenes con el mismo número</strong> en una línea. Al entrar en el circuito de transferencia, el <strong>CTC crea el tren</strong> con un número por defecto.</li>
+<li><strong>Responsabilidad:</strong> la conducción es responsabilidad del conductor.<ul>
+<li><strong>Debe ceder los mandos</strong> (si lo piden y están habilitados) a los <strong>Mandos de la Línea</strong>, a los <strong>Instructores autorizados por el PCC</strong> y a otros de rango superior. Siempre se <strong>avisa al PCC</strong>.</li>
+<li>Hay que <strong>parar</strong> ante cualquier indicio de peligro (resistencia, ruido, vía interceptada, persona en la vía…).</li>
+<li>Si el tren <strong>recibe un golpe</strong> → no moverlo hasta que lo revisen y lo autoricen.</li>
+</ul>
+</li>
+<li><strong>Personal de estación:</strong> se dedica a las funciones <strong>comerciales</strong>. Tiene autoridad sobre los trenes <strong>por delegación del PCC</strong>. <strong>No usa el mando local</strong> del enclavamiento sin autorización del PCC (salvo una emergencia para evitar un accidente).</li>
+<li><strong>En caso de urgencia</strong>, todo el personal habilitado <strong>debe</strong> conducir si se lo pide un responsable operativo.</li>
+<li><strong>Cambiar de sistema ATP o de modo de conducción → hace falta autorización del PCC</strong> (salvo que lo diga una circular o un cartel, o en caso de avería sin comunicación).</li>
+<li><strong>Maniobras:</strong> acoples, movimientos en depósitos, salidas y encierres, vías secundarias, cambios de vía o de sentido.<ul>
+<li>Las dirigen el <strong>PCC, el responsable operativo</strong> o alguien en quien deleguen.</li>
+<li><strong>No se hacen con viajeros</strong> dentro sin autorización del PCC: <strong>primero se desaloja</strong>.</li>
+</ul>
+</li>
+<li><strong>Auto-Shunt:</strong> <strong>toque de silbato de unos 2 s</strong> (más largo que el de cierre de puertas). El conductor espera <strong>en el andén junto a la cabina</strong> hasta que el tren arranca.</li>
+<li><strong>Estacionado:</strong> con el <strong>freno de estacionamiento</strong> en <strong>todos</strong> los vehículos. Nunca entre el <strong>piquete de entrevía</strong> y la aguja.</li>
+<li><strong>Acoplamiento:</strong> un tren parado y frenado; el otro se acerca <strong>a paso de hombre</strong> (con «marcha de acoplamiento» si la tiene).</li>
+<li><strong>Cambio de tensión en vías secundarias:</strong> <strong>parar ante la señal</strong> y pedir autorización. Con un vehículo que no shunta, no se autoriza ninguna otra maniobra por ese recorrido.</li>
+</ul>
+<h3>Situaciones degradadas (capítulo 4.7)</h3>
+<ul>
+<li><strong>6 situaciones degradadas:</strong><ol>
+<li>M+ATP anulado.</li>
+<li>Avería de señalización.</li>
+<li>Auxilio a un tren.</li>
+<li>Cantón ocupado.</li>
+<li>Contravía sin señales.</li>
+<li><strong>Lanzadera</strong> por una sola vía.</li>
+</ol>
+</li>
+<li><strong>Anular M+ATP:</strong> lo autoriza el <strong>PCC</strong> (para pasar a M+20 o Llave Especial), <strong>identificándose</strong> y diciendo el tramo exacto. El conductor <strong>se identifica y repite</strong> el mensaje.</li>
+<li><strong>Bloqueo telefónico por avería = «concesión de vía»</strong> con un <strong>Boletín de doble precaución</strong> (por radio o por escrito).<ul>
+<li>Permite pasar las señales en rojo o apagadas de uno o varios cantones, <strong>como máximo hasta la estación anterior</strong> a donde está el tren precedente.</li>
+<li>Se circula en <strong>marcha a la vista</strong> vigilando las agujas.</li>
+<li><strong>Por el PCC:</strong> primero <strong>localiza al tren precedente</strong>. Si su posición no coincide con el CTC, se repite la pregunta; si sigue habiendo dudas, <strong>se espera a que llegue a la 1.ª estación</strong>.</li>
+<li><strong>Por el responsable operativo</strong> (sin comunicación PCC-tren): por <strong>escrito</strong>, con el documento <strong>«Concesión de vía»</strong> (lo rellena quien confirma la localización) y el <strong>«Boletín de doble precaución»</strong> (lo rellena quien autoriza). El conductor lo <strong>conserva</strong> y lo entrega al terminar la jornada.</li>
+<li><strong>Mixta:</strong> el PCC sustituye a una de las estaciones.</li>
+</ul>
+</li>
+<li><strong>Auxilio a un tren detenido:</strong> el tren averiado <strong>se queda inmovilizado</strong>. Si <strong>no hay comunicación</strong> con él, el tren de auxilio va <strong>a paso de hombre</strong>. Si lo hace la estación, no hace falta localizar al tren anterior; el motivo es «Auxiliar al tren nº __».</li>
+<li><strong>Entrar en un cantón ocupado:</strong> para una <strong>inversión de marcha</strong> con la señal de salida en rojo, o para que un <strong>tren de trabajo</strong> opere junto al acantonado.</li>
+<li><strong>Tren que no shunta:</strong> va <strong>siempre acantonado</strong> por el PCC. El tren que va detrás solo avanza <strong>hasta la estación anterior</strong> y <strong>NUNCA en ATO</strong>.</li>
+<li><strong>Contravía sin señalización:</strong><ul>
+<li>El PCC <strong>localiza y detiene al tren siguiente</strong> y localiza al precedente.</li>
+<li>Se va en <strong>marcha a la vista</strong>, o a <strong>paso de hombre</strong> si hay trabajadores.</li>
+<li><strong>Silbato a la entrada de cada estación.</strong></li>
+</ul>
+</li>
+<li><strong>Lanzadera:</strong> <strong>un solo tren</strong> que va y viene por una vía, <strong>acantonado</strong>. Hace falta concesión de vía <strong>solo para la 1.ª circulación en cada sentido</strong>.</li>
+<li><strong>Rebase involuntario</strong> de una señal en rojo → parar y <strong>avisar al PCC</strong>. Sin comunicación y si es una <strong>señal intermedia</strong> → <strong>esperar 3 min</strong> y seguir <strong>a paso de hombre</strong>.</li>
+<li><strong>Señal en rojo en una vía secundaria:</strong> no hace falta bloqueo telefónico si toda la maniobra está <strong>en el mismo enclavamiento</strong>. Parar y pedir autorización.</li>
+<li><strong>Con una concesión de vía activa, prohibido</strong> maniobrar o mover agujas o calces en ese tramo.</li>
+</ul>
+<h3>Capítulos 4.8 a 4.10</h3>
+<p>Coinciden con el <strong>Manual 2</strong>: vehículos auxiliares, carteles y faroles, luz roja a 50 m, obras a 30 km/h, fuera de servicio con M+20 y paso de hombre, Auto-Shunt. Si te sabes el Manual 2, ya los tienes.</p>
+<h3>Título 5 · Averías, incidencias y accidentes (muy preguntable)</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Situación</th>
+<th>Qué se hace</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Interrupción de servicio</strong></td>
+<td>El PCC monta un <strong>servicio provisional</strong>: los tramos funcionan como líneas independientes y las estaciones límite hacen de <strong>cabecera</strong>. En el tramo cortado se aplica la norma de <strong>fuera de servicio</strong></td>
+</tr>
+<tr>
+<td><strong>Tren averiado</strong></td>
+<td>Avisar al PCC. Si no puede seguir → pedir un <strong>tren de auxilio</strong>; el PCC lo manda <strong>después de confirmar que el averiado está inmovilizado</strong>. Si el averiado se recupera → <strong>avisar al PCC antes de arrancar</strong></td>
+</tr>
+<tr>
+<td><strong>Remolque acoplando otro tren</strong></td>
+<td><strong>máx. 30 km/h</strong></td>
+</tr>
+<tr>
+<td><strong>Remolque con barrón</strong></td>
+<td><strong>máx. 10 km/h</strong></td>
+</tr>
+<tr>
+<td><strong>Llave Especial en vía principal</strong></td>
+<td><strong>máx. 30 km/h</strong> (salvo que el PCC diga otra cosa)</td>
+</tr>
+<tr>
+<td><strong>Parada forzosa</strong></td>
+<td>mejor en una estación; si no, en el sitio más seguro</td>
+</tr>
+<tr>
+<td><strong>Tren parado en una interestación sin comunicación</strong></td>
+<td><strong>freno de servicio + freno de estacionamiento</strong>, <strong>pilotos encendidos en cabeza</strong> y señales con la <strong>linterna</strong> para parar al tren que venga por la <strong>vía contraria</strong></td>
+</tr>
+<tr>
+<td><strong>Ves en la vía contraria un tren parado con los pilotos encendidos</strong></td>
+<td>parar <strong>sin pasar su cabeza</strong>; cruzar solo tras confirmarlo con el PCC o con el otro conductor, <strong>a paso de hombre</strong></td>
+</tr>
+<tr>
+<td><strong>Evacuación por la vía</strong></td>
+<td>se protege la otra vía (como en la fila anterior) y se siguen las instrucciones del PCC según el <strong>Plan de Autoprotección</strong> (antes se llamaba «Plan de Emergencia»). Sin comunicación: tras un tiempo excesivo o si hay riesgo, el conductor <strong>dirige la evacuación</strong> después de <strong>comprobar que el otro tren está parado</strong>. El PCC <strong>enciende el alumbrado</strong></td>
+</tr>
+<tr>
+<td><strong>Tirador de alarma</strong></td>
+<td>si el tren no frena (por el inhibidor) → hablar por el <strong>interfono</strong> y decidir si parar o seguir <strong>hasta la 1.ª estación</strong>; si frena en emergencia → averiguar la causa. Si se usó sin motivo → <strong>tomar los datos del viajero</strong></td>
+</tr>
+<tr>
+<td><strong>Avería del ATP tras salir con la señal en M-Roja</strong></td>
+<td>sin comunicación: <strong>esperar 3 min</strong>, poner <strong>M+20</strong> y seguir <strong>a paso de hombre</strong> hasta la siguiente señal o estación</td>
+</tr>
+<tr>
+<td><strong>Rebase del piñón de salida con comunicación</strong></td>
+<td>si se ha pasado <strong>≤ 50%</strong> del tren, el PCC autoriza el <strong>retroceso</strong> (el CTC muestra ocupado el circuito del andén; en <strong>CBTC</strong> sale el aviso «<strong>Retroceso condicionado</strong>» y se para antes el tren siguiente). El retroceso va <strong>a paso de hombre con silbato insistente</strong> y avisando a los viajeros</td>
+</tr>
+<tr>
+<td><strong>Rebase del piñón sin comunicación, ≤ 50%</strong></td>
+<td><strong>cambiar de cabina</strong> y recolocar el tren <strong>a contravía</strong> tocando el silbato</td>
+</tr>
+<tr>
+<td><strong>Rebase &gt; 50% o no sabe cuánto</strong></td>
+<td>si la señal permitía pasar → <strong>seguir hasta la siguiente estación</strong>; si estaba en parada o hay dudas → <strong>esperar 3 min</strong> y seguir <strong>a paso de hombre</strong></td>
+</tr>
+<tr>
+<td><strong>Desacople en marcha</strong></td>
+<td>avisar al PCC; sin comunicación, medidas de protección (pilotos y linterna)</td>
+</tr>
+<tr>
+<td><strong>Corte de corriente</strong></td>
+<td>regulador <strong>a cero</strong>, aprovechar la <strong>inercia</strong> para llegar a una estación y avisar. Si el corte dura <strong>más de 10 min</strong> → <strong>freno de estacionamiento</strong>. Cuando vuelve la corriente sin comunicación → <strong>esperar 2 min</strong> y seguir en <strong>marcha a la vista</strong></td>
+</tr>
+<tr>
+<td><strong>Corte urgente de tensión</strong></td>
+<td><strong>cualquier trabajador</strong>, identificándose, puede pedírselo <strong>directamente al PCC</strong></td>
+</tr>
+</tbody></table>
+</div><ul>
+<li><strong>Cifras que se confunden:</strong> <strong>3 min</strong> (señal en rojo o rebase sin comunicación; avería de ATP) · <strong>2 min</strong> (cuando vuelve la tensión) · <strong>10 min</strong> (corte de tensión → freno de estacionamiento) · <strong>50 m</strong> (luz roja) · <strong>50%</strong> (rebase del piñón) · <strong>30 km/h</strong> (remolque con otro tren, Llave Especial, obras, pasar una estación sin parar) · <strong>10 km/h</strong> (barrón) · <strong>20 km/h</strong> (M+20, vías secundarias) · <strong>5 km/h</strong> (paso de hombre) · <strong>15 s</strong> (alumbrado apagado → subir pantógrafos) · <strong>3-4 parpadeos</strong> (→ bajar pantógrafos).</li>
+</ul>
+<h3>Accidentes</h3>
+<ul>
+<li><strong>Cualquier trabajador que presencie un accidente, incluso fuera de servicio:</strong><ul>
+<li>Ayuda a los heridos.</li>
+<li>Colabora en la protección.</li>
+<li>Se pone a disposición del <strong>conductor o del trabajador de mayor categoría</strong>.</li>
+<li>Avisa al PCC.</li>
+</ul>
+</li>
+<li><strong>Emergencias:</strong> se actúa según el <strong>Plan de Autoprotección</strong>, <strong>también fuera de servicio</strong>.</li>
+<li><strong>Viajero enfermo en el tren:</strong> seguir <strong>hasta la 1.ª estación</strong>, parar y avisar al PCC. <strong>Nunca dejarlo solo</strong>, sin personal de servicio o sin la Autoridad.</li>
+<li><strong>Alcance o choque</strong> (contra un parachoques o un tren): <strong>inmovilizar el tren</strong>, <strong>pilotos en cabeza</strong>, avisar, revisar si hay heridos y si se <strong>invade el gálibo de la vía contraria</strong>. <strong>No mover el tren hasta que lo revise Mantenimiento.</strong></li>
+<li><strong>Descarrilamiento:</strong> <strong>parar enseguida</strong>, <strong>pilotos en cabeza</strong>, avisar al PCC y, sin comunicación, <strong>linterna</strong> para parar el tren de la vía contraria. Revisar heridos y gálibo.</li>
+<li><strong>Incendio:</strong> avisar al PCC y aplicar el <strong>Plan de Autoprotección</strong>.</li>
+<li><strong>Catenaria dañada u objeto en ella:</strong> parar <strong>sin pasarla</strong> y avisar. <strong>Prohibido quitarlo sin el corte de tensión.</strong></li>
+<li><strong>Arrollamiento:</strong><ul>
+<li>Parar, inmovilizar y avisar al PCC.</li>
+<li><strong>Si está vivo</strong> → auxiliarlo.</li>
+<li><strong>Fallecido que corta la vía:</strong> si está la <strong>Autoridad Judicial</strong>, se le pide permiso para retirarlo. Si no está y hay personal → se hace el <strong>Acta de retirada de cadáveres</strong>, se retira el cuerpo <strong>lo más cerca posible</strong> de donde estaba, se deja <strong>custodiado</strong> y se sigue con autorización del PCC.</li>
+<li><strong>Fallecido que no corta la vía:</strong> se deja custodiado y se sigue con autorización del PCC.</li>
+<li><strong>No hace falta parar</strong> si la persona está <strong>fuera de la vía y ya la atiende alguien</strong> que no hace señales.</li>
+</ul>
+</li>
+</ul>
+<h3>Título 6 · Disposiciones finales</h3>
+<ul>
+<li><strong>Dudas de interpretación</strong> → se consultan al <strong>PCC o al superior inmediato</strong>; en caso de urgencia, <strong>prima la seguridad</strong>. Si hay <strong>diferencia de criterio</strong>, <strong>resuelve el PCC</strong>. <strong>Casos no previstos</strong> → los resuelve el <strong>PCC</strong>.</li>
+<li>Las instrucciones complementarias <strong>nunca pueden contradecir</strong> la NIC. La NIC se aplica también a <strong>contratas y autónomos</strong>. Para actualizarla existe la <strong>Comisión Técnica de Seguimiento</strong>.</li>
+<li><strong>Anexos:</strong> Boletín de doble precaución, Concesión de vía, Boletín de acceso a la plataforma de vía y Acta de retirada de cadáveres.</li>
+</ul>
+<h3>Del Manual 3 puedes descartar</h3>
+<p>El control de cambios (ACT-01 a ACT-09), las medidas exactas de los carteles (ya están en el Manual 2) y la redacción literal de los procedimientos de concesión de vía. Basta con la lógica: <strong>localizar el tren precedente → identificarse → repetir el mensaje → autorizar</strong>.</p>
+</section>
+<section id="m2" class="band sec man"><h2>Manual 2 · Normas Internas para la Seguridad de los Agentes en relación con la Circulación (Metro pesado)</h2><div class="reads" data-sec="m2"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: ALTA.</strong> Es casi todo procedimiento. Las preguntas tipo son «¿a cuántos metros…?», «¿qué color…?», «¿quién autoriza…?» y «¿qué boletín…?».</p>
+<h3>Datos del documento</h3>
+<ul>
+<li>Documento original de <strong>03/02/2014</strong>, con <strong>4 actualizaciones</strong> (ACT-01 y ACT-02 de 2015, <strong>ACT-03 de 2016</strong> sobre el farol verde, <strong>ACT-04 de 2021</strong> sobre el cartel del túnel de enlace).</li>
+<li>Sustituye a las normas de <strong>junio de 2008</strong> y a la <strong>Circular de Dirección 1/2008</strong>.</li>
+<li>Se aplica en toda la red operada por Metro, <strong>salvo en las explotaciones con normativa propia</strong>. <strong>Incumplirlo = incumplimiento laboral.</strong></li>
+<li>La <strong>Comisión de programación</strong> elabora el <strong>Documento de programación</strong> diario (cortes de tensión, trabajos y trenes de trabajo). Solo se pueden hacer trabajos que no figuren en él si son <strong>emergencias</strong>, y hay que justificarlas ante la <strong>Dirección de Operación</strong>.</li>
+<li><strong>Casos no previstos</strong> → los resuelve el <strong>PCC</strong>. Para actualizar las normas existe la <strong>Comisión Técnica de Seguimiento</strong>. También se aplican a <strong>contratas y autónomos</strong> (coordinación de actividades empresariales).</li>
+</ul>
+<h3>Definiciones clave</h3>
+<ul>
+<li><strong>Periodo de servicio:</strong> desde la apertura (más el tiempo de distribución de trenes) <strong>hasta el encierre del último tren de viajeros</strong>. <strong>Fuera de servicio:</strong> el resto, para los trabajos nocturnos. <strong>Un tramo con el servicio suspendido se trata como fuera de servicio.</strong></li>
+<li><strong>Área de trabajo:</strong> tramo autorizado <strong>fuera de servicio</strong>, delimitado por <strong>balizas o luces rojas</strong>. Si el trabajo es itinerante, va de piñón de salida a piñón de salida. <strong>Área de seguridad:</strong> tramo a cada lado del área de trabajo; no circula ningún tren sin autorización del PCC.</li>
+<li><strong>Zona de trabajo:</strong> hay personal en la vía. <strong>Zona de obras:</strong> hay limitación de velocidad pero <strong>nadie trabajando</strong> durante el servicio.</li>
+<li><strong>Zona colindante:</strong> el espacio entre la plataforma de vía y los cerramientos; también los pozos, las salidas de emergencia y las galerías de cables.</li>
+<li><strong>Plataforma de vía:</strong> a cielo abierto, <strong>3 m</strong> desde los carriles exteriores. Si no hay cerramiento, se extiende <strong>1 m</strong> hacia el interior del recinto. <strong>No</strong> se aplica dentro de las naves.</li>
+<li><strong>Marcha a la vista:</strong> poder parar ante cualquier obstáculo visible. <strong>Paso de hombre:</strong> unos <strong>5 km/h</strong>.</li>
+<li><strong>Auto-Shunt:</strong> inversión de marcha en <strong>ATO</strong>, normalmente <strong>sin conductor</strong>.</li>
+<li><strong>Testigo piloto:</strong> el elemento o documento que autoriza un recorrido en una situación degradada.</li>
+<li><strong>Saco de maniobras:</strong> en la estación final, entre el piñón extremo y el final de la vía. Si se suspende un tramo, sus estaciones extremas cuentan como estaciones finales.</li>
+<li><strong>Rampa</strong> = sube · <strong>Pendiente</strong> = baja.</li>
+<li><strong>Vía I</strong> en las líneas circulares = la <strong>interior</strong>; <strong>vía II</strong> = la <strong>exterior</strong>.</li>
+<li><strong>Partes del PCC:</strong> <strong>Puesto de Mando de Trenes</strong> (circulación), <strong>Puesto de Control de Estaciones</strong> (telemando de las estaciones), <strong>Despacho de Cargas</strong> (corte de tensión y energía) y <strong>Puesto de Control de Seguridad</strong>.</li>
+<li><strong>Responsable operativo:</strong> quien supervisa la circulación en su línea, estación, depósito o cochera.</li>
+</ul>
+<h3>Señalización (memorizar colores y medidas)</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Significado / datos</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cartel avisador de precaución próxima</strong></td>
+<td>80×40 cm (amarillo 80×30 + azul 80×10). Dice «¡ATENCIÓN! CARTEL PRECAUTORIO EN LA SIGUIENTE ESTACIÓN» y «<strong>SELECCIONAR A.T.P.</strong>». Va en el <strong>piñón de salida de la estación ANTERIOR</strong></td>
+</tr>
+<tr>
+<td><strong>Cartel precautorio por personal en vía</strong></td>
+<td>80×40, <strong>amarillo</strong>, «¡PRECAUCIÓN! PERSONAL EN PLATAFORMA DE VÍA». Obliga a <strong>PARAR ante él</strong></td>
+</tr>
+<tr>
+<td><strong>Cartel precautorio por zona de obras</strong> (sin personal)</td>
+<td>amarillo y azul, 80×40, «¡PRECAUCIÓN! ZONA DE OBRAS» + «SELECCIONAR A.T.P.»</td>
+</tr>
+<tr>
+<td><strong>Cartel de zona de obras desde túnel de enlace</strong></td>
+<td><strong>35×80</strong>, retrorreflectante, «<strong>VELOCIDAD MÁXIMA 30 km/h</strong>»</td>
+</tr>
+<tr>
+<td><strong>Baliza roja</strong></td>
+<td>prohibición absoluta de rebasarla; luz a <strong>≥ 1,5 m</strong> sobre el carril</td>
+</tr>
+<tr>
+<td><strong>Luz roja</strong> (linterna)</td>
+<td>prohibición absoluta de rebasarla</td>
+</tr>
+<tr>
+<td><strong>Farol amarillo</strong> (20×18 cm, intermitente)</td>
+<td><strong>inicio de precaución</strong></td>
+</tr>
+<tr>
+<td><strong>Farol azul</strong></td>
+<td><strong>inicio de la zona de obras</strong></td>
+</tr>
+<tr>
+<td><strong>Farol verde</strong></td>
+<td><strong>final de precaución</strong></td>
+</tr>
+<tr>
+<td><strong>Farol de parada en piñón</strong> (luz roja intermitente)</td>
+<td>hay personal trabajando en la <strong>Zona A</strong> del andén</td>
+</tr>
+<tr>
+<td><strong>Cartel de Auto-Shunt</strong></td>
+<td>blanco, amarillo y rojo: «ATENCIÓN MANIOBRA EN A.T.O.» y «PROHIBIDO EL PASO SIN AUTORIZACIÓN»</td>
+</tr>
+<tr>
+<td><strong>Cartel de salidas de emergencia</strong></td>
+<td><strong>fotoluminiscente</strong>; indica la distancia a las estaciones o a la salida</td>
+</tr>
+<tr>
+<td><strong>Cartel de tren en mantenimiento</strong></td>
+<td>se cuelga del <strong>regulador de mando</strong> en las <strong>2 cabinas</strong>: «¡PROHIBIDO MOVER EL TREN! SIN LA AUTORIZACIÓN DEL RESPONSABLE OPERATIVO»</td>
+</tr>
+</tbody></table>
+</div><h3>Conducción en vías principales</h3>
+<ul>
+<li><strong>En servicio, personal en vía:</strong><ul>
+<li>Al ver el <strong>cartel avisador</strong> → pasar de <strong>ATO a M+ATP</strong>.</li>
+<li>Ante el <strong>cartel precautorio</strong> → <strong>parar sin rebasarlo</strong> → dar el <strong>enterado</strong> (firmando la Hoja de recogida de firmas o al PCC) → <strong>esperar autorización</strong> del <strong>PCC</strong> o del <strong>testigo piloto</strong> → seguir en <strong>marcha a la vista</strong> y tocar el <strong>silbato</strong> al ver al personal.</li>
+<li><strong>La firma NO autoriza a arrancar.</strong></li>
+</ul>
+</li>
+<li><strong>Luz roja en la vía</strong> → <strong>parar a unos 50 m</strong> → esperar a que la retiren <strong>y</strong> te autorice un trabajador → seguir <strong>a paso de hombre</strong> hasta que la <strong>cola</strong> del tren pase la zona.</li>
+<li><strong>Luz extraña</strong> (distinta de los faroles amarillo, azul y verde) → M+ATP y marcha a la vista, <strong>parar a 50 m</strong> y avisar al PCC si se puede.</li>
+<li><strong>Fuera de servicio:</strong><ul>
+<li>Por norma general, <strong>marcha a la vista</strong> en todas las vías.</li>
+<li>En las <strong>áreas de trabajo</strong>: <strong>paso de hombre + M+20</strong>.</li>
+<li>Todo movimiento lo <strong>autoriza el PCC</strong>. Cuando se comunica el inicio, el tren para en la <strong>primera estación</strong> y pide autorización.</li>
+</ul>
+</li>
+<li><strong>Zona de obras sin personal:</strong><ul>
+<li><strong>Cartel precautorio</strong> en el piñón de salida de la estación anterior.</li>
+<li><strong>Farol amarillo unos 150 m antes</strong>, luego el <strong>farol azul</strong> al inicio de la zona y el <strong>farol verde unos 150 m después</strong>. Si quedan <strong>menos de 150 m</strong> hasta el piñón, el verde va <strong>en el piñón</strong>.</li>
+<li>Velocidad <strong>máx. 30 km/h</strong> desde el farol azul <strong>hasta que la cabeza del tren pase el farol verde</strong>.</li>
+<li><strong>A contravía:</strong> los faroles <strong>no se atienden</strong>; <strong>30 km/h en toda la interestación</strong>.</li>
+</ul>
+</li>
+<li><strong>Vehículos auxiliares:</strong> siempre <strong>marcha a la vista</strong>. El PCC puede levantarla <strong>vehículo por vehículo y solo en esa línea</strong>. Los <strong>bi-viales</strong> entran y salen de la vía con autorización del <strong>PCC o del responsable operativo</strong>.</li>
+<li><strong>Alumbrado del túnel:</strong><ul>
+<li>Está <strong>siempre encendido en los sacos</strong> y normalmente apagado en el resto.</li>
+<li>Encendido sin otra señal → <strong>llamar al PCC</strong>; si no hay comunicación, marcha a la vista hasta la siguiente estación.</li>
+<li>Parpadea <strong>3 o 4 veces</strong> y se queda encendido (con el tren parado sin tracción) → <strong>bajar los pantógrafos</strong>.</li>
+<li>Se <strong>apaga 15 s</strong> y luego se enciende (con los pantógrafos bajados) → <strong>subir los pantógrafos</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>Vías secundarias</h3>
+<ul>
+<li>Siempre <strong>marcha a la vista</strong>.</li>
+<li>En enlaces y sacos con códigos ATP → <strong>M+ATP</strong>; si no es posible, <strong>máx. 20 km/h</strong>.</li>
+<li>En <strong>depósitos y cocheras</strong> → <strong>M+20 y nunca más de 20 km/h</strong>.</li>
+<li><strong>Parar y tocar el silbato</strong> antes de entrar o salir de una nave. <strong>Silbato antes de arrancar</strong> un tren estacionado. <strong>Parar antes de un pasillo peatonal.</strong></li>
+<li><strong>Prohibido</strong> mover un tren con el cartel de «Tren en proceso de mantenimiento».</li>
+</ul>
+<h3>Trabajos en la vía (personal ajeno a la operación)</h3>
+<ul>
+<li><strong>Regla general: PROHIBIDO estar en la plataforma de vía</strong>, salvo para transitar por las <strong>playas de vías de depósitos</strong>.</li>
+<li><strong>EPI obligatorios:</strong><ol>
+<li>Prenda de <strong>alta visibilidad</strong>.</li>
+<li><strong>Linterna de doble luz</strong> (<strong>blanca delante y roja detrás</strong>); <strong>mínimo 2 por grupo</strong>.</li>
+<li><strong>Radioteléfono</strong> por grupo; <strong>2 equipos si el grupo es de más de 3 personas</strong>.</li>
+</ol>
+</li>
+<li><strong>En servicio:</strong><ul>
+<li><strong>Autorización del PCC</strong> + <strong>Boletín de acceso a la plataforma de vía</strong>, que da el responsable operativo; hay que <strong>renovarlo en cada estación</strong>.</li>
+<li>Donde hay Auto-Shunt → <strong>desconectarlo</strong> y hacerlo constar en el boletín.</li>
+<li><strong>Nunca</strong> puede haber circulación simultánea <strong>por las dos vías</strong> en la zona de trabajo.</li>
+<li>Si el PCC protege a los trabajadores con un <strong>tren justo detrás de ellos</strong> y corta la otra vía → <strong>no hace falta boletín</strong>.</li>
+</ul>
+</li>
+<li><strong>Balizas rojas</strong> a <strong>≥ 100 m</strong> del inicio de la zona, con un operario al lado. Los grupos pequeños pueden usar <strong>luces rojas</strong>. Los trabajadores itinerantes se señalizan con su linterna.</li>
+<li><strong>Procedimiento:</strong><ul>
+<li>Hay una persona en cada extremo (piñón o boca) para la <strong>Hoja de recogida de firmas</strong>.</li>
+<li>El responsable operativo que <strong>NO</strong> autoriza la bajada hace el <strong>Boletín de inicio de precaución</strong> → se lo da al <strong>primer conductor que firma</strong> → este lo entrega en el otro extremo.</li>
+<li>Al terminar → <strong>Boletín de final de precaución</strong> al conductor del tren <strong>siguiente al último que firmó</strong>, y se retiran los carteles.</li>
+</ul>
+</li>
+<li><strong>Método de pilotaje:</strong> cuando <strong>no hay comunicación</strong> entre el PCC y los trenes. Un <strong>testigo piloto único</strong> pasa de un conductor a otro de forma alternativa.</li>
+<li><strong>Fuera de servicio:</strong><ul>
+<li>Autorización del PCC, comprobar la radio y <strong>avisar antes de cada nueva interestación</strong> si el trabajo es itinerante.</li>
+<li>Salir <strong>como máximo a la hora indicada por el PCC</strong>.</li>
+<li>En las áreas de trabajo, <strong>alumbrado encendido y ventilación apagada</strong>.</li>
+</ul>
+</li>
+<li><strong>Pruebas sin restricción de velocidad:</strong> las autoriza la <strong>Dirección</strong> y las programa la Comisión. Son <strong>incompatibles</strong> con cualquier trabajo en la vía o en la <strong>Zona A</strong>.</li>
+<li><strong>Naves:</strong> prenda de alta visibilidad o bandas retrorreflectantes, salvo al pasar por las zonas de paso.</li>
+<li><strong>Zonas colindantes:</strong> hay que <strong>delimitarlas</strong> con vallas o cintas; si no, <strong>toda la zona cuenta como plataforma de vía</strong>. Prohibido invadir la vía, <strong>también su espacio aéreo</strong>.</li>
+<li><strong>Andenes:</strong><ul>
+<li><strong>Zona A</strong> = franja de <strong>unos 80 cm</strong>; <strong>Zona B</strong> = el resto.</li>
+<li><strong>En servicio solo se trabaja en la Zona B</strong>, desplazándose <strong>en sentido contrario a los trenes</strong>.</li>
+<li>Las <strong>comprobaciones rutinarias sin herramientas NO cuentan</strong> como trabajo en Zona A.</li>
+<li>Trabajos en Zona A fuera de servicio:<ul>
+<li>Hay que programarlos.</li>
+<li>Llevan un <strong>farol de parada en los 2 piñones</strong>.</li>
+<li>Se terminan <strong>como máximo a las 4:45 h</strong>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>No se autoriza la circulación</strong> si el conductor no va a pasar por todos los indicadores que protegen al personal (cambios de línea o vía), ni por <strong>túneles de enlace con gente trabajando</strong>.</li>
+</ul>
+<h3>Personal de operación (conductores y jefes)</h3>
+<ul>
+<li><strong>Incidencia en un tren:</strong> linterna del tren, prenda de alta visibilidad y autorización del <strong>PCC</strong>, que corta <strong>la otra vía</strong>. Si no hay comunicación, <strong>no bajar hasta confirmar que el tren de la vía contraria está parado</strong>.</li>
+<li><strong>Sacos sin Auto-Shunt:</strong> prenda de alta visibilidad y autorización; <strong>se va por la vía contraria</strong> a la de entrada de los trenes; no hacen falta carteles.</li>
+<li><strong>Sacos con Auto-Shunt:</strong> además, <strong>desconexión + boletín</strong>. El responsable operativo debe desconectar el Auto-Shunt para el encierre, la reposición, las incidencias <strong>y al terminar el servicio</strong>.</li>
+<li><strong>Anomalía con riesgo:</strong><ol>
+<li><strong>Avisar enseguida al PCC</strong> (lugar, auxilios necesarios y si hay que cortar la circulación).</li>
+<li>Tomar medidas para reducir el daño.</li>
+<li><strong>Parar los trenes</strong> que se acerquen (señales de emergencia).</li>
+</ol>
+</li>
+<li><strong>Obligaciones comunes:</strong> comunicar las infracciones y los defectos. Los mandos deben <strong>cumplir, hacer cumplir y comunicar las faltas</strong>. Cualquier desperfecto se comunica al responsable operativo o al PCC.</li>
+</ul>
+<h3>El 20% que puedes descartar</h3>
+<p>El control de cambios, el anexo de impresos y la redacción literal de las obligaciones del PCC (basta con la idea de que el PCC autoriza y garantiza que no circulan trenes por las dos vías a la vez).</p>
+</section>
+<section id="m6" class="band sec man"><h2>Manual 6 · Prevención de Riesgos Laborales (manual básico, «lectura fácil», Comunidad de Madrid e IRSST, 2021)</h2><div class="reads" data-sec="m6"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: MEDIA.</strong> Es el manual más largo (unas 230 páginas), pero está en <strong>lectura fácil</strong>: repite mucho y el contenido real es poco. <strong>Esta hoja es su 80% útil.</strong> Al final del PDF (pág. 226) hay <strong>20 preguntas de autoevaluación con sus soluciones</strong>: hazlas.</p>
+<h3>Tema 1 · Conceptos básicos</h3>
+<ul>
+<li><strong>Riesgo laboral</strong> = posibilidad de que un trabajador sufra un <strong>DAÑO</strong> (no «lesión», ni «patología», ni «enfermedad») causado por el trabajo o relacionado con él. <em>Es la pregunta 1 del propio manual.</em></li>
+<li><strong>Daño derivado del trabajo</strong> = enfermedad o lesión. <strong>Condición de trabajo</strong> = cualquier característica del trabajo con consecuencias para la salud (edificios, máquinas, organización…). <strong>Salud</strong> = bienestar <strong>físico, mental y social</strong>.</li>
+<li><strong>Accidente de trabajo</strong> = una <strong>lesión</strong> sufrida en el trabajo o como consecuencia de él. Si ocurre <strong>yendo o volviendo</strong> del trabajo es un accidente <strong>in itínere</strong>. Una <strong>insolación</strong> trabajando también lo es. Características: es <strong>repentino, no deseado, evitable</strong>, interrumpe el trabajo y causa daño.</li>
+<li><strong>Enfermedad profesional</strong> = <strong>solo las que reconoce la ley</strong> (por ejemplo, la sordera por ruido o las enfermedades respiratorias de los mineros). <strong>Enfermedad relacionada con el trabajo</strong> = aparece poco a poco (por ejemplo, el estrés).</li>
+<li><strong>Disciplinas:</strong><ul>
+<li>Seguridad en el trabajo → evita <strong>accidentes</strong>.</li>
+<li><strong>Higiene industrial</strong> → el <strong>entorno</strong> de trabajo y los productos químicos.</li>
+<li><strong>Ergonomía</strong> → adaptar el trabajo a la persona.</li>
+<li><strong>Psicosociología</strong> → organización y comportamiento.</li>
+<li><strong>Medicina del trabajo.</strong></li>
+</ul>
+</li>
+<li><strong>Costes indirectos</strong> (producción perdida, sustitutos): suelen ser <strong>MAYORES</strong> que los directos.</li>
+<li><strong>Normas:</strong><ul>
+<li><strong>Constitución</strong> y <strong>Estatuto de los Trabajadores</strong>.</li>
+<li><strong>Ley de Prevención de Riesgos Laborales de 1995</strong> (Ley 31/1995): traspone la <strong>Directiva Marco de 1989</strong>. Crea la <strong>Comisión Nacional de Seguridad y Salud en el Trabajo</strong>.</li>
+<li>Reformas: <strong>2003</strong> (integrar la prevención, plan de prevención y <strong>recurso preventivo</strong>), <strong>2004</strong> (coordinación entre empresas) y <strong>2009</strong> (plan simplificado).</li>
+<li><strong>Reglamento de los Servicios de Prevención: 1997.</strong></li>
+</ul>
+</li>
+<li>Contenido por capítulos: <strong>cap. 3</strong> derechos y obligaciones · <strong>cap. 4</strong> servicios de prevención · <strong>cap. 5</strong> delegados y Comité · <strong>cap. 6</strong> fabricantes · <strong>cap. 7</strong> sanciones. (Ojo: el manual dice que la ley tiene «<strong>6 capítulos</strong>», pero enumera 7.)</li>
+<li><strong>Derechos del trabajador:</strong> información y <strong>formación</strong>, <strong>parar el trabajo si hay un peligro grave e inminente</strong>, ser consultado y participar, y <strong>vigilancia de la salud</strong>.</li>
+<li><strong>Delegados de prevención:</strong><ul>
+<li>Hasta <strong>30 trabajadores</strong>: el <strong>delegado de personal</strong> es también el delegado de prevención.</li>
+<li><strong>De 50 a 100 trabajadores: 2</strong> · <strong>de 1.000 a 2.000: 5</strong> · <strong>más de 4.000: 8</strong>.</li>
+<li>Pueden <strong>proponer que se pare</strong> el trabajo (con un informe); el empresario puede rechazarlo <strong>explicando por qué</strong>.</li>
+</ul>
+</li>
+<li><strong>Comité de Seguridad y Salud:</strong> <strong>paritario</strong> (mismo número de trabajadores y de empresa), <strong>obligatorio con más de 50 trabajadores</strong>.</li>
+<li><strong>Obligaciones del trabajador:</strong> usar bien los equipos y los <strong>EPI</strong>, <strong>no desconectar nunca los dispositivos de seguridad</strong>, informar y colaborar.</li>
+<li><strong>Principios de la acción preventiva</strong> (el <strong>1.º y más importante: EVITAR los riesgos</strong>):<ol>
+<li>Evitar.</li>
+<li>Evaluar lo que no se puede evitar.</li>
+<li>Combatir en el <strong>origen</strong>.</li>
+<li><strong>Adaptar el puesto a la persona</strong>.</li>
+<li>Tener en cuenta la evolución de la técnica.</li>
+<li><strong>Sustituir lo peligroso</strong>.</li>
+<li>Planificar.</li>
+<li><strong>Dar prioridad a la protección colectiva frente a la individual</strong>.</li>
+<li>Dar instrucciones.</li>
+</ol>
+</li>
+</ul>
+<h3>Tema 2 · Organismos</h3>
+<ul>
+<li><strong>INSST</strong> (Instituto Nacional de Seguridad y Salud en el Trabajo): organismo <strong>científico-técnico</strong> que asesora, forma, investiga y apoya a la Inspección.</li>
+<li><strong>Inspección de Trabajo y Seguridad Social:</strong> <strong>VIGILA</strong> el cumplimiento, <strong>propone</strong> sanciones (las <strong>impone la autoridad laboral</strong>), informa sobre los accidentes graves y <strong>puede paralizar trabajos</strong> si hay un riesgo grave e inminente.</li>
+<li><strong>Comisión Nacional de SST:</strong> asesora a las Administraciones. En ella están CC. AA., Estado, sindicatos y empresarios.</li>
+<li><strong>Fundación Estatal para la Prevención:</strong> dirigida a las <strong>pequeñas empresas</strong>.</li>
+<li><strong>En Madrid: IRSST</strong> (Instituto Regional de Seguridad y Salud en el Trabajo).</li>
+<li><strong>Europa:</strong> Agencia Europea para la SST · Fundación Europea para la Mejora de las Condiciones de Vida y de Trabajo · Comité Consultivo. <strong>Internacional: OIT.</strong></li>
+</ul>
+<h3>Tema 3 · Condiciones de seguridad</h3>
+<ul>
+<li><strong>Peligros de las máquinas:</strong> mecánicos, eléctricos, térmicos, ruido, vibraciones y posturas.</li>
+<li><strong>Contacto eléctrico directo</strong> = tocar una parte en tensión. <strong>Indirecto</strong> = por un <strong>fallo de aislamiento</strong>.</li>
+<li><strong>Las 5 reglas de oro</strong> para trabajar en una instalación eléctrica:<ol>
+<li><strong>Desconectar</strong>.</li>
+<li><strong>Impedir la reconexión</strong> (bloquear).</li>
+<li><strong>Comprobar que no hay tensión</strong>.</li>
+<li><strong>Poner a tierra y en cortocircuito</strong>.</li>
+<li><strong>Señalizar</strong> la zona.</li>
+</ol>
+</li>
+<li><strong>Fuego</strong> = pequeño y controlable. <strong>Incendio</strong> = grande y sin control.</li>
+<li><strong>Tetraedro del fuego (4 elementos):</strong> <strong>combustible, comburente, foco de ignición y reacción en cadena</strong>.</li>
+<li><strong>Medidas contra incendios:</strong> de <strong>prevención</strong> y de <strong>protección</strong>. La protección puede ser <strong>pasiva</strong> (materiales resistentes, <strong>sectorización</strong>, control de humos, señales y luces) o <strong>activa</strong> (detectar y <strong>extinguir</strong>).</li>
+<li><strong>Señalización:</strong> en panel, luminosa, acústica, verbal y gestual. Los paneles pueden ser de <strong>prohibición, obligación, advertencia, lucha contra incendios y salvamento</strong>.</li>
+<li><strong>Consignación:</strong> bloquear una máquina para que no arranque mientras se repara. <strong>Espacio confinado:</strong> abertura pequeña y sin ventilación (pozos, alcantarillas, <strong>túneles</strong>…). <strong>Permiso de trabajo:</strong> documento para los trabajos de mantenimiento.</li>
+<li><strong>Relaciones peligro → medida:</strong><ul>
+<li>Caída en altura → protecciones en huecos.</li>
+<li>Caída al mismo nivel → suelos antideslizantes y calzado.</li>
+<li>Atropello → pasillos separados.</li>
+<li>Choque → señalizar los obstáculos.</li>
+</ul>
+</li>
+</ul>
+<h3>Tema 4 · Entorno de trabajo (químicos, físicos y biológicos)</h3>
+<ul>
+<li><strong>Agentes químicos:</strong> gases, sólidos o líquidos. Entran por la <strong>respiración, la piel, la boca o la vía parenteral</strong> (una herida profunda).<ul>
+<li>Sus efectos dependen de la <strong>toxicidad × el tiempo de exposición</strong>.</li>
+<li><strong>Valores límite ambientales:</strong> <strong>diario = 8 horas</strong> · <strong>corta duración = 15 minutos</strong>.</li>
+</ul>
+</li>
+<li><strong>Agentes físicos:</strong> energía <strong>mecánica</strong> (ruido y vibraciones), <strong>electromagnética</strong> (radiaciones) y <strong>térmica</strong> (frío y calor).<ul>
+<li>Para evaluarlos se tiene en cuenta el <strong>tipo + la intensidad + el tiempo</strong>.</li>
+<li>Temperatura del cuerpo: <strong>36-37 °C</strong>.</li>
+</ul>
+</li>
+<li><strong>Ruido</strong> (norma de <strong>2006</strong>):<ul>
+<li>Efecto puntual = <strong>fatiga auditiva</strong>; efecto permanente = <strong>sordera</strong>.</li>
+<li><strong>Límite: 80 dB(A) diarios y 135 dB(A) de pico.</strong><div class="scroll"><table>
+<thead>
+<tr>
+<th>Nivel</th>
+<th>Medidas</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>80-85 dB(A)</strong> (pico 135-137)</td>
+<td>plan preventivo; <strong>se entrega el EPI, pero no es obligatorio usarlo</strong>; revisión <strong>cada 3 años</strong></td>
+</tr>
+<tr>
+<td><strong>85-87 dB(A)</strong> (pico 137-140)</td>
+<td>plan técnico; <strong>EPI obligatorio</strong>; zona <strong>señalizada y de acceso limitado</strong>; revisión <strong>cada año</strong></td>
+</tr>
+<tr>
+<td><strong>&gt; 87 dB(A)</strong> (pico &gt; 140)</td>
+<td>reducir el tiempo de exposición; EPI obligatorio; revisión tras aplicar las medidas y después <strong>cada año</strong></td>
+</tr>
+</tbody></table>
+</div></li>
+<li>El riesgo de perder oído empieza a partir de <strong>80 dB(A)</strong>.</li>
+<li>Medidas contra el ruido: sobre el <strong>origen</strong>, sobre el <strong>medio</strong> y sobre el <strong>trabajador</strong> (en ese orden).</li>
+</ul>
+</li>
+<li><strong>Vibraciones</strong> (norma de <strong>2005</strong>): <strong>mano-brazo</strong> y <strong>cuerpo entero</strong>. <strong>Luz artificial: 2010. Campos electromagnéticos: 2016.</strong></li>
+<li><strong>Radiaciones:</strong> las <strong>ionizantes</strong> son las más graves. Las <strong>no ionizantes</strong> pueden ser <strong>ópticas</strong> o <strong>campos electromagnéticos</strong>.</li>
+<li><strong>Agentes biológicos</strong> = <strong>microbios</strong> (bacterias y virus). Hay <strong>4 grupos:</strong><ul>
+<li><strong>G1:</strong> no infecta.</li>
+<li><strong>G2:</strong> leve, contagio bajo, hay tratamiento.</li>
+<li><strong>G3:</strong> grave, contagio alto, hay tratamiento.</li>
+<li><strong>G4:</strong> muy grave, contagio alto y <strong>sin vacuna ni tratamiento</strong>.</li>
+<li>Para prevenir: <strong>limpiar y desinfectar + vigilar la salud</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>Tema 5 · Carga de trabajo y fatiga</h3>
+<ul>
+<li><strong>Carga de trabajo</strong> = esfuerzo <strong>físico + mental</strong>.</li>
+<li><strong>Trabajo muscular estático</strong> = mantener una postura o un esfuerzo. <strong>Dinámico</strong> = en movimiento.</li>
+<li><strong>Cargas de más de 3 kg</strong> = riesgo para la espalda si se manejan en malas condiciones. Para levantarlas: piernas flexionadas, <strong>espalda recta</strong> y carga <strong>repartida entre las 2 manos</strong>. Las sillas, mejor con <strong>5 ruedas</strong>.</li>
+<li><strong>Carga mental</strong> = la exigencia intelectual del puesto (no «la capacidad del trabajador»). Los mensajes claros la reducen.</li>
+<li><strong>Fatiga:</strong> cansancio, sueño o torpeza. <strong>Fatiga crónica:</strong> irritabilidad, depresión e insomnio.</li>
+<li><strong>Insatisfacción laboral.</strong></li>
+</ul>
+<h3>Tema 6 · Protección colectiva e individual</h3>
+<ul>
+<li><strong>Protección colectiva</strong> (protege a varias personas a la vez): <strong>ventilación general y localizada</strong>, <strong>barandillas (de 90 a 100 cm, con barra intermedia y rodapié)</strong>, <strong>redes</strong>, <strong>resguardos</strong> e <strong>interruptor diferencial</strong>. El <strong>cinturón</strong> y la <strong>mascarilla</strong> son <strong>EPI</strong>.</li>
+<li><strong>3 categorías de EPI:</strong><ul>
+<li><strong>Cat. 1:</strong> sencillos, como los <strong>guantes</strong> de trabajo.</li>
+<li><strong>Cat. 2:</strong> riesgo medio, como los <strong>cascos o tapones</strong> para los oídos.</li>
+<li><strong>Cat. 3:</strong> riesgo <strong>mortal o irreversible</strong>, como el <strong>arnés</strong> o el <strong>equipo de respiración autónomo</strong>.</li>
+</ul>
+</li>
+<li><strong>EPI:</strong><ul>
+<li>Se elige <strong>según el riesgo</strong> del que protege.</li>
+<li>Los trabajadores deben participar en la elección.</li>
+<li>Hay que <strong>formar</strong> al trabajador para usarlo.</li>
+<li>El empresario los da <strong>gratis</strong>.</li>
+<li>Son <strong>personales</strong>: no se comparten.</li>
+</ul>
+</li>
+</ul>
+<h3>Tema 7 · Emergencias y evacuación</h3>
+<ul>
+<li><strong>Gravedad, de menos a más:</strong><ol>
+<li><strong>Conato</strong> (se resuelve con los medios del lugar, por ejemplo un extintor).</li>
+<li><strong>Emergencia parcial</strong> (afecta a una zona; interviene un equipo de la empresa).</li>
+<li><strong>Emergencia general</strong> (toda la empresa; <strong>ayuda exterior</strong>, 112).</li>
+</ol>
+</li>
+<li><strong>Causas:</strong> la propia actividad, la tecnología (por ejemplo, una <strong>fuga de gas</strong>), la naturaleza o la situación social.</li>
+<li><strong>Documentos:</strong> <strong>Plan de Autoprotección</strong> (quién es responsable y cómo se actúa) y <strong>Plan de Emergencia y Evacuación</strong>.</li>
+<li><strong>Equipos:</strong><ul>
+<li><strong>Jefe de emergencia:</strong> el máximo responsable hasta que llega la ayuda exterior; <strong>decide la evacuación</strong>.</li>
+<li><strong>Jefe de intervención:</strong> manda en el lugar de la emergencia.</li>
+<li><strong>Equipo de 1.ª intervención</strong> (<strong>al menos 2</strong> personas, con extintores).</li>
+<li><strong>Equipo de 2.ª intervención.</strong></li>
+<li><strong>Primeros auxilios.</strong></li>
+<li><strong>Alarma y evacuación</strong> (<strong>2 o 3 personas</strong>): <strong>comprueban que no queda nadie</strong> e informan en el <strong>punto de encuentro</strong>.</li>
+</ul>
+</li>
+<li><strong>Simulacros:</strong> sirven para aprender a actuar, detectar fallos y comprobar las medidas.</li>
+</ul>
+<h3>Tema 8 · Vigilancia de la salud</h3>
+<ul>
+<li><strong>La garantiza el empresario.</strong> Es <strong>específica</strong>, <strong>voluntaria</strong> (salvo en algunos casos: si es imprescindible, si el trabajador puede ser un peligro, etc., <strong>con informe de los representantes</strong>), <strong>confidencial</strong>, <strong>prolongada</strong> (incluso <strong>después de dejar la empresa</strong>, por ejemplo con el amianto o las radiaciones), <strong>documentada</strong> y <strong>gratuita</strong>.</li>
+<li><strong>El empresario solo puede saber 2 cosas:</strong> si el trabajador es <strong>apto</strong> para el puesto y si hay que <strong>añadir medidas</strong> de protección.</li>
+<li><strong>Técnicas:</strong><ul>
+<li><strong>Control biológico:</strong> los efectos de los químicos, por ejemplo con análisis de sangre u orina.</li>
+<li><strong>Exámenes sistemáticos:</strong> sirven para la <strong>detección precoz</strong>.</li>
+</ul>
+</li>
+<li><strong>Tipos de reconocimiento:</strong> inicial, <strong>periódico</strong>, <strong>tras una ausencia prolongada</strong>, previo, <strong>posocupacional</strong> y tras detectar un daño.</li>
+<li><strong>Trabajadores especialmente sensibles:</strong> <strong>menores de 18</strong>, <strong>embarazadas</strong> (con revisión médica) y personas con <strong>discapacidad</strong> (con estudio del puesto).</li>
+</ul>
+<h3>Tema 9 · Organización de la prevención</h3>
+<ul>
+<li><strong>4 modalidades:</strong><ol>
+<li><strong>El propio empresario:</strong> hasta <strong>10 trabajadores</strong>, o hasta <strong>25 si hay un solo centro</strong>; la actividad no puede ser peligrosa, tiene que estar habitualmente presente y tener formación.</li>
+<li><strong>Trabajadores designados.</strong></li>
+<li><strong>Servicio de prevención propio o mancomunado:</strong> con <strong>dedicación exclusiva</strong>. El <strong>mancomunado</strong> agrupa a varias empresas de la misma actividad o de la misma zona.</li>
+<li><strong>Servicio de prevención ajeno:</strong> necesita una <strong>autorización administrativa</strong>.</li>
+</ol>
+</li>
+<li><strong>Según el tamaño de la empresa:</strong><ul>
+<li>De <strong>251 a 500</strong> trabajadores con actividad peligrosa → servicio <strong>propio obligatorio</strong>.</li>
+<li><strong>Más de 500 → servicio propio siempre obligatorio.</strong></li>
+</ul>
+</li>
+<li><strong>Recurso preventivo</strong> (desde <strong>2003</strong>). <strong>Plan de prevención:</strong> incluye la <strong>evaluación de riesgos</strong> y la <strong>planificación</strong> (medidas materiales, formación e información, procedimientos de control).</li>
+<li><strong>Auditoría</strong> (cuando la empresa usa medios propios, la hace una entidad externa):<ul>
+<li>La <strong>1.ª, durante el primer año</strong>.</li>
+<li>Después, <strong>cada 4 años</strong>; <strong>cada 2</strong> si la actividad es peligrosa.</li>
+<li>Empresas de <strong>menos de 50 trabajadores</strong> sin actividades peligrosas: <strong>exentas</strong>, si lo solicitan.</li>
+</ul>
+</li>
+<li><strong>Nivel básico en prevención:</strong><ul>
+<li>Un curso de <strong>30 h</strong>, o de <strong>50 h</strong> si la actividad es peligrosa.</li>
+<li>O bien estudios equivalentes.</li>
+<li>O bien <strong>2 años de experiencia</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>Tema 10 · Primeros auxilios</h3>
+<ul>
+<li>Deben ser <strong>inmediatos, limitados y temporales</strong>. Los organiza <strong>la EMPRESA</strong>.</li>
+<li><strong>PAS: Proteger → Avisar (112) → Socorrer.</strong></li>
+<li><strong>Socorristas:</strong> se recomienda <strong>1 por cada 50 trabajadores</strong>, o <strong>2 por cada 50</strong> si hay riesgos.</li>
+<li><strong>Constantes vitales:</strong> <strong>consciencia + respiración + pulso</strong>.</li>
+<li><strong>RCP: 30 compresiones + 2 ventilaciones</strong> (las 30 compresiones en unos 15 s; <strong>unas 100 compresiones por minuto</strong>). Se hace en el <strong>centro del pecho</strong>, con los <strong>brazos rectos</strong> y sobre una <strong>superficie dura</strong>. <strong>Cualquiera puede hacer la RCP</strong>; el 112 da las instrucciones por teléfono.</li>
+<li><strong>Posición:</strong> si está inconsciente pero <strong>respira → de lado</strong>. Si hay <strong>riesgo de shock → boca arriba con las piernas en alto</strong>.</li>
+<li><strong>Botiquín:</strong> antisépticos, gasas, algodón, tijeras, pinzas y <strong>guantes de un solo uso</strong>.</li>
+</ul>
+<h3>Soluciones del autotest del propio manual</h3>
+<p>1-b · 2-d · 3-a · 4-c · 6-c · 7-b · 8-a · 9-c · 12-b, c, d · 13-c · 14-d · 15-a · 16-b · 19-c · 20-a.</p>
+<ul>
+<li>Ojo con las preguntas de verdadero o falso:<ul>
+<li>Pregunta 10: «la carga mental es la <strong>capacidad</strong> del trabajador» = <strong>FALSA</strong>.</li>
+<li>Pregunta 11: «<strong>varios trabajadores pueden compartir un EPI</strong>» = <strong>FALSA</strong>.</li>
+<li>Pregunta 13: «<strong>todas las empresas deben hacer un simulacro al año</strong>» = <strong>FALSA</strong>.</li>
+<li>Pregunta 18: «el servicio de prevención propio <strong>no tiene dedicación exclusiva</strong>» = <strong>FALSA</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>El 20% que puedes descartar</h3>
+<p>Las explicaciones largas de herramientas y almacenamiento, el detalle de cada organismo europeo (basta con sus nombres) y los ejemplos repetidos del formato de lectura fácil.</p>
+</section>
+<section id="m4" class="band sec man"><h2>Manual 4 · Reglamento de Viajeros (Decreto 49/1987, de 8 de mayo)</h2><div class="reads" data-sec="m4"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: MUY ALTA.</strong> Es corto y está lleno de cifras: aquí no puedes fallar ninguna.</p>
+<h3>Las cifras que caen seguro</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Dato</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Norma</td>
+<td><strong>Decreto 49/1987, de 8 de mayo</strong>, de la Comunidad de Madrid</td>
+</tr>
+<tr>
+<td>Respuesta del CRTM a una reclamación</td>
+<td><strong>en menos de 1 mes</strong></td>
+</tr>
+<tr>
+<td>Bicicletas</td>
+<td><strong>1 por viajero</strong>; en el tren, <strong>máx. 2 en el coche de cabeza + 2 en el de cola</strong>, junto a las cabinas</td>
+</tr>
+<tr>
+<td>Bicicletas plegadas e infantiles</td>
+<td>cuentan como <strong>bulto de mano</strong> (las plegables hay que plegarlas antes de subir)</td>
+</tr>
+<tr>
+<td>Perros (en general)</td>
+<td><strong>1 por viajero</strong>, con <strong>chip</strong>, <strong>bozal</strong> y correa de <strong>≤ 50 cm</strong> desde el acceso hasta la salida; viajan en el <strong>último coche</strong> y <strong>nunca en asientos</strong>; ascensor sí, <strong>escaleras mecánicas y pasillos rodantes NUNCA</strong></td>
+</tr>
+<tr>
+<td>Perros de asistencia</td>
+<td>se rigen por la <strong>Ley 2/2015, de 10 de marzo</strong> (incluidos los que están en formación)</td>
+</tr>
+<tr>
+<td>Otros animales pequeños</td>
+<td>en <strong>receptáculo</strong> del que no puedan escapar</td>
+</tr>
+<tr>
+<td>Limpieza</td>
+<td><strong>al menos 1 diaria</strong> de instalaciones y trenes (más desinfección, desinsectación y desratización, con certificados visibles)</td>
+</tr>
+<tr>
+<td>Intervalo que obliga a dar la frecuencia en minutos</td>
+<td>cuando es <strong>&lt; 7 min 30 s</strong></td>
+</tr>
+<tr>
+<td><strong>Devolución del billete</strong> (art. 12)</td>
+<td>1) <strong>suspensión</strong> del servicio; 2) intervalo <strong>&gt; 15 min</strong> donde lo previsto era <strong>&lt; 7 min 30 s**; 3) intervalo **&gt; 20 min</strong> donde lo previsto era <strong>≥ 7 min 30 s</strong></td>
+</tr>
+<tr>
+<td>Cómo se devuelve</td>
+<td>un título <strong>equivalente</strong>, o <strong>en metálico</strong> si el viajero lo prefiere; se pide <strong>en la estación, inmediatamente</strong></td>
+</tr>
+<tr>
+<td>Sin devolución</td>
+<td>abonos o títulos de <strong>viajes ilimitados o libre circulación</strong>; y quien compró <strong>después de ser informado</strong> de la incidencia (art. 27)</td>
+</tr>
+<tr>
+<td>Quién extiende la nota que acredita la incidencia</td>
+<td>el <strong>Jefe de Estación</strong> (art. 15), a petición del viajero</td>
+</tr>
+<tr>
+<td>Avisos de suspensión imprevista</td>
+<td>como máximo <strong>15 min después</strong></td>
+</tr>
+<tr>
+<td>Cartel de horario o avisos en los accesos</td>
+<td>cuando el vestíbulo está a <strong>más de 2 tramos de escalera</strong> o a <strong>más de 50 m en planta</strong></td>
+</tr>
+<tr>
+<td>Cambio de tarifas</td>
+<td>canje o uso de los títulos antiguos durante <strong>al menos 15 días</strong></td>
+</tr>
+<tr>
+<td>Niños exentos de título</td>
+<td><strong>menores de 4 años</strong></td>
+</tr>
+<tr>
+<td>Permanencia con título de viajes limitados</td>
+<td><strong>3 horas</strong> desde la validación; pasado ese tiempo = sin título</td>
+</tr>
+<tr>
+<td><strong>Recargo por viajar sin título</strong></td>
+<td><strong>80 €</strong>, que se queda en <strong>la mitad (40 €)</strong> si se paga en el acto o en <strong>15 días hábiles</strong></td>
+</tr>
+<tr>
+<td>Si no paga el recargo</td>
+<td>a los <strong>30 días</strong> se presenta denuncia</td>
+</tr>
+<tr>
+<td>Libro de reclamaciones</td>
+<td>hay que enseñar <strong>título válido + DNI o pasaporte</strong>; el libro está <strong>visado por el CRTM</strong></td>
+</tr>
+<tr>
+<td>Silbato del tren</td>
+<td>anuncia el <strong>cierre inminente de puertas</strong>: desde ese momento está prohibido entrar o salir</td>
+</tr>
+<tr>
+<td>Preferencia de paso</td>
+<td>primero <strong>salen</strong> y luego entran</td>
+</tr>
+<tr>
+<td>Autoridad</td>
+<td>el personal de <strong>Inspección del CRTM</strong> tiene consideración de <strong>autoridad</strong> (art. 30)</td>
+</tr>
+<tr>
+<td>Quién incoa y resuelve las sanciones</td>
+<td>el <strong>Director Gerente del CRTM</strong>, siempre <strong>de oficio</strong></td>
+</tr>
+</tbody></table>
+</div><h3>Leyes que aparecen (memoriza número y año)</h3>
+<ul>
+<li><strong>Ley 16/1987</strong>, de 30 de julio, de Ordenación de los Transportes Terrestres (infracciones: <strong>art. 142.14</strong>; sanciones: <strong>art. 143.1.a</strong>).</li>
+<li><strong>Ley 28/2005</strong>: tabaco. Fumar se sanciona por su <strong>art. 20</strong>.</li>
+<li><strong>Ley 40/2015</strong>: prescripción (<strong>art. 30</strong>). <strong>Ley 39/2015</strong>: procedimiento administrativo.</li>
+<li><strong>RD 1211/1990</strong>: reglamento de la Ley de Ordenación de los Transportes Terrestres.</li>
+<li>Extensiones del Reglamento: Arganda y Rivas (<strong>D. 17/1999</strong>), <strong>Metrosur (D. 10/2003)</strong>, <strong>Metro Ligero (D. 57/2006)</strong>.</li>
+</ul>
+<h3>Derechos del viajero (art. 2, en resumen)</h3>
+<p>Elegir título · viajar con bultos de mano, bici o animal · renunciar al viaje y recibir la devolución · recibir buen trato · pedir el libro de reclamaciones · recibir respuesta en menos de 1 mes · indemnización según el seguro.</p>
+<h3>El 20% que puedes descartar</h3>
+<p>Las disposiciones finales y derogatorias, y los artículos de puro trámite (arts. 3, 6, 33.b, 34.b).</p>
+</section>
+<section id="m5" class="band sec man"><h2>Manual 5 · Código Ético de Metro de Madrid (abril de 2017)</h2><div class="reads" data-sec="m5"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: MEDIA-ALTA.</strong> Es corto y las preguntas tipo son «¿qué artículo…?» o «¿qué debe hacer el empleado si…?». El sentido común acierta mucho, pero hay que fijar las listas.</p>
+<h3>Estructura: 24 artículos en 5 capítulos</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Capítulo</th>
+<th>Arts.</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I. Disposiciones generales</td>
+<td>1-5</td>
+<td>Objeto, ámbito, <strong>Misión</strong>, <strong>Valores</strong>, principios generales</td>
+</tr>
+<tr>
+<td>II. Prestación de servicios</td>
+<td>6-14</td>
+<td>Calidad (6), <strong>Seguridad ferroviaria (7)</strong>, Gestión eficiente (8), Contratación (9), Imagen (10), <strong>Conflictos de interés (11)</strong>, <strong>Regalos (12)</strong>, Corrupción (13), Datos personales (14)</td>
+</tr>
+<tr>
+<td>III. Relación empresa-empleado</td>
+<td>15-21</td>
+<td>Igualdad (15), <strong>Acoso (16)</strong>, Conciliación y sindicatos (17), Salud (18), Selección (19), Bienes (20), Información (21)</td>
+</tr>
+<tr>
+<td>IV. Responsabilidad corporativa</td>
+<td>22-23</td>
+<td>RSC (22), <strong>Transparencia (23)</strong></td>
+</tr>
+<tr>
+<td>V. Aplicación</td>
+<td>24</td>
+<td>Cumplimiento</td>
+</tr>
+</tbody></table>
+</div><h3>Lo imprescindible</h3>
+<ul>
+<li><strong>Ámbito:</strong> Consejo de Administración y <strong>todo el personal</strong>, incluidos el Consejo de Dirección y la estructura directiva, sea cual sea su cargo.</li>
+<li><strong>Misión según el Código:</strong> «ser la <strong>opción de movilidad preferente</strong> en la región de Madrid… servicio público de transporte basado en la <strong>calidad y la eficiencia</strong>». (Ojo: en el Manual 1 la Misión dice «la <strong>principal solución</strong> de movilidad». Mira de qué documento habla la pregunta).</li>
+<li><strong>3 VALORES:</strong> <strong>Servicio público · Profesionalidad · Integridad</strong>.<ul>
+<li>Servicio público: poner al usuario y al ciudadano en el centro.</li>
+<li>Profesionalidad: responder de forma eficaz, en equipo y con los recursos disponibles.</li>
+<li>Integridad: actuar con honestidad y transparencia, con ética y dentro de la norma.</li>
+</ul>
+</li>
+<li><strong>Principios generales (art. 5, letras a-n):</strong> servicio público como seña de identidad, confianza, responsabilidad, calidad e innovación, <strong>lealtad</strong>, trabajo en equipo, escuchar, reconocer el esfuerzo, respeto, legalidad, cuestionar lo que no cumple el Código, evitar que interfieran los intereses personales.</li>
+<li><strong>Seguridad ferroviaria (art. 7):</strong> la normativa y los controles de seguridad son un <strong>requisito indispensable</strong> para prestar el servicio; no permitir conductas que causen daño.</li>
+<li><strong>Contratación (art. 9):</strong> principios de <strong>publicidad, confidencialidad, igualdad, concurrencia, transparencia y no discriminación</strong>. Mientras una licitación está abierta, <strong>contacto mínimo</strong> con las empresas.</li>
+<li><strong>Portavoz (art. 10):</strong> solo las personas <strong>designadas oficialmente</strong>. Cuidado también en las <strong>redes sociales</strong>.</li>
+<li><strong>Incompatibilidades (art. 11):</strong> <strong>Ley 53/1984, de 26 de diciembre</strong> (porque el capital es <strong>100% de la Comunidad de Madrid</strong>). Hay que <strong>comunicar</strong> cualquier actividad profesional externa y <strong>abstenerse</strong> en las decisiones con interés personal.</li>
+<li><strong>Regalos (art. 12):</strong> ni aceptarlos ni ofrecerlos, <strong>salvo cortesía habitual</strong>. Si no encaja → <strong>se devuelve</strong>. Si no se puede devolver → Metro <strong>lo expone</strong> públicamente <strong>o lo dona</strong> (museo, obra social).</li>
+<li><strong>Corrupción (art. 13):</strong> rechazo del <strong>soborno y la extorsión</strong>, máxima transparencia.</li>
+<li><strong>Igualdad (art. 15):</strong> no discriminar por nacimiento, origen, género, orientación, religión, opinión, ideología, <strong>diversidad funcional</strong>, edad…</li>
+<li><strong>Acoso (art. 16):</strong> evitarlo <strong>y denunciarlo</strong>.</li>
+<li><strong>Sindicatos (art. 17):</strong> derecho a afiliarse <strong>y también a NO afiliarse</strong>.</li>
+<li><strong>Selección (art. 19):</strong> si tienes una relación personal con un candidato → <strong>comunicarlo a tu responsable directo o a la División de RRHH</strong>.</li>
+<li><strong>Bienes (art. 20):</strong> incluye la custodia del <strong>efectivo</strong> y el buen uso de los <strong>títulos de transporte</strong>.</li>
+<li><strong>Información (art. 21):</strong> confidencialidad, <strong>integridad y disponibilidad</strong>; no guardar información de la empresa en sistemas ajenos y <strong>comunicar cualquier brecha</strong>.</li>
+<li><strong>RSC (art. 22): 3 líneas de actuación</strong> → <strong>negocio responsable, cultura inclusiva y gestión medioambiental</strong>. Carta de Servicios.</li>
+<li><strong>Transparencia (art. 23):</strong> <strong>Ley 19/2013, de 9 de diciembre</strong> (transparencia, acceso a la información y buen gobierno); <strong>publicidad activa</strong>.</li>
+<li><strong>Aplicación (art. 24):</strong><ul>
+<li>Obligatorio para todos, <strong>empezando por la Dirección</strong>.</li>
+<li>Publicado en la <strong>Intranet Corporativa</strong>.</li>
+<li>Las <strong>dudas</strong> se consultan al <strong>responsable directo</strong> o al <strong>Área de Cumplimiento Normativo y Transparencia</strong>.</li>
+<li>Los <strong>incumplimientos</strong> se comunican al <strong>equipo de Cumplimiento Normativo y Transparencia</strong>.</li>
+<li>Nadie puede ordenar que se incumpla, y <strong>no sirve como excusa ni desconocer el Código ni que lo haya ordenado un superior</strong>.</li>
+<li>Incumplirlo puede acarrear <strong>medidas disciplinarias</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3>El 20% que puedes descartar</h3>
+<p>La redacción literal de los artículos 8, 18 y 22.</p>
+</section>
+<section id="m7" class="band sec man"><h2>Manual 7 · Consorcio Regional de Transportes (CRTM)</h2><div class="reads" data-sec="m7"><span>Lecturas:</span><button type="button" data-n="1" aria-pressed="false">1ª</button><button type="button" data-n="2" aria-pressed="false">2ª</button><button type="button" data-n="3" aria-pressed="false">3ª</button><button type="button" data-n="4" aria-pressed="false">4ª</button></div>
+<p><strong>Prioridad: ALTA.</strong> Son 9 páginas y casi todo es preguntable. Se aprende en 20 minutos.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Dato</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Creación</td>
+<td><strong>Ley 5/1985</strong> (el Manual 1 dice que el organismo se creó en <strong>1986</strong>: si en una pregunta aparece la ley, es 1985)</td>
+</tr>
+<tr>
+<td>Qué es</td>
+<td><strong>organismo público</strong> que concentra las competencias de <strong>transporte regular de viajeros</strong> en la Comunidad de Madrid</td>
+</tr>
+<tr>
+<td>Qué coordina</td>
+<td>Metro, <strong>EMT</strong> y otros autobuses urbanos, <strong>interurbanos</strong>, <strong>Metros Ligeros</strong>, <strong>Tranvía de Parla</strong> y <strong>Cercanías</strong></td>
+</tr>
+<tr>
+<td>Sede social</td>
+<td><strong>Avenida de Asturias, 4</strong></td>
+</tr>
+<tr>
+<td>Atención presencial</td>
+<td><strong>Oficinas de Gestión</strong></td>
+</tr>
+<tr>
+<td>Órgano de dirección</td>
+<td><strong>Consejo de Administración</strong>, que actúa directamente o mediante una <strong>Comisión Delegada</strong></td>
+</tr>
+<tr>
+<td>Presidente</td>
+<td>de la <strong>Comunidad de Madrid</strong>; lo nombra el <strong>Consejo de Gobierno</strong> entre los vocales de la CM</td>
+</tr>
+<tr>
+<td>Vicepresidente</td>
+<td>del <strong>Ayuntamiento de Madrid</strong>; lo nombra el <strong>Consejo de Administración</strong> entre los vocales de los ayuntamientos</td>
+</tr>
+<tr>
+<td><strong>Vocales: 17</strong></td>
+<td><strong>6</strong> Comunidad de Madrid · <strong>1</strong> Ayuntamiento de Madrid · <strong>2</strong> Administración del Estado · <strong>3</strong> ayuntamientos adheridos · <strong>2</strong> sindicatos · <strong>2</strong> asociaciones empresariales · <strong>1</strong> asociaciones de consumidores</td>
+</tr>
+<tr>
+<td>Voz sin voto</td>
+<td><strong>Renfe-Cercanías</strong></td>
+</tr>
+<tr>
+<td>Otros miembros</td>
+<td>Director-Gerente y Secretario</td>
+</tr>
+<tr>
+<td>Plan Estratégico de Movilidad Sostenible</td>
+<td>horizonte de <strong>12 años (2013-2025)</strong>, <strong>más de 200 programas</strong> agrupados en <strong>12 medidas</strong></td>
+</tr>
+</tbody></table>
+</div><p><strong>Funciones (4 bloques):</strong></p>
+<ol>
+<li><strong>Planificación de servicios:</strong> programar la oferta, seguir la demanda, inspeccionar los indicadores de calidad, elaborar planos, horarios y avisos, y accesibilidad.</li>
+<li><strong>Gestión comercial:</strong> vender títulos, tramitar <strong>quejas y sugerencias</strong> e informar (también sobre sanciones).</li>
+<li><strong>Infraestructuras:</strong> estudios, proyectos, el Plan de Movilidad y encuestas.</li>
+<li>Tramitar <strong>autorizaciones y concesiones</strong>.</li>
+</ol>
+<p>Truco para los 17 vocales: <strong>6-1-2-3-2-2-1</strong>.</p>
+</section>
+<section id="cifras" class="band sec"><h2>Hoja de cifras · leer en voz alta todos los días</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Dato</th>
+<th>Cifra</th>
+<th>Manual</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reglamento de Viajeros</td>
+<td><strong>Decreto 49/1987, de 8 de mayo</strong></td>
+<td>M4</td>
+</tr>
+<tr>
+<td>Recargo por viajar sin título</td>
+<td><strong>80 €</strong> (<strong>40 €</strong> si se paga en el acto o en <strong>15 días hábiles</strong>); denuncia a los <strong>30 días</strong></td>
+<td>M4</td>
+</tr>
+<tr>
+<td>Devolución del billete</td>
+<td><strong>suspensión</strong> · <strong>&gt; 15 min</strong> (si el intervalo previsto era &lt; 7&#39;30&quot;) · <strong>&gt; 20 min</strong> (si era ≥ 7&#39;30&quot;)</td>
+<td>M4 / M1</td>
+</tr>
+<tr>
+<td>Permanencia con título de viajes limitados</td>
+<td><strong>3 horas</strong></td>
+<td>M4</td>
+</tr>
+<tr>
+<td>Niños sin título</td>
+<td><strong>menores de 4 años</strong></td>
+<td>M4 / M1</td>
+</tr>
+<tr>
+<td>Bicis en el tren</td>
+<td>1 por viajero · <strong>2 en el coche de cabeza + 2 en el de cola</strong></td>
+<td>M4</td>
+</tr>
+<tr>
+<td>Perros</td>
+<td>1 por viajero · bozal · correa de <strong>≤ 50 cm</strong> · <strong>último coche</strong> · nada de escaleras mecánicas</td>
+<td>M4</td>
+</tr>
+<tr>
+<td>Respuesta del CRTM a una reclamación</td>
+<td><strong>&lt; 1 mes</strong> · Carta de Servicios de Metro: <strong>95% en ≤ 13 días hábiles</strong></td>
+<td>M4 / M1</td>
+</tr>
+<tr>
+<td>CRTM</td>
+<td><strong>Ley 5/1985</strong> · <strong>Av. de Asturias, 4</strong> · <strong>17 vocales (6-1-2-3-2-2-1)</strong> · Renfe con voz y sin voto</td>
+<td>M7</td>
+</tr>
+<tr>
+<td>Carta de Servicios</td>
+<td><strong>95%</strong> a ≤ <strong>4 personas/m²</strong> · información <strong>≥ 8</strong> · atención <strong>≥ 8,5</strong> · limpieza <strong>≥ 7</strong> · <strong>&gt; 99,99%</strong> sin agresiones · <strong>100%</strong> de trenes con ATP</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Normas</td>
+<td><strong>UNE-EN-13816</strong> (toda la red) · <strong>ISO 14001 desde 2005</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>La CM es accionista mayoritaria</td>
+<td><strong>desde diciembre de 2011</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Comité de Dirección</td>
+<td>se reúne <strong>cada quince días</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>12 líneas + Ramal + ML1 · <strong>303 estaciones · 296,78 km</strong> (compruébalo en la pág. 17)</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Depósitos y cocheras</td>
+<td><strong>11 depósitos · 8 cocheras</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Ancho de vía</td>
+<td>pesado <strong>1.445 mm</strong> · ligero <strong>1.435 mm</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Gálibo</td>
+<td>estrecho <strong>230 cm</strong> (L1-5 + Ramal) · ancho <strong>280 cm</strong> (L6-12)</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Tensión</td>
+<td><strong>600 / 1.500 Vcc</strong> en pesado · <strong>750 Vcc</strong> en ligero · batería <strong>110 V</strong> (y 24 V)</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Pasillo de evacuación en el túnel</td>
+<td><strong>75 cm</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Zona A del andén</td>
+<td><strong>unos 80 cm</strong></td>
+<td>M1 / M2 / M3</td>
+</tr>
+<tr>
+<td>Plataforma de vía a cielo abierto</td>
+<td><strong>3 m</strong> desde el carril · <strong>1 m</strong> dentro de un recinto sin cerrar</td>
+<td>M2 / M3</td>
+</tr>
+<tr>
+<td>Pulsador de puertas</td>
+<td><strong>máx. 115 cm</strong> de altura</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Centros de Atención al Cliente</td>
+<td>Sol, Ópera, Pza. de Castilla · L-V <strong>7-22 h</strong> · fines de semana y festivos <strong>10-22 h</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>CIAC y PCC</td>
+<td><strong>Alto del Arenal</strong> · CIAC de <strong>7 a 23 h</strong> · <strong>900 444 404</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Citadis</td>
+<td><strong>5 cajas</strong> (hasta 7) · <strong>8 vehículos, del 128 al 135</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Coronas tarifarias</td>
+<td><strong>8</strong>: A, B1, B2, B3, C1, C2 + <strong>E1, E2</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Tarjeta personal / MULTI</td>
+<td><strong>4 €</strong> / <strong>2,50 €</strong> · <strong>3 títulos</strong> · garantía de <strong>3 años</strong> · caducan a los <strong>10 años</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Edades</td>
+<td><strong>Infantil 4-7</strong> · <strong>Joven hasta 26</strong> · <strong>Normal 26-65</strong> · <strong>+65</strong> · <strong>Joven 7-14 gratis</strong> (hasta C2)</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Descuentos</td>
+<td>familia numerosa general <strong>20%</strong> · especial <strong>50%</strong> · discapacidad <strong>≥ 65% → 20%</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Abono 30 días</td>
+<td><strong>10 días</strong> para empezar a usarlo · el +65 dura <strong>365 días</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Sencillo zona A</td>
+<td><strong>1,50 €</strong> hasta 5 estaciones · <strong>+0,10 €</strong> por estación · <strong>2 €</strong> desde 10</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Turístico</td>
+<td><strong>1, 2, 3, 4, 5 o 7 días</strong> · infantil para <strong>&lt; 11 años</strong> al <strong>50%</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Tarjeta Infantil repetida</td>
+<td><strong>6 €</strong></td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Velocidades</td>
+<td><strong>M+20 → 20 km/h</strong> · <strong>Llave Especial → 30</strong> · <strong>obras → 30</strong> · <strong>pasar una estación sin parar → 30</strong> · remolque con otro tren <strong>30</strong> · con <strong>barrón 10</strong> · paso de hombre <strong>≈ 5</strong></td>
+<td>M1 / M2 / M3</td>
+</tr>
+<tr>
+<td>Distancias en la vía</td>
+<td><strong>luz roja → parar a 50 m</strong> · <strong>balizas ≥ 100 m</strong> · farol <strong>amarillo 150 m antes</strong> · <strong>verde 150 m después</strong> · baliza a <strong>≥ 1,5 m</strong> de altura</td>
+<td>M2 / M3</td>
+</tr>
+<tr>
+<td>Tiempos</td>
+<td><strong>3 min</strong> (señal en rojo o rebase sin comunicación · avería de ATP) · <strong>2 min</strong> (cuando vuelve la tensión) · <strong>10 min</strong> (corte de tensión → freno de estacionamiento) · <strong>15 s</strong> de alumbrado apagado → <strong>subir pantógrafos</strong> · <strong>3-4 parpadeos</strong> → <strong>bajar pantógrafos</strong> · Auto-Shunt: silbato de <strong>unos 2 s</strong></td>
+<td>M2 / M3</td>
+</tr>
+<tr>
+<td>Rebase del piñón</td>
+<td><strong>≤ 50%</strong> del tren → retroceso</td>
+<td>M3</td>
+</tr>
+<tr>
+<td>Cartel de regulación</td>
+<td><strong>&gt; 30 s</strong> muestra «parada» · parpadea a <strong>10 s</strong> · retraso que parpadea a <strong>60 s</strong> · <strong>&gt; 99 s → «R»</strong></td>
+<td>M3</td>
+</tr>
+<tr>
+<td>Señales de velocidad</td>
+<td>aviso = <strong>círculo</strong> · limitación = <strong>rombo</strong> · fin = <strong>cuadrado</strong></td>
+<td>M3</td>
+</tr>
+<tr>
+<td>Placas</td>
+<td><strong>A</strong> automática · <strong>M</strong> mandada · <strong>R</strong> repetidora · <strong>NR</strong> no rebasable · <strong>S Ag</strong> aguja · <strong>AG</strong> n.º de aguja · <strong>CAL</strong> n.º de calce</td>
+<td>M3</td>
+</tr>
+<tr>
+<td>Equipo en la vía</td>
+<td>linterna <strong>blanca delante y roja detrás</strong>, <strong>2 por grupo</strong> · <strong>2 radios si el grupo es de más de 3</strong></td>
+<td>M2</td>
+</tr>
+<tr>
+<td>Trabajos en la Zona A fuera de servicio</td>
+<td>terminar <strong>como máximo a las 4:45 h</strong></td>
+<td>M2</td>
+</tr>
+<tr>
+<td>Normas de Seguridad de Agentes</td>
+<td><strong>03/02/2014</strong> (sustituyen a las de 2008)</td>
+<td>M2</td>
+</tr>
+<tr>
+<td>Código Ético</td>
+<td><strong>abril de 2017</strong> · <strong>24 artículos</strong> · <strong>3 valores</strong> · incompatibilidades <strong>Ley 53/1984</strong> · transparencia <strong>Ley 19/2013</strong></td>
+<td>M5</td>
+</tr>
+<tr>
+<td>Ley de PRL</td>
+<td><strong>1995</strong> · Directiva Marco <strong>1989</strong> · Reglamento de los Servicios de Prevención <strong>1997</strong></td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Delegados de prevención</td>
+<td>hasta <strong>30</strong> trabajadores = delegado de personal · <strong>50-100 → 2</strong> · <strong>1.000-2.000 → 5</strong> · <strong>&gt; 4.000 → 8</strong></td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Comité de Seguridad y Salud</td>
+<td><strong>más de 50</strong> trabajadores</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Ruido</td>
+<td><strong>80 / 85 / 87 dB(A)</strong> · picos <strong>135 / 137 / 140</strong> · revisión <strong>cada 3 años / cada año</strong></td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Valores límite</td>
+<td><strong>8 h</strong> al día · <strong>15 min</strong> de corta duración</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Agentes biológicos</td>
+<td><strong>4 grupos</strong> · el G4 no tiene tratamiento</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Barandillas</td>
+<td><strong>90-100 cm</strong></td>
+<td>M6</td>
+</tr>
+<tr>
+<td>EPI</td>
+<td><strong>3 categorías</strong> (guante · tapones · arnés)</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Prevención asumida por el empresario</td>
+<td>hasta <strong>10</strong> trabajadores (<strong>25</strong> con un solo centro) · servicio propio obligatorio <strong>&gt; 500</strong></td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Auditoría</td>
+<td>la 1.ª <strong>durante el primer año</strong> · luego <strong>cada 4 años</strong> (<strong>cada 2</strong> si la actividad es peligrosa)</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Nivel básico de prevención</td>
+<td><strong>30 h</strong> (<strong>50 h</strong> si es peligrosa) o <strong>2 años</strong> de experiencia</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>Socorristas</td>
+<td><strong>1 por cada 50</strong> trabajadores</td>
+<td>M6</td>
+</tr>
+<tr>
+<td>RCP</td>
+<td><strong>30 compresiones + 2 ventilaciones</strong> · <strong>≈ 100 compresiones/min</strong> · <strong>112</strong></td>
+<td>M6</td>
+</tr>
+</tbody></table>
+</div></section>
+</main>
+<footer>Guía hecha a partir de los 7 manuales oficiales del proceso y de las bases de la prueba (23/11/2026). Si algo no cuadra, manda el PDF.</footer>
+<script>
+{
+const ST=[{"id":"m1","l":"M1 Metro","w":10,"p":"Máxima"},{"id":"m3","l":"M3 Circulación","w":9,"p":"Máxima"},{"id":"m2","l":"M2 Seguridad","w":6,"p":"Alta"},{"id":"m6","l":"M6 PRL","w":6,"p":"Media"},{"id":"m4","l":"M4 Reglamento","w":4,"p":"Muy alta"},{"id":"m5","l":"M5 Código","w":3,"p":"Media-alta"},{"id":"m7","l":"M7 CRTM","w":2,"p":"Alta"}];
+const KEY='guia8020-reads';
+let reads={};try{reads=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(reads))}catch(e){}};
+const count=id=>(reads[id]||[]).length;
+
+for(const box of document.querySelectorAll('.reads')){
+  const id=box.dataset.sec;
+  const paint=()=>box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',(reads[id]||[]).includes(+b.dataset.n)));
+  box.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const n=+b.dataset.n;const a=new Set(reads[id]||[]);a.has(n)?a.delete(n):a.add(n);reads[id]=[...a];save();paint();draw()});
+  paint();
+}
+
+const s=document.getElementById('rs');
+const draw=()=>{
+  const W=s.clientWidth,H=s.clientHeight;if(!W)return;
+  const narrow=W<520,pad=narrow?26:40,y=H*0.42;
+  const n=ST.length,step=(W-pad*2)/(n-1);
+  let g=`<line x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}" stroke="#2f8f99" stroke-width="10" stroke-linecap="round"/>`;
+  ST.forEach((t,i)=>{
+    const x=pad+i*step,r=(narrow?9:12)+t.w*(narrow?1.1:1.6),c=count(t.id),f=Math.min(c,3)/3;
+    const lab=narrow?t.l.split(' ')[0]:t.l;
+    g+=`<a href="#${t.id}" aria-label="${t.l}, ${c} lecturas"><circle cx="${x}" cy="${y}" r="${r}" fill="#0b5159" stroke="#fff" stroke-width="4"/>`+
+       `<circle cx="${x}" cy="${y}" r="${Math.max(0,(r-4)*f)}" fill="#ff7a55" style="transition:r .4s"/>`+
+       `<text x="${x}" y="${y+r+22}" text-anchor="middle" fill="#fff" font-family="Archivo,sans-serif" font-size="${narrow?12:14}" font-weight="800">${lab}</text>`+
+       (narrow?'':`<text x="${x}" y="${y+r+40}" text-anchor="middle" fill="#a9cfd3" font-family="Archivo,sans-serif" font-size="12">~${t.w} preg. · ${c}/3</text>`)+`</a>`;
+  });
+  s.innerHTML=g;
+};
+const ro=new ResizeObserver(draw);ro.observe(s);
+
+const target=new Date('2026-11-28T10:00:00+01:00');
+const cd=document.getElementById('cd');
+const tick=()=>{const ms=target-new Date();if(ms<=0){cd.textContent='¡Hoy es el día!';return}
+  const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+  cd.textContent=(d?d+' d ':'')+h+' h '+m+' min';};
+tick();setInterval(tick,30000);
+
+const links=[...document.querySelectorAll('#nav a')];
+const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}},{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('main section').forEach(x=>io.observe(x));
+}
+</script>
+</body>
+</html>
