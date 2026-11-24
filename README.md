@@ -16,6 +16,10 @@ Material de estudio personal para la prueba objetiva de aptitud.
 
 Para leerla sin conexión, descarga `index.html` (botón **Download raw file**) y ábrelo con el navegador.
 
+## 🃏 Cartas de las series de trenes
+
+Para repasar el material móvil (series 2000 a 9000, Citadis, letras M-R-S, gálibos y cifras): https://marioarjona.github.io/oposicion-metro-madrid/cartas-series.html
+
 ## ❓ Banco de preguntas (474)
 
 - App online: https://oposicion-metro.pages.dev

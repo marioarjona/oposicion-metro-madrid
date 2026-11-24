@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartas de las series de trenes · Metro de Madrid</title>
+<style>
+:root{color-scheme:light dark;
+--bg:light-dark(#f4f7f8,#0f1a1c);--ink:light-dark(#14191c,#e7efef);--mute:light-dark(#55636a,#9fb2b5);
+--card:light-dark(#ffffff,#172629);--line:light-dark(#d5e3e4,#2a3f42);
+--est:light-dark(#0d6e78,#3fb6c2);--anc:light-dark(#d94f2b,#ff7a55);--lig:light-dark(#6b4fbb,#a58cf0);--gen:light-dark(#3d5a40,#8cc79a)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:24px max(4vw,16px) 8px;max-width:1200px;margin:0 auto}
+h1{margin:0 0 6px;font-size:clamp(24px,4vw,34px);line-height:1.15}
+header p{margin:0 0 12px;color:var(--mute);max-width:70ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.bar button{font:600 15px system-ui,sans-serif;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.bar button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.bar button:focus-visible,.c:focus-visible{outline:3px solid var(--est);outline-offset:3px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mute);margin:10px 0 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:16px max(4vw,16px) 40px;max-width:1200px;margin:0 auto}
+.c{perspective:1200px;height:360px;cursor:pointer;border:0;padding:0;background:none;text-align:left;color:inherit;font:inherit}
+.in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.c.flip .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgb(0 0 0/.08);overflow:hidden;display:flex;flex-direction:column}
+.b{transform:rotateY(180deg);padding:16px 18px;gap:8px;overflow-y:auto}
+.f{align-items:center;justify-content:center;text-align:center;padding:18px;border-top:12px solid var(--k)}
+.b{border-top:12px solid var(--k)}
+.est{--k:var(--est)}.anc{--k:var(--anc)}.lig{--k:var(--lig)}.gen{--k:var(--gen)}
+.tag{position:absolute;top:12px;left:14px;font:700 12px system-ui;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
+.num{font:900 clamp(52px,9vw,68px)/1 system-ui,sans-serif;color:var(--k);letter-spacing:-.02em}
+.nick{font:800 22px/1.2 system-ui,sans-serif;margin:10px 0 6px}
+.train{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:10px 0 4px}
+.train span{min-width:30px;height:26px;padding:0 6px;border-radius:6px;display:grid;place-items:center;font:800 13px system-ui;color:#fff;background:var(--k)}
+.train span.r{background:transparent;color:var(--k);border:2px solid var(--k)}
+.train span.s{background:color-mix(in srgb,var(--k) 55%,transparent)}
+.hint{position:absolute;bottom:12px;font-size:13px;color:var(--mute)}
+.b h3{margin:0;font-size:19px;color:var(--k)}
+.row{display:grid;grid-template-columns:92px 1fr;gap:8px;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.row b{color:var(--mute);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+.trick{margin-top:auto;background:color-mix(in srgb,var(--k) 14%,transparent);border-radius:10px;padding:10px 12px;font-size:15px}
+.trick::before{content:"🧠 ";}
+footer{max-width:1200px;margin:0 auto;padding:0 max(4vw,16px) 32px;color:var(--mute);font-size:14px}
+@media(prefers-reduced-motion:reduce){.in{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🃏 Cartas de las series de trenes</h1>
+  <p>Toca una carta para darle la vuelta. Delante tienes la serie y su apodo; detrás, los coches, la composición, las líneas y un truco. Intenta decir la respuesta en voz alta <strong>antes</strong> de girarla.</p>
+  <div class="bar">
+    <button id="mix" type="button">🔀 Barajar</button>
+    <button id="all" type="button">Girar todas</button>
+    <button id="reset" type="button">Ponerlas boca abajo</button>
+  </div>
+  <div class="legend"><span><i style="background:var(--est)"></i>Gálibo estrecho · 230 cm · L1-L5 + Ramal</span><span><i style="background:var(--anc)"></i>Gálibo ancho · 280 cm · L6-L12</span><span><i style="background:var(--lig)"></i>Metro Ligero</span><span><i style="background:var(--gen)"></i>Reglas básicas</span></div>
+</header>
+<main id="deck"></main>
+<footer>Fuente: Manual 1, <em>Conocimientos específicos sobre Metro de Madrid</em>, págs. 39 y 65-70 (temario oficial 2026).</footer>
+<script>
+const T=s=>s.split('-').map(x=>`<span class="${x[0]==='R'?'r':x[0]==='S'?'s':''}">${x}</span>`).join('');
+const CARDS=[
+ {k:'gen',tag:'Regla',num:'M R S',nick:'Las letras de los coches',train:'M-R-S',
+  rows:[['M','Motor con cabina (va en los extremos, aquí va el conductor)'],['R','Remolque: sin motor y sin cabina'],['S','Motor intermedio sin cabina'],['Número','El impar siempre es el más bajo (R-2175 / M-2176)']],
+  trick:'M de Maquinista, R de Remolque, S de "Sin cabina". Los trenes largos son un espejo: M-R-S | S-R-M.'},
+ {k:'gen',tag:'Regla',num:'230 · 280',nick:'Los dos gálibos',train:'',
+  rows:[['Estrecho','230 cm · series 2000 y 3000 · L1, L2, L3, L4, L5 y Ramal'],['Ancho','280 cm · series 5000, 6000, 7000, 8000 y 9000 · L6 a L12'],['Futuro','Todos los proyectos nuevos se hacen para gálibo ancho']],
+  trick:'Series "pequeñas" (2000 y 3000) = tren estrecho = líneas viejas (1-5).'},
+ {k:'est',tag:'Estrecho',num:'2000',nick:'La Pareja',train:'R-M',
+  rows:[['Coches','2 (unidad tren)'],['Familias','2000-A y 2000-B'],['Líneas','1 y 5']],
+  trick:'2000 = 2 coches. Una pareja de novios: uno conduce (M) y el otro va de remolque (R).'},
+ {k:'est',tag:'Estrecho',num:'3000',nick:'La Familia (grande y pequeña)',train:'M1-R1-S1-S2-R2-M2',
+  rows:[['Subserie 1','6 coches inseparables: M1-R1-S1-S2-R2-M2 · líneas 3 y 5'],['Subserie 2','4 coches: M-R-S-M · líneas 2, 4 y Ramal']],
+  trick:'Familia grande (6) en la 3 y la 5; familia pequeña (4) en la 2, la 4 y el Ramal. Pares con pares: 4 coches → líneas 2 y 4.'},
+ {k:'anc',tag:'Ancho',num:'5000',nick:'Los Gemelos',train:'M-M',
+  rows:[['Coches','2 (unidad tren)'],['Composición','M-M: los dos tienen motor'],['Líneas','6 y 9A']],
+  trick:'Dos gemelos iguales, los dos con motor: ninguno va de remolque.'},
+ {k:'anc',tag:'Ancho',num:'6000',nick:'El Trío',train:'M-R-M',
+  rows:[['Coches','3 (el manual lo llama "Trío")'],['Composición','M-R-M: dos motores y un remolque'],['Extra','Coches diáfanos, con pasillo de intercirculación'],['Línea','9B (tramo TFM)']],
+  trick:'Un trío musical: dos cantantes (M) y uno en medio (R). Toca en la 9B.'},
+ {k:'anc',tag:'Ancho',num:'7000',nick:'El Sexteto',train:'M1-R1-S1-S2-R2-M2',
+  rows:[['Coches','6, inseparables'],['Composición','M1-R1-S1-S2-R2-M2 (como el 3000 grande)'],['Líneas','9A y 10A']],
+  trick:'Es el gemelo ancho del 3000 de 6 coches. 7000 → líneas 9A y 10A.'},
+ {k:'anc',tag:'Ancho',num:'8000',nick:'El Comodín',train:'M-S-R-M',
+  rows:[['6 coches','M1-R1-S1-S2-R2-M2 → línea 6'],['4 coches','M-S-R-M → líneas 8 y 10B'],['3 monotensión','M-R-M → líneas 10B y 12 (a veces 7B, 10A y 11)'],['3 bitensión','M-R-M → líneas 9A y 10A']],
+  trick:'El comodín de la baraja: tiene muchas formas y va a casi todas partes. Ojo: su versión de 4 es M-S-R-M (no M-R-S-M como el 3000).'},
+ {k:'anc',tag:'Ancho',num:'9000',nick:'El Doble formato',train:'M-R-S-S-R-M',
+  rows:[['6 coches','M-R-S-S-R-M → líneas 7A, 9A y 10A'],['3 coches','M-R-M → líneas 7B y 12']],
+  trick:'Viene en tamaño grande (6) y pequeño (3). El pequeño va a las "B" y a la circular: 7B y 12.'},
+ {k:'lig',tag:'Metro Ligero',num:'Citadis',nick:'El Tranvía',train:'',
+  rows:[['Cajas','5, articuladas (ampliable a 7)'],['Tensión','750 V CC'],['Flota','8 vehículos, numerados del 128 al 135, con ATP para el túnel']],
+  trick:'Cinco cajas, 750 V y del 128 al 135: "un tranvía de 5 vagones con 8 hermanos".'},
+ {k:'gen',tag:'Cifras',num:'1.445',nick:'Cifras que caen seguro',train:'',
+  rows:[['Ancho de vía','1.445 mm en metro pesado · 1.435 mm en metro ligero'],['Catenaria','600 V o 1.500 V CC en metro · 750 V en ligero'],['Sentido','Metro por la izquierda · Ligero por la derecha'],['Pantógrafo','En el techo del coche M par. Sube con aire comprimido y lo baja un muelle']],
+  trick:'El ligero tiene 10 mm menos de vía y circula al revés (por la derecha).'},
+];
+const deck=document.getElementById('deck');
+function render(list){
+  deck.innerHTML=list.map((c,i)=>`<button class="c ${c.k}" type="button" aria-label="Carta ${c.num}: ${c.nick}. Toca para girar">
+   <div class="in">
+    <div class="f"><span class="tag">${c.tag}</span><div class="num">${c.num}</div><div class="nick">${c.nick}</div>${c.train?`<div class="train">${T(c.train)}</div>`:''}<span class="hint">Toca para ver la respuesta ↻</span></div>
+    <div class="b"><h3>${c.num} · ${c.nick}</h3>${c.rows.map(r=>`<div class="row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}<div class="trick">${c.trick}</div></div>
+   </div></button>`).join('');
+}
+render(CARDS);
+deck.addEventListener('click',e=>{const c=e.target.closest('.c');if(c)c.classList.toggle('flip')});
+document.getElementById('all').onclick=()=>deck.querySelectorAll('.c').forEach(c=>c.classList.add('flip'));
+document.getElementById('reset').onclick=()=>deck.querySelectorAll('.c').forEach(c=>c.classList.remove('flip'));
+document.getElementById('mix').onclick=()=>{const a=[...CARDS];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}render(a)};
+</script>
+</body>
+</html>
