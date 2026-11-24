@@ -12,7 +12,9 @@ Material de estudio personal para la prueba objetiva de aptitud.
 - botones para marcar cada vez que relees una parte,
 - una tabla de cifras para repasar.
 
-Para leerla, descarga `index.html` (botón **Download raw file**) y ábrelo con el navegador. No necesita internet.
+**Léela online:** https://marioarjona.github.io/oposicion-metro-madrid/ (también desde el móvil).
+
+Para leerla sin conexión, descarga `index.html` (botón **Download raw file**) y ábrelo con el navegador.
 
 ## ❓ Banco de preguntas (474)
 
