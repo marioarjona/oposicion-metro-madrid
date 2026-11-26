@@ -18,9 +18,9 @@ Para leerla sin conexión, descarga `index.html` (botón **Download raw file**) 
 
 ## 📝 Examen con preguntas de otros años
 
-40 preguntas al azar, 60 minutos y +1 / −0,33, como el examen real: https://marioarjona.github.io/oposicion-metro-madrid/examen.html
+40 preguntas al azar de un banco de 124, 60 minutos y +1 / −0,33, como el examen real: https://marioarjona.github.io/oposicion-metro-madrid/examen.html
 
-Las preguntas salen del examen tipo de 2023, de tests de Daypo y del autotest oficial de PRL, y cada respuesta está comprobada con los manuales de 2026.
+Las preguntas salen del examen tipo de 2023, de una pregunta real de 2023, de tests de Daypo (incluido uno de la convocatoria de 2019) y del autotest oficial de PRL, y cada respuesta está comprobada con los manuales de 2026.
 
 ## 🃏 Cartas de las series de trenes
 
