@@ -16,6 +16,12 @@ Material de estudio personal para la prueba objetiva de aptitud.
 
 Para leerla sin conexión, descarga `index.html` (botón **Download raw file**) y ábrelo con el navegador.
 
+## 📝 Examen con preguntas de otros años
+
+40 preguntas al azar, 60 minutos y +1 / −0,33, como el examen real: https://marioarjona.github.io/oposicion-metro-madrid/examen.html
+
+Las preguntas salen del examen tipo de 2023, de tests de Daypo y del autotest oficial de PRL, y cada respuesta está comprobada con los manuales de 2026.
+
 ## 🃏 Cartas de las series de trenes
 
 Para repasar el material móvil (series 2000 a 9000, Citadis, letras M-R-S, gálibos y cifras): https://marioarjona.github.io/oposicion-metro-madrid/cartas-series.html

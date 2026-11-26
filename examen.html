@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examen con preguntas de otros años · Metro de Madrid</title>
+<style>
+:root{color-scheme:light dark;
+--bg:light-dark(#f4f7f8,#0f1a1c);--ink:light-dark(#14191c,#e7efef);--mute:light-dark(#55636a,#9fb2b5);
+--card:light-dark(#ffffff,#172629);--line:light-dark(#d5e3e4,#2a3f42);--teal:light-dark(#0d6e78,#3fb6c2);
+--ok:light-dark(#1d7a3a,#5fd08a);--bad:light-dark(#c0392b,#ff7a6b);--sel:light-dark(#e3f2f3,#1f3a3e)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 max(4vw,16px)}
+header{padding:24px 0 8px}
+h1{margin:0 0 6px;font-size:clamp(24px,4vw,32px);line-height:1.15}
+.lead{color:var(--mute);margin:0 0 14px}
+.rules{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:0 0 16px}
+.rules ul{margin:6px 0 0;padding-left:1.2em}.rules li{margin:.2em 0}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0}
+.top .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.clock{font:800 26px/1 ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--bad)}
+.stat{color:var(--mute);font-size:15px}
+button.big{font:700 16px system-ui,sans-serif;min-height:46px;padding:0 20px;border-radius:999px;border:0;background:var(--teal);color:#fff;cursor:pointer}
+button.ghost{font:600 15px system-ui,sans-serif;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button:focus-visible,label:focus-within{outline:3px solid var(--teal);outline-offset:2px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0}
+.qh{display:flex;gap:10px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.qn{font:800 15px system-ui;color:var(--teal)}
+.src{font-size:12.5px;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:1px 9px}
+.qt{margin:6px 0 10px;font-weight:600}
+.opts{display:grid;gap:8px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line);border-radius:12px;cursor:pointer;min-height:44px}
+.opts input{margin-top:4px;width:18px;height:18px;flex:none;accent-color:var(--teal)}
+.opts label:has(input:checked){background:var(--sel);border-color:var(--teal)}
+.opts .L{font-weight:800;min-width:1.4em}
+.clear{margin-top:8px;font-size:14px;background:none;border:0;color:var(--mute);text-decoration:underline;cursor:pointer;min-height:32px}
+.done .opts label{cursor:default}
+.opts label.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.opts label.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.why{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:10px;background:var(--bg)}
+.why b{color:var(--teal)}
+.badge{font:800 13px system-ui;border-radius:999px;padding:2px 10px;color:#fff}
+.badge.ok{background:var(--ok)}.badge.bad{background:var(--bad)}.badge.bl{background:var(--mute)}
+#res{background:var(--card);border:2px solid var(--teal);border-radius:18px;padding:18px 20px;margin:16px 0}
+#res h2{margin:0 0 6px}
+.score{font:900 52px/1 system-ui;color:var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.grid div{background:var(--bg);border-radius:12px;padding:10px 12px}
+.grid b{display:block;font-size:24px}
+.bym{margin:10px 0 0;padding-left:1.2em}
+.end{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 40px}
+footer{color:var(--mute);font-size:14px;padding:0 0 32px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>📝 Examen con preguntas de otros años</h1>
+  <p class="lead">Preguntas reales de tests de otros años, con cada respuesta comprobada en los 7 manuales oficiales de 2026. Cada examen saca 40 al azar de un banco de <span id="tot"></span>.</p>
+  <div class="rules" id="rules">
+    <strong>Como el examen real (Comunicado nº 6):</strong>
+    <ul>
+      <li><strong>40 preguntas en 60 minutos.</strong></li>
+      <li>Cada acierto suma <strong>+1</strong>, cada fallo <strong>resta 0,33</strong> y en blanco cuenta <strong>0</strong>.</li>
+      <li>Se aprueba con <strong>20 sobre 40</strong>.</li>
+      <li>Si no puedes descartar al menos 2 opciones, déjala en blanco.</li>
+    </ul>
+  </div>
+  <button class="big" id="start" type="button">▶ Empezar examen</button>
+</header>
+
+<div class="top" id="top" hidden><div class="wrap">
+  <span class="clock" id="clock" aria-live="off">60:00</span>
+  <span class="stat" id="stat">0 / 40 contestadas</span>
+  <button class="big" id="finish" type="button">Corregir</button>
+</div></div>
+
+<main class="wrap">
+  <section id="res" hidden aria-live="polite"></section>
+  <div id="list"></div>
+  <div class="end" id="end" hidden>
+    <button class="big" id="again" type="button">🔀 Nuevo examen (otras 40)</button>
+    <button class="ghost" id="onlybad" type="button">Ver solo fallos y en blanco</button>
+  </div>
+</main>
+<footer class="wrap">
+  <p><strong>De dónde salen las preguntas:</strong> examen tipo de 2023 (academia Empleo Maquinistas, publicado en Scribd), tres tests de Daypo hechos por opositores y el autotest oficial del Manual 6 (págs. 227-237). He quitado las que tratan temas que no están en los manuales de 2026: precios de 2023, historia, cifras de instalaciones y preguntas con imágenes. Las respuestas están comprobadas en los manuales de 2026. Algunas cambian respecto a 2023: por ejemplo, la correa del perro ahora puede ser <em>extensible o no</em>. En unas pocas he cambiado alguna opción o la redacción para que encajen con el temario de 2026.</p>
+</footer>
+
+<script>
+/* [fuente, pregunta, opciones, índice correcto, referencia y explicación] */
+const E='Examen tipo 2023', D='Test Daypo', P='Autotest oficial PRL';
+const BANK=[
+[E,'A través de las distintas jefaturas, ¿quién asegura la distribución y entrega de la Normativa Interna de Circulación, y de las comunicaciones que la modifiquen, a todos los afectados?',['Área de Control y Planificación de la Operación.','La Dirección.','La Consejería Regional de Transportes.','El Puesto de Control Central.'],1,'M3 NIC, art. 1.2.2: «La Dirección, a través de las distintas jefaturas, asegurará la distribución y entrega de la NIC».'],
+[E,'La estación de Avenida de América, ¿con qué líneas tiene correspondencia?',['Líneas 4, 5, 6, 7.','Líneas 4, 5, 6, 9.','Líneas 4, 6, 7, 8.','Líneas 4, 6, 7, 9.'],3,'M1, Estaciones por línea: aparece en las listas de L4, L6, L7 y L9.'],
+[E,'Todo tren que circule por vías principales lleva un número de tren, que conserva mientras está en la línea. ¿Quién es el único que puede modificarlo?',['Personal de Mantenimiento de Material Móvil.','Jefe de Sector.','Responsable operativo.','Puesto de Control Central.'],3,'M3 NIC, cap. 4.3: «solamente podrá ser modificado por el PCC».'],
+[E,'¿Cuántos vocales propone la Administración del Estado en el Consejo de Administración del Consorcio?',['Uno.','Dos.','Tres.','Cuatro.'],1,'M7 CRTM, Consejo de Administración: 17 vocales, de ellos 2 de la Administración del Estado.'],
+[E,'¿Qué duración tiene el Abono Transportes +65?',['365 días aplicada a todas las tarjetas desde el 1/01/2023.','365 días desde la fecha de carga.','Ilimitada para todas las tarjetas desde el 1/01/2023.','Ilimitada desde la fecha de carga.'],1,'M1, Abono Transportes +65: «Esta carga será válida durante los siguientes 365 días, independientemente de la fecha de la primera utilización».'],
+[E,'¿Qué título NO es válido en la estación de Puerta de Arganda?',['Sencillo TFM.','Sencillo Zona A.','Sencillo Combinado.','Sencillo MetroEste.'],3,'M1, Zonas: Puerta de Arganda es zona A y el inicio del tramo TFM. MetroEste solo vale entre Hospital del Henares y Barrio del Puerto.'],
+[E,'¿Cuáles son las estaciones de cabecera de la línea 7?',['Pitis – Hospital del Henares.','Pitis – San Fernando.','Pitis – Henares.','Pitis – Estadio Metropolitano.'],0,'M1, Estaciones por línea y vía I: Hospital del Henares → Estadio Metropolitano (7B) → Pitis (7A).'],
+[E,'La competencia de velar por el cumplimiento de la NIC, tanto en situaciones de normalidad como en situaciones especialmente sensibles para la seguridad, es de:',['El Puesto de Control Central.','Los Coordinadores de Línea.','Los responsables operativos del Área de Gestión Operativa.','Los Técnicos de línea.'],0,'M3 NIC, art. 2.1.2: «es competencia del PCC velar por el cumplimiento de esta NIC».'],
+[E,'Todo trabajador que observe una situación o un accidente que pueda suponer un riesgo para la circulación de los trenes está obligado a:',['Colaborar con el conductor del tren en la medida de sus posibilidades.','Tomar las medidas a su alcance para evitar si es posible o reducir las consecuencias que de dicha situación o accidente puedan derivarse.','Activar el Plan de Autoprotección.','Ninguna de las anteriores.'],1,'M3 NIC, Título 5: avisar inmediatamente al PCC, tomar las medidas a su alcance para evitar o reducir las consecuencias, y detener a todo tren que pueda llegar con riesgo.'],
+[E,'Acceso con perros: deben llevar bozal y su portador debe llevarlos sujetos con…',['una correa no extensible, de una longitud que no supere los 50 cm.','una correa extensible o no, de una longitud que no supere los 50 cm.','una correa no extensible, de una longitud que no supere los 40 cm.','una correa extensible o no, de una longitud que no supere los 40 cm.'],1,'M4 Reglamento, art. 2 ter.2.c: «correa extensible o no, de una longitud que no supere los 50 centímetros». ¡Trampa típica!'],
+[E,'Acceso con bicicletas: si la ocupación lo permite y no se molesta a nadie, el viajero puede transportarla en…',['Ascensores.','Ascensores y pasillos rodantes.','Ascensores, pasillos rodantes y escaleras mecánicas.','Ninguna de las anteriores.'],2,'M4 Reglamento, art. 2 bis.1.d. Ojo: con perro NO se pueden usar escaleras mecánicas ni pasillos rodantes, solo ascensores.'],
+[E,'En relación al título turístico, ¿qué dos zonas se distinguen?',['Zona A y Zona T.','Zona A y Zona L.','Zona A y Zona C2.','Zona A y Zona E2.'],0,'M1, Título turístico: «Se han definido dos zonas para estos abonos, zona A y zona T».'],
+[E,'El indicador luminoso portátil denominado «luz roja» indica:',['Inicio de precaución, y está entre el carril exterior y el paramento lateral del túnel.','La prohibición absoluta de rebasarla cuando se encuentra situada en la plataforma de vía.','La presencia de personas trabajando en la franja de borde de andén (Zona A).','Ninguna de las anteriores.'],1,'M2 Seguridad, 4.1.3.b. La opción A describe el farol amarillo.'],
+[E,'Acceso con bicicletas: ¿existe un máximo de bicicletas por tren?',['Sí, como máximo 4 bicicletas por tren.','Sí, como máximo 2 bicicletas por tren.','Como máximo 2 bicicletas por cada coche del tren.','No hay máximo mientras las condiciones del servicio lo permitan.'],0,'M4 Reglamento, art. 2 bis.1.c: como máximo 2 en el coche de cabeza y 2 en el de cola, junto a las cabinas, es decir, 4 por tren.'],
+[E,'Acceso con perros: ¿cuál de las siguientes afirmaciones es FALSA?',['Se permite el acceso de perros de asistencia.','Se puede limitar el acceso por aglomeraciones o por seguridad.','Se permite un máximo de dos perros por viajero.','El viajero se responsabiliza de los daños que cause el perro.'],2,'M4 Reglamento, art. 2 ter.2.a: «Solo se permitirá un perro por viajero».'],
+[E,'En el periodo fuera de servicio, la circulación por las áreas de trabajo con personal en la plataforma de vía se realizará:',['A paso de hombre y en el modo de conducción M+20, si los trenes disponen de dicho modo.','A velocidad reducida, sin sobrepasar los 10 km/h.','Marcha a la vista, extremando las precauciones.','A velocidad reducida, sin sobrepasar los 30 km/h.'],0,'M2 Seguridad, cap. 5.2: «se realizará a paso de hombre y en el modo de conducción M+20».'],
+[E,'Acceso con perros: ¿cuál de las siguientes afirmaciones es cierta?',['Los trayectos se hacen en el primer coche de cada tren.','Los perros pueden ocupar asientos en casos excepcionales.','Pueden usar escaleras mecánicas si no molestan.','Se permite el acceso de perros de asistencia en formación.'],3,'M4 Reglamento, art. 2 ter.1. Las demás son falsas: van en el ÚLTIMO coche, nunca ocupan asientos y no pueden usar escaleras mecánicas.'],
+[E,'Según la zonificación tarifaria, ¿qué tramo de la línea 10 es MetroNorte?',['Entre La Granja y Hospital Infanta Sofía.','Entre Las Tablas y Hospital Infanta Sofía.','Entre Tres Olivos y Hospital Infanta Sofía.','Entre Chamartín y Hospital Infanta Sofía.'],0,'M1, Zonas tarifarias: «METRONORTE Hospital Infanta Sofía - La Granja (B1)». La explotación del tramo 10B llega a Tres Olivos, pero la zona MetroNorte es La Granja–Hospital Infanta Sofía.'],
+[E,'La maniobra de cambio de sentido de circulación de un tren se denomina:',['Retroceso.','Inversión de marcha.','Circulación a contravía.','Cambio de sentido.'],1,'M3 NIC, Definiciones: «Inversión de marcha: Maniobra de cambio de sentido de circulación de un tren».'],
+[E,'¿En qué circunstancias tienen derecho los viajeros a la devolución del importe del billete?',['Cuando se produzca una suspensión del servicio.','Intervalo de más de 15 min donde el previsto es de menos de 7 min 30 s.','Intervalo de más de 20 min donde el previsto es de 7 min 30 s o más.','Todas las anteriores son correctas.'],3,'M4 Reglamento, art. 12 (también en M1, Carta de Servicios).'],
+[E,'El conductor de un tren también será responsable de las averías y accidentes debidos a:',['La negligencia en el cumplimiento de las normas.','La falta de mantenimiento preventivo del material.','La falta de tracción eléctrica.','Todas las anteriores son correctas.'],0,'M3 NIC: «También será responsable de las averías y accidentes debidos a la negligencia en el cumplimiento de las normas».'],
+[E,'Si viajo de O´Donnell a Aeropuerto T4 con mi Abono Zona A, ¿dónde compro el Suplemento de Aeropuerto?',['En O´Donnell antes de pasar los tornos.','En T4, en las máquinas previas a la salida.','En T4, en las máquinas posteriores a la salida.','Ninguna de las anteriores es correcta.'],3,'M1, Suplemento Aeropuerto: los portadores de Abonos están exentos, así que no hay que comprarlo.'],
+[E,'Para establecer un servicio de lanzadera por una única vía sin señales, la concesión de vía para la primera circulación en cada sentido se hará según el artículo de:',['Interrupciones de servicio.','Casos no contemplados en esta normativa.','Establecimiento del bloqueo telefónico por avería. Concesión de vía.','Ninguna de las anteriores.'],2,'M3 NIC, art. 4.7.8: «según la normativa indicada en el artículo 4.7.3» (bloqueo telefónico por avería, concesión de vía).'],
+[E,'En la señal de cambio de tensión de catenaria, la tensión indicada en la parte INFERIOR corresponde:',['A la zona a la que se pasa después del aislador de sección.','A la zona de los depósitos o cocheras.','A la zona por la que se circula.','Ninguna de las anteriores.'],2,'M3 NIC, Señalización: la de abajo es la zona por la que se circula; la de arriba, la zona a la que se pasa.'],
+[E,'¿Cuál es la duración de la tarjeta Multi?',['2 años.','5 años.','10 años.','No tiene caducidad.'],2,'M1, Tarjeta MULTI: «tiene una duración de diez años desde su emisión». La Personal también caduca a los 10 años.'],
+[E,'¿Cuáles de estos billetes de 10 viajes son válidos en Metro y en los autobuses de la EMT?',['10 viajes Metrobús y 10 viajes MetroSur.','10 viajes Metrobús y 10 viajes MetroNorte.','10 viajes Metrobús y 10 viajes Combinado.','Ninguna de las anteriores.'],3,'M1, Títulos: solo el Metrobús (zona A) vale en Metro y EMT. Ninguna pareja es correcta.'],
+[E,'El PCC solicita por llamada general a las estaciones la localización del tren que precede al que va a autorizar. ¿Quién le facilita la situación?',['El personal de seguridad de una de ellas.','El responsable operativo de una de ellas.','Un trabajador habilitado para la conducción.','Un inspector del Puesto de Mando.'],1,'M3 NIC, cap. 4.7: «El responsable operativo de la estación donde se encuentre en ese momento el tren solicitado… lo comunicará».'],
+[E,'¿Cuál de las siguientes estaciones tiene correspondencia con las líneas 1, 2 y 3?',['Gran Vía.','Plaza de España.','Sol.','Cuatro Caminos.'],2,'M1, Estaciones por línea: Sol aparece en L1, L2 y L3.'],
+[E,'¿Cuántas zonas tarifarias abarcan la Comunidad de Madrid?',['5.','6.','7.','8.'],1,'M1, Zonas: A, B1, B2, B3, C1 y C2. «Con la zona C… se abarca la totalidad de la Comunidad de Madrid».'],
+[E,'¿Qué línea une las estaciones de Pinar de Chamartín y Argüelles?',['Línea 1.','Línea ML1.','Línea 2.','Línea 4.'],3,'M1, vía I: «Línea 4 Pinar de Chamartín hacia Argüelles».'],
+[E,'¿Cuál es la definición de zona colindante?',['Es el espacio próximo al área de trabajo.','Es el espacio comprendido entre los límites de la plataforma de vía y los cerramientos exteriores.','Es el espacio, a cada lado del área de trabajo, establecido para su protección.','Ninguna de las anteriores.'],1,'M2 Seguridad, Definiciones. La opción C es el «área de seguridad».'],
+[E,'¿En qué línea se encuentra la estación de Antonio Saura?',['Línea 4.','Línea 9.','Línea 12.','Línea ML1.'],3,'M1, Estaciones por línea: ML1 Pinar de Chamartín – Las Tablas, que incluye Antonio Saura.'],
+[E,'Antes de entrar o salir de cualquier recinto cerrado de cocheras o depósitos, el conductor:',['Circulará a paso de hombre y hará sonar el silbato al pasar por la puerta.','Comprobará el indicador de número de vía y avisará solo si hay personas.','Detendrá el tren y hará sonar el silbato o claxon ante la puerta.','Ninguna de las anteriores.'],2,'M3 NIC: «se detendrá el tren y se hará sonar el silbato o claxon ante la puerta, como aviso al personal».'],
+[E,'Un trabajador relacionado con la circulación tiene dudas de interpretación y debe adoptar una solución urgente. Lo hará:',['De acuerdo con el sentido común y su buen criterio.','Dando prioridad a los criterios de seguridad según lo establecido en la Normativa.','Aplicando la normativa del periodo fuera de servicio, por ser más restrictiva.','No puede decidir sin consulta previa.'],1,'M3 NIC, art. 6.1.1.'],
+[E,'Para que un tren rebase un cartel precautorio por personal en la plataforma de vía, además de la autorización del PCC o el testigo piloto, será necesaria:',['La selección del modo M+20 y circular a paso de hombre.','La autorización de la señal y circular marcha a la vista.','La confirmación de que el conductor conoce la existencia de las personas que se encuentran en la plataforma de vía.','La autorización del Jefe de Sector responsable.'],2,'M3 NIC / M2, cartel «¡Precaución! Personal en plataforma de vía».'],
+[E,'Los viajeros sin título de transporte válido deben abonar un recargo extraordinario de:',['80 €.','40 €.','60 €.','90 €.'],0,'M4 Reglamento, art. 28: 80 €, que se reduce a la mitad (40 €) si se paga en el momento o en 15 días hábiles.'],
+[E,'¿Cuál de estas estaciones tiene Centro de Atención al Cliente?',['Méndez Álvaro.','Sol.','Príncipe Pío.','Gregorio Marañón.'],1,'M1: hay Centros de Atención al Cliente en Sol, Ópera y Plaza de Castilla.'],
+[E,'El Vicepresidente del Consejo de Administración del Consorcio es nombrado por…',['Los vocales de los Ayuntamientos consorciados.','Los vocales de la Comunidad de Madrid.','El Presidente del Consejo de Administración.','El propio Consejo de Administración.'],3,'M7 CRTM: el vicepresidente lo nombra el Consejo de Administración, entre los vocales de los Ayuntamientos consorciados.'],
+[E,'Una señal repetidora se identifica con una placa en su parte inferior en la que figura:',['La letra «R» y el código alfanumérico de la señal de la que es repetidora.','Las letras «RP» y el código de la señal de la que es repetidora.','Las letras «SR» y el código de la señal de la que es repetidora.','Las letras «SRP» y el código de la señal de la que es repetidora.'],0,'M3 NIC, Señales: automáticas = «A», mandadas = «M», repetidoras = «R».'],
+[D,'Marcha a paso de hombre:',['Conducción manual a unos 10 km/h.','Conducción manual a unos 15 km/h.','Conducción manual a unos 5 km/h.','Conducción manual a unos 30 km/h.'],2,'M3 NIC, Definiciones: «velocidad aproximada de 5 km/h, equivalente a la de una persona andando».'],
+[D,'¿Cuáles son los límites de una estación?',['La franja del andén y el cerramiento exterior.','Los piñones de entrada y salida.','El piñón de entrada.','Ambas franjas de borde.'],1,'M3 NIC, Definiciones: «Estación… Sus límites son los piñones de entrada y salida».'],
+[D,'Si un conductor encuentra varias señales o carteles en un mismo lugar…',['Obedecerá solo la primera si son contradictorias.','Obedecerá solo una si son compatibles.','Obedecerá la más restrictiva si son contradictorias.','Obedecerá la menos restrictiva si son contradictorias.'],2,'M3 NIC, art. 3.1.5: si son compatibles, todas; si son contradictorias, la más restrictiva.'],
+[D,'Cuando un tren pase por una estación sin detenerse, lo hará:',['A 20 km/h.','A paso de hombre.','A 30 km/h.','Sin sobrepasar los 30 km/h y emitiendo señales acústicas.'],3,'M3 NIC, art. 4.2.14: silbato o claxon, sin sobrepasar 30 km/h y atento a los carteles de precaución.'],
+[D,'Mientras un cantón esté ocupado por un tren, la señal de entrada al mismo permanece con el aspecto:',['Morado.','Rojo.','Rojo o M-Roja.','Amarillo.'],2,'M3 NIC: «permanece con el aspecto rojo o M-Roja».'],
+[D,'El Abono Transportes +65 se puede obtener a partir de los:',['55 años.','60 años.','65 años.','70 años.'],2,'M1, Perfiles: «Abono +65: A partir de 65 años».'],
+[D,'Relevo de conductores:',['Debe hacerse sin producir demora en la circulación.','El conductor entrante debe estar en el punto de relevo 10 min antes.','El conductor saliente debe estar en el punto de relevo con la antelación necesaria.','Se admite un máximo de 3 min de demora.'],0,'M3 NIC, art. 4.2.16: sin demora. Es el ENTRANTE quien debe estar en el punto de relevo con la antelación necesaria.'],
+[D,'La estación de Pradillo pertenece a la línea:',['L10.','L9.','L12.','L5.'],2,'M1, Estaciones por línea: L12 MetroSur (Móstoles).'],
+[D,'¿En qué línea está MetroEste?',['10.','9.','12.','7.'],3,'M1, Zonas: MetroEste, Hospital del Henares – Barrio del Puerto (L7, tramo 7B).'],
+[D,'¿En qué línea está TFM?',['7.','10.','12.','9.'],3,'M1, Zonas: T.F.M., Puerta de Arganda – Arganda del Rey (L9, tramo 9B).'],
+[D,'¿En qué línea está MetroNorte?',['1.','10.','7.','9.'],1,'M1, Zonas: MetroNorte, Hospital Infanta Sofía – La Granja (L10).'],
+[D,'¿Cuánto mide el ancho de vía en Metro Ligero?',['1.445 mm.','1.435 mm.','1.593 mm.','1.712 mm.'],1,'M1: 1.445 mm en metro pesado y 1.435 mm en metro ligero.'],
+[D,'¿Qué series de trenes circulan por la línea 5?',['Series 2000 y 3000.','Solo la 2000-A.','Series 6000 y 3000.','Serie 9000.'],0,'M1, Material móvil: 2000 (líneas 1 y 5) y 3000 de 6 coches (líneas 3 y 5).'],
+[D,'¿Cuántas líneas circulares tiene la red de Metro?',['Todas las líneas son circulares.','2: la línea 6 y MetroSur (L12).','Solo la línea 6.','Ninguna.'],1,'M1, vía I: «Línea 6 Circular» y «Línea 12 (Metrosur) Circular».'],
+[D,'¿Cuántas estaciones tiene el Ramal?',['12 estaciones.','2: Ópera y Príncipe Pío.','2: Sol y Atocha.','3: Ópera, Plaza de España y Príncipe Pío.'],1,'M1, Estaciones por línea: Ramal Ópera – Príncipe Pío.'],
+[D,'¿En qué estación de la línea 9 hay que cambiar de tren?',['En ninguna.','Puerta de Arganda.','Sainz de Baranda.','Núñez de Balboa.'],1,'M1: la L9 se divide en 9A (Paco de Lucía – Puerta de Arganda) y 9B (TFM, Puerta de Arganda – Arganda del Rey).'],
+[D,'La línea 2 comienza y termina en:',['Ventas – Cuatro Caminos.','Las Rosas – Cuatro Caminos.','Cuatro Caminos – Las Rosas.','Moncloa – Plaza de España.'],1,'M1, vía I: «Línea 2 Las Rosas hacia Cuatro Caminos». La cabecera es Las Rosas.'],
+[D,'¿Qué serie de trenes circula por la línea 2?',['2000-A.','2000-B.','8400.','3000.'],3,'M1, Material móvil: 3000 de 4 coches (M-R-S-M) en las líneas 2, 4 y Ramal.'],
+[D,'La línea 2 está en la zona tarifaria…',['A.','A+B1.','B1.','A+B1+B2.'],0,'M1, Zonas: Metro de Madrid, zona metropolitana A.'],
+[P,'¿Cuál es la definición correcta de riesgo laboral?',['Posibilidad de que un trabajador sufra una patología causada o relacionada con el trabajo.','Posibilidad de que un trabajador sufra un daño causado o relacionado con el trabajo.','Posibilidad de que un trabajador sufra una enfermedad causada o relacionada con el trabajo.','Posibilidad de que un trabajador sufra una lesión causada o relacionada con el trabajo.'],1,'M6 PRL, autotest pregunta 1 (solución oficial: b).'],
+[P,'¿Cuál de las siguientes frases sobre las condiciones de trabajo es FALSA?',['Son cuestiones relacionadas con los edificios, instalaciones, máquinas, organización o productos.','Los accidentes de trabajo indican que en la empresa hay malas condiciones de trabajo.','Son características del trabajo que pueden afectar a la seguridad y salud del trabajador.','La actividad preventiva debe estudiar las características de los trabajadores para adaptarlos a las condiciones de trabajo.'],3,'M6 PRL, autotest pregunta 2 (solución oficial: d). Es al revés: se adapta el trabajo a la persona.'],
+[P,'De los principios generales de la acción preventiva, ¿cuál es el más importante?',['Evitar los riesgos.','Conocer y evaluar los riesgos cuando no se pueden evitar.','Frenar los riesgos desde el principio.','Dar las instrucciones correctas a los trabajadores.'],0,'M6 PRL, autotest pregunta 3 (solución oficial: a).'],
+[P,'¿Qué institución vigila que empresas y trabajadores cumplan las normas de prevención?',['El Instituto Nacional de Seguridad y Salud en el Trabajo.','La Inspección de Industria.','La Inspección de Trabajo y Seguridad Social.','El Servicio de Prevención Ajeno.'],2,'M6 PRL, autotest pregunta 4 (solución oficial: c).'],
+[P,'¿De qué dependen los efectos de los agentes químicos para la salud de los trabajadores?',['De si el agente químico produce cáncer.','De la cantidad de agente químico utilizado.','De lo perjudicial que es el agente y del tiempo de contacto del trabajador con él.','Solo del tipo de agente.'],2,'M6 PRL, autotest pregunta 6 (solución oficial: c).'],
+[P,'Al evaluar los efectos de los agentes físicos, ¿qué debemos tener en cuenta?',['El tipo de agente y su cantidad o intensidad, solamente.','El tipo de agente, su cantidad o intensidad y el tiempo de contacto.','Las dos anteriores son incorrectas.','Solo el tiempo de contacto.'],1,'M6 PRL, autotest pregunta 7 (solución oficial: b).'],
+[P,'¿Qué son los agentes biológicos?',['Microbios, como bacterias y virus.','Animales, como vacas, perros o serpientes.','Plantas.','Productos químicos de origen natural.'],0,'M6 PRL, autotest pregunta 8 (solución oficial: a).'],
+[P,'¿Qué medidas sirven para prevenir y controlar el riesgo biológico?',['Limpiar y desinfectar lugares y equipos de trabajo.','Vigilar la salud del trabajador según las recomendaciones médicas.','Las dos anteriores.','Ninguna de las anteriores.'],2,'M6 PRL, autotest pregunta 9 (solución oficial: c).'],
+[P,'Marca la afirmación verdadera:',['El plan de autoprotección es necesario para todas las empresas que puedan tener una emergencia.','Todas las empresas deben hacer al menos un simulacro al año.','Una emergencia general afecta a toda la empresa y obliga a pedir ayuda fuera de ella.','Ninguna es verdadera.'],2,'M6 PRL, autotest pregunta 13 (solución oficial: c).'],
+[P,'En una emergencia pueden sufrir daños… (señala la FALSA)',['Los trabajadores.','El entorno de trabajo.','El medio ambiente.','Ninguna de las anteriores.'],3,'M6 PRL, autotest pregunta 14 (solución oficial: d). Todos los anteriores pueden sufrir daños.'],
+[P,'¿Quién comprueba que nadie se queda sin salir en una emergencia?',['El equipo de alarma y evacuación.','El jefe de emergencia.','El jefe del servicio de prevención.','El equipo de primeros auxilios.'],0,'M6 PRL, autotest pregunta 15 (solución oficial: a).'],
+[P,'¿Cómo puede empezar una situación de emergencia?',['Con la visita de una empresa externa.','Con una fuga en una tubería de gases.','Con unas obras en una zona del centro de trabajo.','Con un cambio de turno.'],1,'M6 PRL, autotest pregunta 16 (solución oficial: b).'],
+[P,'¿Quién es responsable de organizar los primeros auxilios en la empresa?',['Las administraciones públicas.','Los trabajadores.','La empresa.','Todas las anteriores son correctas.'],2,'M6 PRL, autotest pregunta 19 (solución oficial: c).'],
+[P,'Cuando hablamos de constantes vitales, ¿a qué nos referimos?',['A la respiración y el pulso, junto con que la persona esté despierta.','A la respiración, junto con que la persona esté despierta.','A la respiración y el pulso.','Al pulso, junto con que la persona esté despierta.'],0,'M6 PRL, autotest pregunta 20 (solución oficial: a).'],
+];
+const N=40, MIN=60, LET='ABCD';
+document.getElementById('tot').textContent=BANK.length+' preguntas';
+let exam=[],t0=0,timer=null,finished=false;
+const $=id=>document.getElementById(id);
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(){
+  finished=false;
+  exam=shuffle(BANK.map((q,i)=>i)).slice(0,Math.min(N,BANK.length)).map(i=>BANK[i]);
+  $('list').innerHTML=exam.map((q,i)=>`<article class="q" id="q${i}"><div class="qh"><span class="qn">Pregunta ${i+1}</span><span class="src">${q[0]}</span></div>
+   <p class="qt">${q[1]}</p><div class="opts" role="radiogroup" aria-label="Pregunta ${i+1}">${q[2].map((o,j)=>`<label><input type="radio" name="p${i}" value="${j}"><span class="L">${LET[j]})</span><span>${o}</span></label>`).join('')}</div>
+   <button class="clear" type="button" data-i="${i}">Dejar en blanco</button><div class="why" hidden></div></article>`).join('');
+  $('rules').hidden=true;$('start').hidden=true;$('top').hidden=false;$('res').hidden=true;$('end').hidden=true;
+  document.body.classList.remove('done');
+  t0=Date.now();clearInterval(timer);timer=setInterval(tick,1000);tick();count();
+  window.scrollTo({top:0});
+}
+function tick(){
+  const left=Math.max(0,MIN*60-Math.floor((Date.now()-t0)/1000));
+  $('clock').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+  $('clock').classList.toggle('low',left<=300);
+  if(left===0)grade(true);
+}
+function count(){const n=exam.filter((q,i)=>document.querySelector(`input[name=p${i}]:checked`)).length;$('stat').textContent=`${n} / ${exam.length} contestadas`}
+function grade(timeout){
+  if(finished)return;finished=true;clearInterval(timer);
+  let ok=0,bad=0,bl=0;const byM={};
+  exam.forEach((q,i)=>{
+    const el=document.querySelector(`input[name=p${i}]:checked`),a=el?+el.value:-1,box=$('q'+i);
+    box.querySelectorAll('input').forEach(x=>x.disabled=true);
+    box.querySelector('.clear').hidden=true;
+    const labs=box.querySelectorAll('label');labs[q[3]].classList.add('right');
+    let st;if(a<0){bl++;st='bl'}else if(a===q[3]){ok++;st='ok'}else{bad++;st='bad';labs[a].classList.add('wrong')}
+    box.dataset.st=st;
+    const m=(q[4].match(/^M\d/)||['?'])[0];byM[m]=byM[m]||{ok:0,n:0};byM[m].n++;if(st==='ok')byM[m].ok++;
+    const w=box.querySelector('.why');w.hidden=false;
+    w.innerHTML=`<span class="badge ${st}">${st==='ok'?'✓ Acierto +1':st==='bad'?'✗ Fallo −0,33':'En blanco 0'}</span> Correcta: <b>${LET[q[3]]})</b><br>${q[4]}`;
+  });
+  const score=Math.round((ok-bad/3)*100)/100,pass=score>=20;
+  const names={M1:'M1 Metro',M2:'M2 Seguridad',M3:'M3 NIC',M4:'M4 Reglamento',M6:'M6 PRL',M7:'M7 CRTM'};
+  $('res').innerHTML=`<h2>${timeout?'⏰ Se acabó el tiempo. ':''}${pass?'✅ Pasarías el corte':'❌ No llegarías al corte'}</h2>
+   <div class="score">${score.toFixed(2).replace('.',',')} <span style="font-size:22px">/ 40</span></div>
+   <div class="grid"><div>Aciertos<b>${ok}</b></div><div>Fallos<b>${bad}</b></div><div>En blanco<b>${bl}</b></div><div>Tiempo<b>${Math.round((Date.now()-t0)/60000)} min</b></div></div>
+   <strong>Por manual:</strong><ul class="bym">${Object.keys(byM).sort().map(m=>`<li>${names[m]||m}: ${byM[m].ok} de ${byM[m].n}</li>`).join('')}</ul>
+   <p class="stat">El corte es 20. Repasa los manuales donde más falles.${bad>0&&ok-bad/3<ok?` Los fallos te han costado ${(bad/3).toFixed(2).replace('.',',')} puntos.`:''}</p>`;
+  $('res').hidden=false;$('end').hidden=false;$('top').hidden=true;document.body.classList.add('done');
+  $('res').scrollIntoView({behavior:'smooth'});
+}
+$('start').onclick=start;$('again').onclick=start;
+$('finish').onclick=()=>{const n=exam.filter((q,i)=>!document.querySelector(`input[name=p${i}]:checked`)).length;if(!n||confirm(`Te quedan ${n} en blanco. ¿Corregir ya?`))grade(false)};
+$('list').addEventListener('change',count);
+$('list').addEventListener('click',e=>{const b=e.target.closest('.clear');if(!b)return;document.querySelectorAll(`input[name=p${b.dataset.i}]`).forEach(x=>x.checked=false);count()});
+let only=false;$('onlybad').onclick=()=>{only=!only;$('onlybad').textContent=only?'Ver todas':'Ver solo fallos y en blanco';document.querySelectorAll('.q').forEach(q=>q.hidden=only&&q.dataset.st==='ok')};
+</script>
+</body>
+</html>
